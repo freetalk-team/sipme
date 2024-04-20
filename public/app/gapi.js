@@ -7,20 +7,6 @@ const PHOTO_API_URL = 'https://photoslibrary.googleapis.com';
 
 const API_KEY = Config.gapi ? Config.gapi.key : Config.gapiKey;
 
-// How to get link
-// curl "https://www.googleapis.com/drive/v3/files/1raWDhHU_uC1CJR7KCOdsmfFcWekMmCdv?fields=thumbnailLink&key=AIzaSyBYKpAuP2eMIL-8oW7bL-mEVgj3YtJ1D_M"
-
-// response
-/*
-
-
-curl "https://www.googleapis.com/drive/v3/files/[id]?fields=thumbnailLink&key=[API_KEY]"
-
-{
-  "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AKHj6E6Gd-NUnOqslK75EzH495F6qaYKkqIvIa6RFlrpaIe9eYcD8Kvj0ecWJ5DD86S6LoX218chX8oj4qtUKtcWQWE7YklYkgw8=s220"
-}
-
-*/
 	
 const GoogleApiMixin = {
 
