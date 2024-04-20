@@ -9,15 +9,19 @@ Free, Open Source software. Developed collaboratively by a dedicated team of dev
 ## Features
 
 - Chat
+
   Text messages (**Markdown**), video calls, screen sharing
 
 - Task board
+
   Create and edit tasks. Partially compatible with **Trac** database
 
 - Games
+
   Play online games
 
 - Player
+
   Listen, watch your local media files. Share albums and playlists
 
 ## Installation
