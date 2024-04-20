@@ -27,6 +27,7 @@ Free, Open Source software. Developed collaboratively by a dedicated team of dev
 
   Listen, watch your local media files. Share albums and playlists
 
+
 ## Installation
 
 ### Install packages
@@ -90,6 +91,9 @@ cd config
 cp local.sample.yaml local.yaml
 vi local.yaml
 ```
+
+### Application design
+![details](/public/ui/svg/app-design.svg)
 
 ## Usage
 
