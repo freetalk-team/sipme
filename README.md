@@ -12,6 +12,9 @@ Free, Open Source software. Developed collaboratively by a dedicated team of dev
 
   Text messages (**Markdown**), video calls, screen sharing
 
+  + SIP proxy
+  + Firebase Cloud Messaging (FCM)
+
 - Task board
 
   Create and edit tasks. Partially compatible with **Trac** database
