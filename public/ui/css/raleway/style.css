@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url(font.ttf) format('truetype');
+}
+
+.raleway {
+  font-family: 'Raleway';
+}

@@ -1,0 +1,29 @@
+
+.sidebar .list2 .group-header {
+
+	font-size: 80%;
+	font-weight: bolder;
+
+	border-radius: 4px;
+
+	/* box-shadow: #000000 0 -6px 6px -6px inset, #000000 0 6px 6px -6px inset; */
+	box-shadow: var(--shadow-bottom);
+
+	/* cursor: pointer; */
+}
+
+.sidebar .list2 .group-header:hover {
+	opacity: .8;
+}
+
+.sidebar .list2 .group-header .title {
+	white-space: nowrap;
+	text-transform: uppercase;
+	padding-left: 2px;
+	margin: 0;
+}
+
+.dark .sidebar .list2 .group-header,
+.sidebar.dark .list2 .group-header {
+	box-shadow: var(--shadow-bottom-dark);
+}

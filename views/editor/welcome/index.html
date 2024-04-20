@@ -1,0 +1,172 @@
+
+<template id="editor-welcome-content" class="w3-row w3-container w3-margin-bottom welcome">
+
+	<div class="w3-twothird w3-panel">
+		<h3 class="w3-blue w3-padding-tiny w3-round w3-card-2 text-stroke gradient text-center ellipsis cartoon relative">
+			<button class="icon fa fa-plus display-hover top-right" title="Add task" cmd="add-new-task"></button>
+			<i class="fa tasks stroke fa-sm wm6"></i>
+			TASKS
+		</h3>
+		<div class="group column">
+			<h3 class="wm6">My board</h3>
+			<div class="info show-container-empty cc m10">
+				<h4 class="nomargin wm8 inconsolata">Update tickets, add comments</h4>
+				<div class="cc w3-container">
+					<span class="cr ci">
+						<i class="fa fa-fw tasks sm wm6"></i>
+						<a title="Open" cmd="open-ls-task">Open TaskBoard</a>
+					</span>
+					<span class="cr ci">
+						<i class="fa fa-fw fa-plus sm wm6"></i>
+						<a title="Create" cmd="add-new-task">Crete new ticket</a>
+					</span>
+				</div>
+				
+			</div>
+			<div class="cc list container-empty content" group="task" ds="taskown" template="editor-taskboard-item" visible="5"></div>
+			<div class="cr m10 hide-container-empty smaller italic" style="justify-content:end;margin-top:5px;">
+				<a name="_less" class="hidden">less</a>
+				<a name="_more" class="hidden">more</a>
+			</div>
+		</div>
+
+		<div class="group column">
+			<h3 class="wm6">Reported</h3>
+			<div class="info show-container-empty cc m10">
+				<h4 class="nomargin wm8 inconsolata">Update tickets, add comments</h4>
+				<div class="cc w3-container">
+					<span class="cr ci">
+						<i class="fa fa-fw tasks sm wm6"></i>
+						<a title="Open" cmd="open-ls-task">Open TaskBoard</a>
+					</span>
+					<span class="cr ci">
+						<i class="fa fa-fw fa-plus sm wm6"></i>
+						<a title="Create" cmd="add-new-task">Crete new ticket</a>
+					</span>
+				</div>
+				
+			</div>
+			<div class="cc list container-empty content" group="task" ds="taskreported" template="editor-taskboard-item" visible="5"></div>
+			<div class="cr m10 hide-container-empty smaller italic" style="justify-content:end;margin-top:5px;">
+				<a name="_less" class="hidden">less</a>
+				<a name="_more" class="hidden">more</a>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="w3-third w3-panel">
+
+		<div class="group cc">
+			<h3 class="w3-green w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis cartoon nomargin-bottom">
+				<i class="fa fa-comments fa-sm stroke wm6"></i>
+				CHAT
+			</h3>
+			<div class="info show-container-empty cc m10 smaller">
+				<i class="wm8">Find contacts, create rooms</i>
+				<div class="cc w3-container">
+					<span class="cr ci">
+						<i class="fa fa-fw fa-user wm6"></i>
+						<a title="Find" cmd="find-contact">Find user</a>
+					</span>
+					<span class="cr ci">
+						<i class="fa fa-fw fa-user-friends wm6"></i>
+						<a title="Create" cmd="add-new-room">Create room</a>
+					</span>
+				</div>
+				
+			</div>
+			<div class="cc list container-empty" group="chat" template="editor-contact-item"></div>
+		</div>
+
+		<div class="group cc">
+			<h3 class="w3-purple w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis cartoon nomargin-bottom">
+				<i class="fa fa-gamepad sm stroke wm6"></i>
+				GAME
+			</h3>
+			<div class="info show-container-empty cc m10 smaller">
+				<i class="wm8">Invite friends to play games</i>
+				<div class="cc w3-container">
+					<span class="cr ci">
+						<i class="fa fa-fw backgammon wm6"></i>
+						<a title="New game" cmd="game-new-backgammon">Backgammon</a>
+					</span>
+				</div>
+
+			</div>
+			<div class="cc list container-empty" role="game" template="editor-game-item"></div>
+		</div>
+
+		<div class="group cc">
+			<h3 class="w3-red w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis cartoon nomargin-bottom">
+				<i class="fa fa-play sm stroke wm6"></i>
+				PLAYER
+			</h3>
+			<div class="info show-container-empty cc m10 smaller">
+				<i class="wm8">Listen, organize your media files</i>
+				<div class="cc w3-container">
+					<a>Import files</a>
+				</div>
+			</div>
+			<div class="cc list container-empty player" role="track" template="edior-player-track-item-file"></div>
+		</div>
+	</div>
+
+</template>
+
+<template id="editor-taskboard-item" class="item cc relative noevents w3-padding w3-border-bottom" data-id="{{this.id}}" data-updated="{{this._updated||this.time}}" task>
+	<div class="actions top-right mar3 row ci smaller display-hover allevents">
+		<button class="icon fa tasks sm" name="tasks" title="open" cmd="open-ticket-task"></button>
+		<button class="icon fa share sm" name="share" title="Share" cmd="share-task"></button>
+		<button class="icon fa remove" name="rm" title="Remove" cmd="remove-task" display="su"></button>
+	</div>
+	<h3 class="nomargin ellipsis">{{this.summary}}</h3>
+	<div class="cr ci hide-selected small">
+		<span><b>status:</b> {{this.status}}</span>
+		<span><b>severity:</b> {{this.severity}}</span>
+	</div>
+	[[editor-taskboard-edit-task,div show-selected]]{{this}}
+</template>
+
+<template id="editor-contact-item" class="contact grid item ci w3-padding-tiny padding-hor-4 noevents" data-id="{{this.user.id}}">
+	<img class="avatar circle center" src="{{this.user.photo}}"> 
+	<a class="name ellipsis" cmd="open-contact-contact" title="Open chat">{{this.user.name}}</a>
+	<button class="icon fa call sm display-hover" name="call" title="Call" cmd="video-call-user"></button>
+	<div class="status cr ci nodisplay-hover small fade">
+		<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+	</div>
+	<span class="msg ellipsis">{{this.shortHTML}}</span>
+	<div class="show-selected input w3-margin-top">[[message-input-area]]</div>
+</template>
+
+<template id="editor-room-item" class="contact item w3-padding-tiny padding-hor-4 noevents column" data-id="{{this.room.id}}" data-room="true">
+	<div class="cr noverflow">
+		<img class="avatar circle" src="{{this.user.photo}}">
+		<div class="cc m2 fit">
+			<div class="cr ci">
+				<a class="name ellipsis" title="Chat" cmd="open-room-contact">{{this.room.name}}</a>
+				<i class="fa fa-user-friends xs wm6 margin-left-auto"></i>
+				<time class="small watermark-8 fade" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+			</div>
+			<span class="msg ellipsis r2">{{this.shortHTML||this.text}}</span>
+		</div>
+	</div>
+	<div class="show-selected input w3-margin-top">[[message-input-area]]</div>
+</template>
+
+
+<template id="editor-game-item" class="contact grid item ci w3-padding-tiny padding-hor-4 noevents" data-id="{{this.id}}" cmd="game-open-user">
+	<img class="avatar circle center" src="{{this.user.photo}}"> 
+	<span class="name ellipsis">{{this.user.name}}</span>
+	<div class="status cr ci nodisplay-hover small fade">
+		<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+	</div>
+	<i class="ellipsis smaller">{{this.desc||this.type}}</i>
+</template>
+
+<template id="message-input-area" classes="input row input-area ci w3-padding-tiny events">
+	<div name="comment" contenteditable role="textbox" class="fit expandable-textarea" placeholder="type a message"></div>
+	<button class="icon fa sm fa-smile" name="emoji" title="Emoji" tabindex="-1"></button>
+	<button class="icon fa sm fa-send" name="send" title="Send" cmd="send-chat-message" disabled></button>
+</template>
+

@@ -1,0 +1,316 @@
+
+#player-editor {
+
+	background-color: var(--dark-bg-color);
+	color: var(--dark-text-color);
+
+ 	.header {
+
+		background-color: var(--dark-header-background);
+		color: var(--dark-header-color);
+
+		&.grid {
+			grid-template-areas:
+				'icon title right'
+				'icon desc right'
+				'icon progress tbar';
+
+			.progress {
+				grid-area: progress;
+				min-height: 24px;
+				max-width: 650px;
+
+				input[type="range"] {
+					border: 1px solid #4D90FE77;
+				}
+			}
+		}
+
+		button[name="play"] {
+			color: #4CAF50;
+
+			/* &::before { content: "Play"; } */
+		} 
+	}
+
+	&[state="playing"] {
+		.header {
+			button[name="play"] {
+				color: #f55;
+
+				/* &::before { content: "Pause"; } */
+	
+				&:before {
+					content: '\f04c';
+				}
+			} 
+		}
+	}
+
+	&[view="files"] {
+
+		.header {
+
+			:is(button) {
+
+				&[name="share"] { display: none; }
+				&[name="remove"] { display: none; }
+			}
+
+		}
+	}
+
+	:is(video) {
+		&::-webkit-media-controls-toggle-closed-captions-button {
+			display: none;
+		}
+
+		
+	}
+}
+
+#player-editor  .editor .grid .toolbar button {
+	opacity: 0.6;
+}
+
+
+
+.player .track {
+	display: grid;
+	grid-template-areas: 
+		'title toolbar'
+		'desc time'
+		;
+
+	/* grid-template-columns: repeat(4, 1fr); */
+	grid-template-columns: 1fr;
+
+	gap: 5px;
+
+	margin: 2px 4px;
+	padding: 2px;
+}
+
+.player .track.file {
+	grid-template-areas: 
+		'title title title actions'
+		'desc  time rating rating'
+		'video video video video'
+		;
+}
+
+.player .track .head {
+	grid-area: title;
+}
+
+.player.loading3 .item {
+	display: none!important;
+}
+
+.player .track.new {
+	background-color: #8bc34a20!important;
+}
+
+.player .track video {
+	grid-area: video;
+	max-width: 80%;
+	height: auto;
+	margin: 10px auto;
+    border-radius: 5px;
+    box-shadow: #222 0 0 2px 2px;
+}
+
+.player .track.playing .head {
+	font-size: 120%;
+	margin-top: 5px;
+}
+
+.player .track.playing .title .fa:before {
+	color: yellowgreen;
+	content: '\f04b';
+}
+
+.player .track.playing:not(:active) {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.player .track.playing:not(:active) .title {
+	font-style: italic;
+}
+
+.player .track.playing .marquee-container {
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.player .track.playing .marquee-container .marquee {
+	animation: marquee 6s linear infinite;
+	animation-delay: 2s;
+
+	display: inline-flex;
+	/* overflow: hidden; */
+	text-overflow: unset;
+
+}
+
+.player .remove .item[selected],
+.player .track.delete {
+	background-color: #f4433640!important;
+}
+
+.sidebar.player {
+	min-width: 320px!important;
+	max-width: 650px!important;
+}
+
+.explorer .item:not(.index) .fa.check {
+	visibility: hidden;
+	/* background-color: #4CAF5020!important; */
+}
+
+.explorer .item.file[selected] .fa.check {
+	/* display: none; */
+	visibility: hidden;
+}
+
+/* #player-editor .sidebar .item span > * {
+	margin-right: 5px;
+	font-weight: 500;
+	font-size: 92%;
+} */
+
+#player-editor .editor input[name="filter"] {
+	margin: 4px;
+	max-width: 600px;
+}
+
+#player-editor.dark .editor input[name="filter"]:not(:focus) {
+	border: 1px solid rgba(81, 203, 238, 0.2);
+}
+
+#player-editor.edit[view="radio"] [role="filter"] {
+	display: none;
+}
+  
+  /* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+  body { margin: 50px; text-align: center; font-family: 'Open Sans', sans-serif; background: #f2fbff; font-size: .6em;}
+   */
+
+
+
+
+@keyframes marquee {
+	from {
+	  transform: translateX(90%);
+	}
+	to { 
+	  transform: translateX(-95%);
+	}
+  }
+  
+.player .fa.audio {
+	color: var(--green);
+}
+
+.player .fa.video {
+	color: var(--blue);
+}
+
+#player-editor .count li:before,
+#player-editor .count .item .counter:before {
+	content: counter(count, decimal) '. ';
+    margin-right: 5px;
+    font-style: italic;
+    font-size: smaller;
+    font-weight: bold;
+    opacity: .8;
+}
+
+
+
+#player-editor .editor .scrollable .content {
+	margin: 0 5px;
+	padding-bottom: 10px;
+}
+
+#player-editor .editor .grid.torrent {
+	display: grid;
+	/* grid-template-areas: 
+		'title toolbar toolbar toolbar toolbar'
+		'desc  rating rating rating rating'
+		'files files files files files'
+		; */
+
+	grid-template-areas: 
+		'title actions'
+		'desc  rating'
+		'progress progress'
+		'files files'
+		;
+	;
+
+	grid-template-columns: 1fr auto;
+	gap: 5px;
+
+	/* grid-auto-flow: dense;
+    direction: rtl; */
+}
+
+/* .torrent.grid .actions { grid-area: actions; }
+.torrent.grid .title { grid-area: actions; } */
+
+/* #player-editor .editor .torrent .files {
+	display: none;
+} */
+
+.collapsed .collapsable {
+	display: none;
+}
+
+#player-editor .editor .item.torrent.details .files {
+	display: unset;
+}
+
+#player-editor .editor .grid .progress {
+	grid-area: progress;
+}
+
+.color-icons .fa.audio {
+	color: var(--green);
+}
+
+.color-icons .fa.video {
+	color: var(--blue);
+}
+
+#player-editor[view="torrent"] .editor [role="filter"],
+#player-editor:not([view="playlist"]) .header [role="actions"] {
+	display: none;
+}
+
+#player-editor[view="playlist"] .editor .item:not([data-playlist]) {
+	display: none;
+}
+
+#player-editor:not([view="radio"]) [role="tabs"] {
+	display: none;
+}
+
+#player-editor .item.torrent:not([state]) .progress {
+	display: none;
+}
+
+#player-editor .radio button.fa[name="play"] {
+	/* margin-top: 50px;
+	font-size: 12em; */
+}
+
+#player-editor .radio button.fa[name="play"][state="play"]:before {
+	content: '\f144'!important;
+	color: #4caf50;
+}
+
+#player-editor .radio button.fa[name="play"][state="pause"]:before {
+	content: '\f28b'!important;
+	color: #ff9800;
+}

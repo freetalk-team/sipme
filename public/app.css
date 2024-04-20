@@ -1,0 +1,88 @@
+
+@import 'main.css';
+
+/* fonts */
+@import 'ui/css/raleway/style.css';
+@import 'ui/css/monday-feelings/style.css';
+/* @import 'ui/css/super-boys/style.css'; */
+
+@import 'titlebar/titlebar.css';
+@import 'navbar/navbar.css';
+@import 'editor/editor.css';
+/* @import 'sidebar/sidebar.css'; */
+@import 'sidebar/sidebar2.css';
+
+@import 'settings.css';
+/* @import 'wellcome.css'; */
+
+
+.cartoon {
+	font-family: 'Monday Feelings';
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: var(--font);
+	/* zoom: 110%; */ /* Brakes CodeMirror !!! */
+	overflow: hidden;
+	/* font-size: 11px; */
+	font-size: 120%;
+	user-select: none;
+	background: white;
+
+	width: 100%;
+	height: 100%;
+}
+
+#main {
+	width: 100%;
+	flex: 1;
+	height: 100%;
+	background-color: #fcfcfc;
+	position: absolute;
+	overflow: hidden;
+	display: flex;
+}
+
+#main-page {
+	width: 100%;
+	/* height: calc(100% - 22px); */
+	height: 100%;
+	/* background-color: blue; */
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+#app-page {
+	/* width: calc(100% - 38px); */
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	/* height: calc(100% - 22px); */
+
+	background-color: var(--dark-header-background);
+	display: flex;
+	/*display: none; */
+	flex: 1;
+}
+
+#home-page {
+	margin: 0 20px;
+}
+
+#home-page section {
+	background-color: #f4f4f4;
+	margin: 0 5px;
+	padding: 0 10px;
+}
+
+#home-page section:hover {
+	background-color: #f0f0f0;
+	border-radius: 5px	;
+}

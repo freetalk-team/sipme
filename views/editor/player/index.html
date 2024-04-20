@@ -1,0 +1,207 @@
+
+<template id="editor-player-header" classes="header grid">
+
+	<i role="icon" class="fa fa-fw icon circle stroke baseline {{this.icon||'fa-dot-circle'}}" style="align-self:baseline;color:{{this.iconcolor||'inherit'}}"></i>
+	<h2 class="title text-stroke ellipsis nomargin">Player</h2>
+	<i class="ns smaller ellipsis">Play files</i>
+	<div class="right cr ci xxl">
+		<button class="icon fa fa-play fa-fw" name="play" title="Play"></button>
+		<button class="icon fa sm fa-fast-backward" name="prev" title="Previous"></button>
+		<button class="icon fa sm fa-fast-forward" name="next" title="Next"></button>
+	</div>
+	<div class="toolbar cr">
+		<button name="share" class="icon fa sm" title="Share"></button>
+		<button name="remove" class="icon fa" title="Remove"></button>
+	</div>
+	<div class="progress cr ci">
+		<input class="fit slider" type="range" min="1" max="100" value="0" disabled>
+		<time class="smaller italic bold wm6 raleway">0:00</time>
+	</div>
+</template>
+
+<template id="editor-player-base" classes="editor column fit container color-icons">
+	<!-- @if{{app.sudo}}
+	<div class="cr w3-padding ci">
+		<input name="magnet" class="fit" spellcheck="false">
+		<button name="download" class="icon fa fa-download"></button>
+		<button name="stop" class="icon fa fa-stop-circle"></button>
+	</div>
+	@endif -->
+	<div class="cr ci w3-margin-4" role="filter">
+		<input class="fit" name="filter" placeholder="filter" autocomplete="off">
+		<!-- <button name="search" class="icon fa fa-search" title="Search" disabled></button> -->
+	</div>
+	<!-- <div class="tabbar cr w3-padding-ver-8 margin-top" role="tabs">
+		<span class="tab active" tab="main">main</span>
+		<span class="tab" tab="player">player</span>
+	</div> -->
+	[[scrollable-list,div list]]{{this}}
+</template>
+
+<template id="editor-tabs" classes="tabbar cr w3-padding-ver-8 margin-top">
+	<span class="tab active" tab="{{this[0]}}">{{this[0]}}</span>
+	@foreach{{this.slice(1)}}
+		<span class="tab" tab="{{this}}">{{this}}</span>
+	@endforeach
+</template>
+
+
+
+<template id="editor-player-content-base" classes="column hidden">
+
+</template>
+
+<template id="editor-player-content-torrent" classes="column hidden fa-color-icons">
+	
+	[[search-area,,torrent,editor-player-torrent-result]]
+	<h2 class="nomargin watermark" style="margin-left:5px">Local</h2>
+	<div class="main container-col"></div>
+</template>
+
+<template id="edior-player-track-item-file" classes="track grid item file noevents ci w3-padding-tiny" data-id="{{this.id}}">
+	<div class="title cr ci ellipsis">
+		<i class="fa stroke {{this.type||'audio'}} beat"></i>
+		<span class="fit marquee-container ellipsis">
+			<h4 class="ellipsis nomargin marquee">{{this.title||fileX.getTitleFromMeta(this)}}</h4>
+		</span>
+	</div>
+	<i class="desc ellipsis smaller">{{this.desc||fileX.getDescriptionFromMeta(this)}}</i>
+	<button class="icon fa sm fa-fw fa-minus display-hover actions" name="delete" title="Remove"></button>
+	<span class="time small bold watermark-8">{{this.duration ? fileX.getDuration(this.duration) : ''}}</span>
+	<div class="star-ratings" data-rating="{{fileX.getRating(this)}}"></div>
+</template>
+
+<template id="editor-player-torrent-new" classes="w3-margin w3-padding w3-card-2 w3-container container-col m5 fade color-icons max-width">
+
+	<h2 class="nomargin text-stroke w3-center">New torrent</h2>
+	<div class="cr">
+		<label class="w3-third w3-center">Title</label>
+		<input name="title" class="fit" placeholder="torrent name" value="{{_0}}">
+	</div>
+	<div class="cr">
+		<label class="w3-third w3-center">Category</label>
+		<select name="title" class="fit">
+			<option value="music">music</option>
+			<option value="movie">movie</option>
+			<option value="xxx">xxx</option>
+		</select>
+	</div>
+	<h4 class="nomargin fit w3-dark-grey w3-center w3-round w3-padding-tiny">{{this.length}} files</h4>
+
+	<ul class="w3-ul files count">
+		@foreach{{this}}
+			<li class="cr w3-padding-ver-8 ci si">
+				<input class="checkbox" type="checkbox" checked="checked" data-index="{{_0}}">
+				<i class="fa smaller stroke {{this.type}}"></i>
+				<div class="fit ellipsis">{{this.name || fileX.getTitleFromMeta(this)}}</div>
+				<b class="w3-small w3-col s1 w3-right-align">{{size(this.size)}}</b>
+			</li>
+		@endforeach
+	</ul>
+	<div class="actions w3-content cr w3-margin-top">
+		<button class="icon fa fa-lg" name="submit" title="Add"/>
+		<button class="icon fa fa-lg" name="cancel" title="Cancel"/>
+	</div>
+</template>
+
+<template id="editor-player-torrent" classes="grid torrent item w3-padding-small noevents ci" data-id="{{this.uri||this.magnetURI}}" data-size="{{this.size}}">
+
+	<h3 class="fit ellipsis nomargin">{{this.title||this.name}}</h3>
+	<!-- <div class="toolbar cr m2 display-hover">
+		<button class="icon fa fa-fw sm" name="share" title="Share"></button>
+		<button class="icon fa fa-fw" name="delete" title="Remove"></button>
+	</div> -->
+	[[{{_0}}]]
+	[[editor-player-files-size,i]]{{this.files}}
+	[[editor-player-files,ul hidden]]{{this.files}}
+	<div class="star-ratings rating" data-rating="{{this.rating || 0}}"></div>
+	<div class="progress row  w3-padding-small ci">
+		<progress class="w3-col fit w3-margin-right" value="{{this.progress||0}}" max="100"></progress>
+		<b class="small" role="speed">0 KB/s</b>
+	</div>
+</template>
+
+<template id="editor-player-files" classes="w3-ul files count w3-margin-left fade" collapsable>
+	@foreach{{this}}
+		<li class="cr w3-padding-ver-8 ci">
+			<i class="fa" name="{{this.type}}"></i>
+			<div class="fit ellipsis">{{this.name}}</div>
+			<b class="w3-small w3-col s1 w3-right-align">{{size(this.size)}}</b>
+		</li>
+	@endforeach
+</template>
+
+<template id="editor-player-radio" classes="container-col w3-margin radio">
+	<div class="cr">
+		<div class="container-col fit">
+			<h2 class="fit ellipsis nomargin watermark-8" role="name">{{this.name}}</h2>
+			<p><i>{{this.desc||'No desc'}}</i></p>
+		</div>
+		<button class="icon fa fa-3x margin-right stroke" name="play" title="Play" cmd="player-radio" data-id="{{this.code}}" state="play"></button>
+	</div>
+	<h3>Chat</h3>
+	<div class="container-col max-width">
+		<div class="input row input-area ci allevents w3-padding-tiny">
+			<div name="comment" contenteditable role="textbox" class="fit expandable-textarea"></div>
+			<button class="icon fa smile margin-left-tiny" name="emoji" title="Emoji" tabindex="-1"></button>
+			<button class="icon fa fa-send" name="send" title="Send" disabled></button>
+		</div>
+		<div class="container-col list" role="chat"></div>
+	</div>
+</template>
+
+<template id="editor-player-files-size" classes="smaller fit ellipsis desc">
+	{{this.length}} files, total size {{size(this.map(i => i.size))}}
+</template>
+
+<template id="editor-player-torrent-result" classes="grid torrent item w3-padding-small noevents ci {{this.local?'local':''}}" data-id="{{this.uri||this.magnetURI}}" data-size="{{this.size}}">
+	<h3 class="title ellipsis nomargin counter">{{this.title||this.name}}</h3>
+	<div class="actions display-hover cr m5 noevents" style="justify-content:end;">
+		<button class="icon fa fa-fw sm fa-download" name="download" title="Download"></button>
+		<button class="icon fa fa-fw fa-folder" name="save" title="Save"></button>
+	</div>
+	<div class="star-ratings rating" data-rating="{{this.rating || 0}}"></div>
+	[[editor-player-files-size,i]]{{this.files}}
+	[[editor-player-files,ul hidden]]{{this.files}}
+</template>
+
+<template id="torrent-actions" classes="actions display-hover cr m5 noevents" style="justify-content:end;">
+	<button class="icon fa fa-fw sm" name="playlist" title="Create playlist" cmd="import-torrent-playlist"></button>
+	<button class="icon fa fa-fw fa-folder" name="save" title="Save"></button>
+	<button class="icon fa fa-fw sm" name="share" title="Share" cmd="share-torrent"></button>
+	<button class="icon fa fa-fw" name="remove" title="Remove" cmd="rm-torrent"></button>
+</template>
+
+<template id="torrent-search-actions" classes="actions display-hover cr m5 noevents" style="justify-content:end;">
+	<button class="icon fa fa-fw sm fa-download" name="download" title="Download"></button>
+	<button class="icon fa fa-fw fa-folder" name="save" title="Save"></button>
+</template>
+
+<template id="editor-player-sidebar-queue-item" classes="cr m5 w3-padding-small padding-hor-4 noevents ci">
+	<i class="fa smaller {{this.type}}"></i>
+	<span class="title fit ellipsis">{{this.title}}</span>
+	<button class="icon fa sm display-hover" name="delete" title="Remove"></button>
+</template>
+
+<template id="editor-player-sidebar-playlist-file" classes="cr m5 ci w3-padding-small noevents si">
+	<i class="fa smaller w3-text-green" name="{{this.type}}"></i>
+	<span class="fit ellipsis">{{this.title||this.file.name}}</span>
+	@if{{this.album}}
+		<i class="smaller fit ellipsis">{{this.album}}</i>
+	@endif
+	<b class="small text-right">{{size(this.size||this.file.size)}}</b>
+</template>
+
+<template id="edior-player-remote-file-item" classes="track grid item file noevents ci w3-padding-tiny" data-id="{{this.id}}">
+	<div class="title cr ci ellipsis">
+		<i class="fa stroke {{this.type||'audio'}}"></i>
+		<span class="fit marquee-container ellipsis">
+			<h4 class="ellipsis nomargin marquee">{{this.title}}</h4>
+		</span>
+	</div>
+	<i class="desc ellipsis smaller">{{this.artist}}</i>
+	<button class="icon fa sm fa-fw fa-minus display-hover actions" name="delete" title="Remove"></button>
+	<span class="time small bold watermark-8"></span>
+	<div class="star-ratings"></div>
+</template>
+

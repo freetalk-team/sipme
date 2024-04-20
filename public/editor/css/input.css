@@ -1,0 +1,50 @@
+
+
+.input-area {
+	line-height: 20px;
+	align-items: end;
+}
+
+.input-area textarea {
+	width: 100%;
+	font-size: 18px;
+	resize: none;
+	overflow: hidden;
+
+	min-height: 20px;
+	max-height: 314px;
+	height: auto;
+	/* max-height: 5rem;
+	min-height: 2rem; */
+}
+
+.input-area .expandable-textarea {
+	/* border: 1px solid #ccc; */
+	/* font-family: inherit;
+	font-size: inherit; */
+	/* padding: 1px 6px; */
+
+	/* white-space: pre-line; */
+	white-space: pre-wrap;
+
+	display: inline-block;
+	width: 100%;
+	flex: 1;
+	overflow: hidden;
+	/* resize: both; */
+	/* min-height: 40px; */
+	max-height: 120px;
+	/* line-height: 20px; */
+	font-size: smaller;
+	/* flex-grow: 2; */
+	cursor: text;
+	/* caret-shape: auto; */
+
+	/* background-color: unset;
+	color: #202124; */
+
+	padding: 1px 5px;
+
+
+	text-indent: unset;
+}

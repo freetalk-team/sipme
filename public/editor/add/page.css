@@ -1,0 +1,44 @@
+
+.add-editor .CodeMirror {
+	flex: 3;
+	height: auto;
+	border-radius: 5px;
+}
+
+.add-editor .CodeMirror .CodeMirror-overlayscroll-vertical {
+	opacity: 0;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+}
+
+.add-editor .CodeMirror:hover .CodeMirror-overlayscroll-vertical {
+	opacity: .9;
+}
+
+.add-editor button:not(.icon) {
+	color: whitesmoke;
+	width: fit-content;
+}
+
+.add-editor [name="result"] {
+	min-height: 500px;
+	resize: none;
+}
+
+.add-editor textarea[readonly] {
+	pointer-events: none;
+}
+
+.add-editor .preview {
+	width: 98%;
+	margin: auto;
+}
+
+.add-editor .preview canvas {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+/* .add-editor .editor > .scrollable > area:has(.content > .max-height) > .content {
+	height: calc(100% - 10px);
+}  */

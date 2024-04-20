@@ -1,0 +1,75 @@
+{
+  "name": "sipme",
+  "version": "0.9.1",
+  "description": "SIP Web chat",
+  "main": "server.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+
+    "build": "npm run build-js && npm run build-css",
+    "build-js": "cd build/app && npx webpack",
+    "build-css": "cd build/css && npx webpack"
+
+  },
+  "keywords": [
+    "sip",
+    "web",
+    "javascript"
+  ],
+  "author": "Freetalk Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "compression-webpack-plugin": "^11.1.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "css-loader": "^7.1.1",
+    "css-minimizer-webpack-plugin": "^6.0.0",
+    "ejs": "^3.1.9",
+    "ejs-loader": "^0.5.0",
+    "ejs-locals": "^1.0.2",
+    "esm": "^3.2.25",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "file-loader": "^6.2.0",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.9.0",
+    "googleapis": "^134.0.0",
+    "limited-cache": "^2.2.0",
+    "log4js": "^6.9.1",
+    "method-override": "^3.0.0",
+    "mini-css-extract-plugin": "^2.8.1",
+    "module-alias": "^2.2.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "pako": "^2.1.0",
+    "passport": "^0.7.0",
+    "passport-firebase-auth": "^0.0.0-beta.1",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "passport-oauth2-refresh": "^2.2.0",
+    "pg": "^8.11.5",
+    "pkginfo": "^0.4.1",
+    "sequelize": "^6.37.2",
+    "serve-favicon": "^2.5.0",
+    "sqlite3": "^5.1.7",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.91.0",
+    "websocket": "^1.0.34",
+    "yamljs": "^0.3.0"
+  },
+  "_moduleAliases": {
+    "@common": "common",
+    "@config": "config",
+    "@service": "service",
+    "@db": "db"
+  }
+}

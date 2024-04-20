@@ -1,0 +1,195 @@
+<div id="editor" class="column relative">
+	<div class="top-right mar3 w3-card w3-round column" role="popup-area"></div>
+	<div id="editor-loading" class="loading fill hidden"></div>
+	<%- include add/index.html %>
+</div>
+
+<div ux>
+
+	<template id="popup-item" class="popup md compact nomargin relative inconsolata w3-padding fade">
+		<button class="icon fa top-right" name="remove" title="Close"></button>
+		{{dom.markdown(this.msg)}}
+	</template>
+
+	<template id="editor-header-grid" class="header grid">
+		<i class="fa fa-fw icon circle stroke {{this.icon||'fa-dot-circle'}}" style="color:{{this.iconcolor||'inherit'}}" role="icon"></i>
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		[[_0]]{{this}}
+		[[_1]]{{this}}
+	</template>
+
+	<template id="editor-header-update" class="header grid">
+		<i class="fa fa-fw icon circle stroke {{this.icon||'fa-dot-circle'}}" role="icon" style="color:{{this.iconcolor||'inherit'}}"></i>
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		<div class="right bottom row-reverse end-items">
+			<button name="cancel" title="Clear" class="icon fa"></button>
+			<button name="submit" title="Update" disabled class="icon fa"></button>
+		</div>
+		
+	</template>
+
+	<template id="editor-header-grid-basic" class="header grid basic">
+		<i class="fa fa-fw icon circle stroke {{this.icon||'fa-dot-circle'}}" role="icon" style="align-self:baseline;color:{{this.iconcolor||'inherit'}}"></i>
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		[[{{_0}}]]{{this}}
+	</template>
+
+	<template id="editor-header-avatar-grid" class="header grid">
+		<img class="avatar circle">
+		<i class="icon circle fa fa-fw" role="icon"></i>
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title || ''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc || ''}}</i>
+		[[_0]]{{this}}
+		<div class="toolbar row-reverse">
+			[[_1]]{{this}}
+		</div>
+		[[_2]]{{this}}
+	</template>
+
+	<template id="editor-header-avatar" class="header grid">
+		<img class="avatar circle">
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		[[_0]]{{this}}
+		<div class="toolbar row-reverse">
+			[[_1]]{{this}}
+		</div>
+		[[_2]]{{this}}
+	</template>
+
+	<template id="editor-scrollable" class="editor column fit container relative">
+		[[scrollable,,_0]]{{this}}
+	</template>
+
+	<template id="editor-base" class="edit fade">
+		[[_0]]{{this}}
+		[[_1]]{{this}}
+	</template>
+
+	<template id="editor-base-editor" classes="editor column fit relative">
+	</template>
+
+	<template id="editor-base-sidebar" class="edit fade">
+		[[_0]]{{this}}
+		<div class="row-reverse fit sidebar-container">
+			<!-- <div class="sidebar"></div> -->
+			[[editor-sidebar]]{{_2}}
+			<div class="v-sash reverse"></div>
+			[[_1]]{{this}}
+		</div>
+	</template>
+
+	<template id="editor-sidebar-tabs" class="tabbar">
+		@foreach{{this}}
+			<span class="tab fit text-center noevents {{_0 == 0 ? 'active': ''}}" tab="{{this.name||this}}">
+				@if{{this.icon}}
+					<i class="fa {{this.icon}}"></i>
+				@else
+					{{this}}
+				@endif
+			</span>
+		@endforeach
+		<button class="icon fa fa-fw fa-angle-double-right small center" name="collapse" title="Collapse" style="margin:0 6px 0 auto"></button>
+	</template>
+
+	<template id="editor-sidebar" class="sidebar row">
+		<div class="main column fit fade">
+			[[editor-sidebar-tabs]]{{this}}
+			[[scrollable-list,,,column list]]
+		</div>
+		<div class="navbar container-col">
+			<button class="icon" name="expand" title="Expand">
+				<i class="fa fa-fw sm fa-angle-double-left"></i>
+			</button>
+		</div>
+	</template>
+
+	<template id="editor-sidebar-title" class="sidebar column fade fa-color-icons">
+		<div class="header container-row center-items w3-padding-tiny">
+			<i class="fa {{_0}}"></i>
+			<h5 class="nomargin text-up fit ellipsis watermark-6">{{_0}}</h5>
+			<button class="icon fa fa-fw fa-angle-double-right smaller" name="expand" title="Expand"></button>
+		</div>
+		[[scrollable-list,,,column]]
+	</template>
+
+	
+
+	<template id="slideshow" classes="slideshow-container max-width">
+		<img class="image w3-card-4 fade" src="{{this[0].src||this[0]}}">
+		@foreach{{this.slice(1)}}
+			<img class="image w3-card-4 fade hidden" src="{{this.src||this}}">
+		@endforeach
+		@if{{gt(this.length,1)}}
+			<span class="number display-hover" style="top: 5px; left:5px">1 / {{this.length}}</span>
+			<a class="w3-btn-floating display-hover" style="left:0" name="prev">❮</a>
+			<a class="w3-btn-floating display-hover" style="right:0" name="next">❯</a>
+		@endif
+	</template>
+
+	<template id="search-area" classes="search-area column w3-panel max-width w3-margin-top w3-margin-bottom" ds="{{_0}}" template="{{_1}}" role="search">
+		<div class="input-area search container-row m5 fit  w3-margin-bottom">
+			<input class="fit" type="text" name="search" placeholder="search" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false">
+			<button class="icon fa" name="clear" disabled title="Clear"></button>
+			<button class="icon fa sm" disabled name="search" title="Search"></button>
+		</div>
+	</template>
+
+	<template id="search-area-results-container" classes="container-col show-empty">
+		@foreach{{this.slice(0, 10)}}[_0]
+			[[_1]]{{this}}
+		@endforeach
+		@foreach{{this.slice(10)}}[_0]
+			[[_1,div hidden]]{{this}}
+		@endforeach
+	</template>
+
+	<template id="search-area-results" classes="results container-col list2 count fade">
+		[[search-area-results-container,,_0]]{{this}}
+		<footer class="container-row smaller w3-padding-tiny" style="justify-content:end">
+			@if{{this.length >= 10}}
+				<a name="less" class="hidden italic" title="Less">less</a>
+				<a name="more" class="italic" title="More">more</a>
+			@endif
+		</footer>
+	</template>
+
+	<template id="editor-tab-navbar" class="container-row tabbar" role="navbar">
+		@foreach{{this}}
+			[[editor-tab-navbar-item,span]]{{this}}
+		@endforeach
+	</template>
+
+	<template id="editor-tab-navbar-item" class="tab" tab="{{this}}" title="{{this}}">
+		{{this}}
+	</template>
+
+	<template id="editor-tab-page" class="container-col">
+		[[editor-tab-navbar]]{{this}}
+		<div role="tab-area">
+			@foreach{{this}}
+				<div class="container-col fade hidden" page="{{this}}"></div>
+			@endforeach
+		</div>
+	</template>
+
+	<template id="input-autocomplete" class="autocomplete">
+		<input type="text" name="{{this.name||this}}" value="{{this.value||''}}" placeholder="{{_1}}" style="width:100%;" ds="{{_0}}">
+	</template>
+
+	<%- include settings/index.html %>
+	<%- include find/index.html %>
+	<%- include video/index.html %>
+
+	<%- include welcome/index.html %>
+	<%- include contact/index.html %>
+	<%- include game/index.html %>
+	<%- include player/index.html %>
+	<%- include task/index.html %>
+	<%- include wiki/index.html %>
+	<%- include admin/index.html %>
+
+</div>

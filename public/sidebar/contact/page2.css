@@ -1,0 +1,140 @@
+
+
+.contact .avatar,
+.contact .avatar > img {
+	height: 32px;
+	width: 32px;
+	/* background-size: cover; */
+	background-size: 24px;
+	/* background-image: url('../../ui/svg/contact-blue.svg'); */
+	flex-shrink: 0;
+	align-self: center;
+
+	box-shadow: #ccc 0 0 2px 2px;
+}
+
+.dark .contact .avatar {
+	box-shadow: #66a 0 0 2px 2px;
+}
+
+.contact img.avatar {
+	margin: 0 4px;
+}
+
+.contact .avatar.blue {
+	background-image: url('../../ui/svg/contact-blue.svg');
+}
+
+.contact .avatar.green {
+	background-image: url('../../ui/svg/contact-green.svg');
+}
+
+.contact .avatar.orange {
+	background-image: url('../../ui/svg/contact-orange.svg');
+}
+
+.contact .avatar.gray {
+	background-image: url('../../ui/svg/contact-gray.svg');
+}
+
+.dark .contact a.name {
+	color: #ccc;
+}
+
+.contact .info {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	margin-right: 9px;
+	flex: 1;
+
+	margin: 0 9px 0 5px;
+}
+
+.contact .header {
+	display: flex;
+	margin: 0;
+	flex: 1;
+}
+
+.contact.missed .header i.fa {
+	display: unset;
+}
+
+.contact.missed {
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.contact.missed .header i.fa:before {
+	content: '\f0e0';
+	color: #007acc
+}
+
+.contact .footer {
+	font-size: 80%;
+	/* font-weight: 600; */
+	font-style: italic;
+	display: flex;
+	padding-right: 2px;
+}
+
+.contact .footer span.status {
+	flex: 1;
+	/* display: flex; */
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	/* font-family: auto, emoji; */
+}
+
+.contact .footer i {
+	font-size: 90%;
+	opacity: .8;
+}
+
+.contact .header span {
+	flex: 1;
+}
+
+.contact.grid .status {
+	grid-area: rest;
+}
+
+.contact .status {
+	
+	[data-count="0"] { display: none; }
+	[data-missed="0"] { display: none; }
+}
+
+.contact.grid button[name="call"] {
+	grid-area: rest;
+	justify-self: end;
+}
+
+.contact.grid time {
+	grid-area: rest;
+}
+
+.contact .fa-bounce {
+	--fa-animation-duration: 1.2s;
+}
+
+.contact .msg {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contact time {
+	justify-self: end;
+}
+
+/* .contact i.fa {
+	font-size: 80%;
+	align-self: center;
+	display: none;
+}
+
+.contact.modified i.fa {
+	display: unset;
+} */
+

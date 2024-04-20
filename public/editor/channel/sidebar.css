@@ -1,0 +1,135 @@
+
+
+
+
+/* .fa.weather[data-icon="01d"]:before {
+	content: '\f185';
+}
+
+.fa.weather[data-icon="02d"]:before {
+	content: '\f6c4';
+}
+
+.fa.weather[data-icon="03d"]:before {
+	content: '\f0c2';
+}
+
+.fa.weather[data-icon="04d"]:before {
+	content: '\f0c2';
+}
+
+.fa.weather[data-icon="09d"]:before {
+	content: '\f740';
+}
+
+.fa.weather[data-icon="10d"]:before {
+	content: '\f743';
+}
+
+.fa.weather[data-icon="11d"]:before {
+	content: '\f0e7';
+}
+
+.fa.weather[data-icon="13d"]:before {
+	content: '\f2dc';
+}
+
+.fa.weather[data-icon="50d"]:before {
+	content: '\f75f';
+}
+
+.fa.weather[data-icon="01n"]:before {
+	content: '\f186';
+}
+
+.fa.weather[data-icon="02n"]:before {
+	content: '\f6c3';
+}
+
+.fa.weather[data-icon="03n"]:before {
+	content: '\f0c2';
+}
+
+.fa.weather[data-icon="04n"]:before {
+	content: '\f0c2';
+}
+
+.fa.weather[data-icon="09n"]:before {
+	content: '\f740';
+}
+
+.fa.weather[data-icon="10n"]:before {
+	content: '\f73c';
+}
+
+.fa.weather[data-icon="11n"]:before {
+	content: '\f0e7';
+}
+
+.fa.weather[data-icon="13n"]:before {
+	content: '\f2dc';
+}
+
+#editor .sidebar .list2 .item:nth-child(even) {
+	background-color: rgba(0, 0, 0, 0.06);
+}
+
+#editor .sidebar .list2 .item.selected .ellipsis:not(.name),
+#editor .sidebar .list2 .item.selected .hidden {
+	display: unset !important;
+} */
+
+.edit.channel .sidebar .item.selected .md.expand > p {
+	overflow: unset!important;
+	display: unset!important;
+}  
+
+.edit.channel .sidebar .md > p.image img {
+	max-width: 33%!important;
+}
+
+
+.edit .sidebar .md img[alt^="logo"] {
+	width: 16px;
+	height: 16px;
+}
+
+.edit .sidebar .md font {
+	font-size: smaller;
+}
+
+.edit .sidebar [data-replies]:not([data-replies="0"]):before {
+	content: 'and ' attr(data-replies) ' others ';
+}
+
+.edit .sidebar .group.replies > .content > .item:first-of-type {
+	display: none!important;
+}
+
+/* .edit .sidebar .group.replies > .group-header {
+	box-shadow: unset;
+	padding-right: unset;
+} */
+
+.edit .sidebar .text-expand {
+	--max-height: 80px;
+}
+
+.edit .sidebar .text-expand:after {
+	background: linear-gradient(transparent 12px,#ddd);
+}
+
+.edit .sidebar .group-header .title {
+	font-size: smaller;
+}
+
+.edit .sidebar button.icon {
+	height: fit-content;
+}
+
+.edit .sidebar button[name="like"] .reaction {
+	font-size: 2.4em;
+	bottom: 16px;
+	left: -12px;
+	padding-bottom: 8px;
+}

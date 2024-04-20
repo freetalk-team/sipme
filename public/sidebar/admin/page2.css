@@ -1,0 +1,41 @@
+
+.list2 .item.admin .info {
+	flex: 1;
+	padding: 0 5px 0 10px;
+}
+
+.list2 .item.admin .info .header {
+	display: flex;
+}
+
+.list2 .item.admin .info .header span {
+	font-size: 90%;
+	text-transform: lowercase;
+	font-style: italic;
+	/* font-weight: bold; */
+	flex: 1;
+}
+
+.list2 .item.admin.selected .info .header span {
+	font-style: unset;
+	font-weight: bold;
+}
+
+.list2 .item.admin .info .header .item-icon {
+	padding-right: 4px;
+}
+
+.list2 .item.admin .info .header .item-icon {
+	font-size: 80%;
+	opacity: .7;
+	align-self: center;
+}
+
+.list2 .item.admin .info .header button.icon {
+	opacity: 0;
+}
+
+.list2 .item.admin:hover .info .header button.icon {
+	opacity: unset;
+}
+

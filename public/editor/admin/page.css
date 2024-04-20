@@ -1,0 +1,125 @@
+
+.admin-editor {
+	display: flex;
+	flex-direction: row-reverse;
+	flex: 1;
+	overflow: hidden;
+}
+
+.admin-editor .page {
+	flex: 1;
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+/* .admin-editor .page .container.edit {
+	flex-shrink: 0;
+	flex-grow: 1;
+} */
+
+.admin-editor .header {
+	/* min-height: 60px; */
+	padding: 10px 5px 0 5px;
+}
+
+.admin-editor .header h2,
+.admin-editor .header h3,
+.admin-editor .header h4 {
+	color: rgba(0, 0, 0, 0.8);
+	/* box-shadow: #000000 0 -6px 6px -6px inset, #000000 0 6px 6px -6px inset; */
+	-webkit-text-stroke: 0.5px #5c5c5c;
+}
+
+.admin-editor .header span {
+	/* align-self: center; */
+	flex: 1;
+}
+
+.admin-editor .header i.fa.icon {
+	padding-right: 10px;
+	/* font-size: smaller; */
+}
+
+.admin-editor .header i.fa.icon:before {
+	/* content: " (" attr(icon-id) ")"; */
+	content: attr(icon-id);
+}
+
+.admin-editor .header p {
+	/* font-style: italic; */
+	font-size: 90%;
+}
+
+.admin-editor .header p.code {
+	background-color: #f0f0f0;
+	font-family: monospace;
+
+	/* font-weight: bold; */
+	font-size: 85%;
+	padding: 5px;
+
+	color: unset;
+
+	cursor: text;
+	user-select: text;
+}
+
+
+
+.admin-editor .header i.fa {
+	font-size: larger;
+	align-self: center;
+}
+
+.admin-editor .header i.fa.red {
+	color: #cc1111;
+}
+
+.admin-editor .header i.fa.green {
+	color: #11aa11;
+}
+
+
+.admin-editor .editor {
+	flex: 1;
+	overflow: hidden;
+	background-color: #3c3c3c;
+	color: #cccccc;
+	/* padding: 2px 3px; */
+}
+
+.admin-editor .editor .bold {
+	font-weight: bold;
+}
+
+.admin-editor .editor .newroute {
+	margin: 5px;
+}
+
+.admin-editor .editor .newroute label {
+	/* flex: 2 1; */
+	/* text-align: center; */
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+.admin-editor .editor .newroute .value {
+	flex: 3 0;
+	/* padding-right: 10px; */
+	margin-right: 10px;
+	display: flex;
+}
+
+
+
+/* .admin-editor .page .edit {
+	flex: unset;
+} */
+
+.fa.state[data-added="true"]:before {
+	content: '\f14a';
+}
+
+.fa.state[data-added="false"]:before {
+	content: '\f0c8';	
+}

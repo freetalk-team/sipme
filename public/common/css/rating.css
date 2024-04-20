@@ -1,0 +1,76 @@
+.star-ratings {
+	grid-area: rating;
+
+	unicode-bidi: bidi-override;
+	color: #c5c5c5;
+	/* font-size: 25px; */
+	/* font-size: smaller; */
+	/* height: 16px; */
+	/* line-height: 16px; */
+	/* width: 100px; */
+	/* margin: 0 auto; */
+	margin: -2px 5px 0 0;
+	justify-self: end;
+	position: relative;
+	text-shadow: 0 1px 0 #a2a2a2;
+} 
+.star-ratings:before { 
+	content: '★★★★';
+	opacity: .3;
+}
+
+/* [data-rating] .star-ratings:after,
+.star-ratings[data-rating]:after, */
+[data-rating="0"] .star-ratings:after,
+.star-ratings[data-rating="0"]:after {
+	width: 0%;
+}
+
+[data-rating="1"] .star-ratings:after,
+.star-ratings[data-rating="1"]:after {
+	width: 12.5%;
+}
+
+[data-rating="2"] .star-ratings:after,
+.star-ratings[data-rating="2"]:after {
+	width: 25%;
+}
+
+[data-rating="3"] .star-ratings:after,
+.star-ratings[data-rating="3"]:after {
+	width: 37.5%;
+}
+
+[data-rating="4"] .star-ratings:after,
+.star-ratings[data-rating="4"]:after {
+	width: 50%;
+}
+
+[data-rating="5"] .star-ratings:after,
+.star-ratings[data-rating="5"]:after {
+	width: 62.5%;
+}
+
+[data-rating="6"] .star-ratings:after,
+.star-ratings[data-rating="6"]:after {
+	width: 75%;
+}
+
+[data-rating="7"] .star-ratings:after,
+.star-ratings[data-rating="7"]:after {
+	width: 87.5%;
+}
+
+.star-ratings:after {
+	color: gold;
+	content: '★★★★';
+	text-shadow: 0 1px 0 #ab5414;
+	position: absolute;
+	z-index: 1;
+	display: block;
+	/* left: 0; */
+	right: 0;
+	direction: rtl;
+	top:0;
+	overflow: hidden;
+}

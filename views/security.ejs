@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/app.css">
+		<link rel="stylesheet" href="/site.css">
+	</head>
+	<body class="column">
+		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
+			<img class="x64" src="<%- Config.product.logo %>">
+			<div class="cc m2 fit">
+				<h1 class="wm8 text-stroke nomargin"><%- Config.product.name %></h1>
+				<b><%- Config.company.name %></b>
+				<i class="smaller"><%- Config.company.desc %></i>
+			</div>
+			<span class="cr ci m10 smaller baseline nounderline">
+				<a href="/" class="cr ci"><i class="fa sm wm6 margin-right-tiny fa-home"></i>home</a>
+				<a href="/trac" class="cr ci">trac</a>
+				<a href="/doc/wiki" class="cr ci">wiki</a>
+			</span>
+		</header>
+
+		<div class="scroll-area custom cc m15">
+
+			<div class="w3-container w3-padding max-width wider center">
+
+				<div class="md light inconsolata-p">
+					<h1 id="security-policy">Security Policy</h1>
+					<p><strong>Web Messanger</strong> is committed to ensuring the security of our users&#39; data and maintaining the integrity of our systems. This Security Policy outlines the measures we take to safeguard your information and protect against unauthorized access, use, or disclosure.</p>
+					<h2 id="information-security">Information Security</h2>
+					<ul>
+					<li><p><strong>Data Encryption</strong>: We use industry-standard encryption protocols to protect the transmission of data between your browser and our servers. This helps prevent unauthorized interception of your information during transit.</p>
+					</li>
+					<li><p><strong>Secure Storage</strong>: Your personal data, if collected, is stored securely on our servers with restricted access. We employ robust security measures to prevent unauthorized access to this information.</p>
+					</li>
+					<li><p><strong>Regular Security Audits</strong>: We conduct regular security audits and assessments of our systems to identify and address potential vulnerabilities proactively.</p>
+					</li>
+					</ul>
+					<h2 id="access-control">Access Control</h2>
+					<ul>
+					<li><p><strong>User Authentication</strong>: Access to sensitive areas of our application is restricted to authorized users only. We implement strong authentication mechanisms to ensure that only authenticated users can access these areas.</p>
+					</li>
+					<li><p><strong>Role-Based Access Control (RBAC)</strong>: We employ RBAC to restrict access privileges based on users&#39; roles and responsibilities. This ensures that users only have access to the information and functionalities necessary for their job functions.</p>
+					</li>
+					</ul>
+					<h2 id="incident-response">Incident Response</h2>
+					<ul>
+					<li><p><strong>Monitoring and Detection</strong>: We continuously monitor our systems for suspicious activities and unauthorized access attempts. Any anomalies or security incidents are promptly detected and investigated.</p>
+					</li>
+					<li><p><strong>Response Plan</strong>: In the event of a security incident, we have a predefined response plan in place to contain the incident, mitigate its impact, and restore normal operations as quickly as possible.</p>
+					</li>
+					<li><p><strong>Notification</strong>: If a security incident poses a risk to our users&#39; data or privacy, we will promptly notify affected users and provide guidance on steps they can take to protect themselves.</p>
+					</li>
+					</ul>
+					<h2 id="compliance">Compliance</h2>
+					<ul>
+					<li><p><strong>Regulatory Compliance</strong>: We adhere to applicable data protection laws and regulations, such as GDPR, CCPA, and others, to ensure the lawful processing and protection of users&#39; personal data.</p>
+					</li>
+					<li><p><strong>Third-Party Security</strong>: We conduct due diligence on third-party service providers to ensure they meet our security standards and adhere to relevant compliance requirements.</p>
+					</li>
+					</ul>
+					<h2 id="training-and-awareness">Training and Awareness</h2>
+					<ul>
+					<li><p><strong>Employee Training</strong>: We provide regular training and awareness programs to our employees on security best practices, data protection principles, and how to recognize and respond to security threats.</p>
+					</li>
+					<li><p><strong>User Education</strong>: We educate our users on security best practices, such as creating strong passwords, avoiding phishing scams, and safeguarding their accounts from unauthorized access.</p>
+					</li>
+					</ul>
+					<h2 id="continual-improvement">Continual Improvement</h2>
+					<ul>
+					<li><p><strong>Security Updates</strong>: We regularly update our systems and software with the latest security patches and upgrades to address newly discovered vulnerabilities and mitigate potential risks.</p>
+					</li>
+					<li><p><strong>Security Feedback</strong>: We welcome feedback from our users regarding any security concerns or suggestions for improving our security posture. We take all feedback seriously and use it to enhance our security practices.</p>
+					</li>
+					</ul>
+					<h2 id="contact-us">Contact Us</h2>
+					<p>If you have any questions or concerns about our Security Policy or the security of our application, please contact us at <a href="mailto:&#x74;&#x65;&#x61;&#109;&#x2e;&#102;&#x72;&#x65;&#101;&#116;&#x61;&#108;&#x6b;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x74;&#x65;&#x61;&#109;&#x2e;&#102;&#x72;&#x65;&#101;&#116;&#x61;&#108;&#x6b;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a>.</p>
+					<p>This Security Policy was last updated on 12 Dec 2023.</p>
+				</div>
+
+				<%- include footer %>
+			</div>
+		</div>
+	</body>
+</html>

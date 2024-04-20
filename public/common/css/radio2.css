@@ -1,0 +1,53 @@
+/* .radio:first-of-type {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 5px;
+} */
+
+label.radio {
+  margin-right: 1em;
+  margin-left: 5px;
+  line-height: 20px;
+
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  /* top: 4px; */
+  align-self: center;
+}
+
+input[type="radio"]:checked {
+  /* border: 6px solid black; */
+  border: 4px solid var(--blue);
+}
+
+/*
+
+<div class="radio">
+      <input type="radio" id="contactChoice1"
+       name="contact" value="email" checked>
+      <label for="contactChoice1">Email</label>
+
+      <input type="radio" id="contactChoice2"
+       name="contact" value="phone">
+      <label for="contactChoice2">Phone</label>
+
+      <input type="radio" id="contactChoice3"
+       name="contact" value="mail">
+      <label for="contactChoice3">Mail</label>
+    </div>
+
+*/

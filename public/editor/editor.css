@@ -1,0 +1,409 @@
+
+@import 'css/input.css';
+
+/* @import 'menu.css'; */
+@import 'component.css';
+/* @import 'wizzard.css'; */
+@import 'welcome/page.css';
+@import 'contact/page.css'; 
+/* @import 'channel/page.css';  */
+@import 'channel/page2.css'; 
+/* @import 'simulator/page.css';  */
+@import 'admin/page.css'; 
+@import 'find/page.css';
+@import 'game/page.css';
+@import 'sidebar.css';
+@import 'account/page.css';
+@import 'video/page.css';
+@import 'player/page.css';
+@import 'component/page.css'; 
+@import 'wiki/page.css'; 
+@import 'add/page.css';
+@import 'task/page.css';
+@import 'setup/page.css';
+
+.avatar {
+	box-shadow: #888 0 0 2px 2px;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.avatar {
+	box-shadow: #ccc 0 0 2px 2px;
+}
+
+.avatar.default {
+	background-image: url(../ui/svg/contact.svg);
+}
+
+.header {
+
+	.avatar {
+		width: 48px;
+		height: 48px;
+		/* aspect-ratio: 1; */
+		flex-shrink: 0;
+		align-self: center;
+		/* align-self: center; */
+	}
+
+	.right {
+		display: flex;
+		justify-content: right;
+
+		&.bottom {
+			align-items: flex-end;
+		}
+	}
+
+	.toolbar {
+		display: flex;
+		justify-content: right;
+		align-items: center;
+	}
+}
+
+button.circle2 {
+	/* box-shadow: rgba(var(--red), .8); */
+	/* box-shadow: var(--red) 0 0 2px 2px;
+	background-color: var(--red); */
+	border-radius: 50px;
+	aspect-ratio: 1;
+	padding: 5px;
+	min-width: 38px;
+}
+
+button.circle2.fa:before {
+	margin: auto;
+}
+
+.yt {
+	/* margin-top: 10px;
+	margin-left: 10px; */
+	position: relative;
+	text-align: center;
+	width: fit-content;
+}
+
+.yt > img {
+	border-radius: 5px;
+	width: fit-content;
+	height: auto;
+	box-shadow: #bbb 0 0 2px 2px;
+	opacity: .8;
+}
+
+.yt:after {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free";
+	color: #f00;
+	content: "\f167"; 
+	font-size: 5em;
+	z-index: 99;
+	opacity: .5;
+}
+
+#editor {
+	width: 100%;
+	/* flex-grow: 3;
+	flex-shrink: 1; */
+	flex: 1 1 auto;
+	height: 100%;
+	/* background-color: lightgray; */
+	/* background-color: #3c3c3c;
+	color: #cccccc; */
+	background-color: #fefefe;
+	color: #000000cc;
+	/* width: 100%; */
+
+	overflow: hidden;
+
+	.name:is(a) { cursor: pointer; }
+
+	.dark {
+		color: var(--dark-text-color);
+		background-color: var(--dark-bg-color);
+	}
+
+	.path > :is(a,b) {
+		max-width: 180px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.edit {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.editor {
+		position: relative;
+		overflow: hidden;
+
+		&.dark {
+			border-radius: 10px;
+			margin: 5px;
+			box-shadow: #888 0 0 2px 2px;
+		}
+	}
+
+}
+
+
+
+/* button:disabled.icon i.fa {
+	color: unset;
+} */
+
+
+#editor .container .editor {
+	height: 100%;
+	/* display: flex;
+	flex-direction: column; */
+	overflow: hidden;
+	/* margin-left: 5px; */
+}
+
+#editor .sidebar-container {
+	display: flex;
+	flex-direction: row-reverse;
+	height: 100%;
+	overflow: hidden;
+}
+
+#editor .edit > .header {
+	margin: 5px 5px;
+	/* padding-bottom: 5px; */
+	padding: 10px 5px 5px 5px;
+}
+
+#editor .edit.dark {
+	color: var(--dark-header-color);
+	background-color: var(--dark-header-background);
+}
+
+#editor .editor.dark {
+	background-color: #3c3c3c;
+	color: #cccccc;
+}
+
+#editor .editor .scrollable .shadow {
+	--box-shadow-color: #afafaf;
+	box-shadow: var(--box-shadow-color) 0 8px 6px -6px inset;
+	height: 6px;
+}
+
+#editor .dark .editor .scrollable .shadow,
+#editor .editor.dark .scrollable .shadow {
+	/* --box-shadow-color: #888; */
+	--box-shadow-color: #0008;
+}
+
+#editor.hover .editor {
+	opacity: .7;
+	/* background: url(/ui/lib/fontawesome/svgs/solid/cloud-upload-alt.svg) no-repeat center center transparent;
+	background-size: cover; */
+}
+
+#editor.hover .editor:before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	content: '\f382';
+	position: absolute;
+	z-index: 99;
+	opacity: .2;
+	text-align: center;
+	/* align-self: center; */
+	font-size: 20em;
+	/* top: 20px; */
+	/* text-align: center; */
+	/* width: 100%; */
+	/* height: inherit; */
+	top: 50%;
+	left: 50%;
+	/* line-height: 100px; */
+	/* font-size-adjust: 1.5; */
+	/* vertical-align: middle; */
+	transform: translate(-50%,-50%);
+}
+
+#editor.hover.error .editor:before {
+	color: var(--red);
+}
+
+#editor .edit [role="icon"].circle {
+	box-sizing: unset;
+
+	border-radius: 50%;
+	padding: 8px;
+	margin: 0 10px 0 4px;
+	box-shadow: var(--icon-shadow) 0 0 2px 2px;
+	/* filter: drop-shadow(0 0 0.75rem #888); */
+
+	min-width: 20px;
+	text-align: center;
+	align-self: center;
+	/* font-size: larger; */
+	font-size: 150%;
+
+	aspect-ratio: 1/1;
+
+	background-color: var(--dark-header-color);
+}
+
+#editor .edit.dark .header [role="icon"] {
+	background-color: var(--gray);
+	/* background-color: #ccf; */
+	box-shadow: var(--icon-shadow-dark) 0 0 2px 2px;
+}
+
+.edit .header {
+
+	[role="icon"].circle {
+		/* line-height: 28px; */
+		line-height: 34px;
+	}
+
+	&.grid {
+		grid-template-areas: 
+		'icon title right'
+		'icon desc  right'
+		'tbar tbar tbar'
+		;
+		gap: 5px;
+
+		grid-template-columns: [icon] 62px 1fr;
+	}
+
+	&.grid.basic {
+		grid-template-areas: 
+		'icon title right'
+		'icon desc tbar'
+		;
+	}
+
+	[role="icon"], .avatar { grid-area: icon; }
+	.ns { grid-area: desc; }
+	.title { grid-area: title; }
+	.toolbar { grid-area: tbar; }
+	.right { grid-area: right; }
+}
+
+#editor [role="popup-area"] {
+	background-color: #f1f1f1;
+	z-index: 99;
+}
+
+#editor .popup {
+	min-width: 250px;
+}
+
+#editor .popup[value="success"] {
+	background-color: #4CAF50EE;
+}
+
+#editor .popup[value="error"] {
+	background-color:  #f44336EE;
+}
+
+#editor .popup[value="info"] {
+	background-color: #f1f1f1EE;
+}
+
+.editor .post {
+	display: grid;
+	grid-template-areas:
+		"date wiki share remove"
+		"user user user user"
+		"md md md md"
+		"bottom bottom bottom bottom"
+		;
+
+	grid-template-columns: 1fr;
+}
+
+.editor .post > .comment-bar {
+	grid-area: bottom;
+}
+
+.editor .post > time {
+	grid-area: date;
+}
+
+/* .editor.blog .post .head button[name] {
+	grid-area: attr(name);
+} */
+
+.editor .post > .user {
+	grid-area: user;
+}
+
+.editor .post > .md {
+	grid-area: md;
+} 
+
+.editor .post .md p {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.editor .post .md > pre > code {
+	pointer-events: all;
+}
+
+.editor .post .md.text-expand {
+	--max-height: 300px;
+	--shadow-height: 50px;
+}
+
+.editor .post .md.text-expand.long {
+	--max-height: 650px;
+}
+
+.editor .post .md > *:first-child {
+	margin-block-start: 0;
+}
+
+.editor .post .md > *:last-child {
+	margin-block-end: 0;
+}
+
+.editor .post .md > p.image {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+.editor .post .md > h1:first-of-type {
+	margin-block-start: 0;
+}
+
+.editor .post .md a {
+	pointer-events: all!important;
+}
+
+.editor .post[data-id^="offline"] {
+	background-color: #f4f4f4;
+}
+
+.editor .post[data-id^="offline"] .bottom[comments] {
+	display: none;
+}
+
+/* CSS mixin
+
+@mixin generate-sizes($class) {
+	.#{$class}__content {
+	   font-size: 12px;
+	  }
+	.#{$class}--alt {
+	  font-size: 14px; 
+	}
+}
+@include generate-sizes("mainContainer");
+
+*/

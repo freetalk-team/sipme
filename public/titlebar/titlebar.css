@@ -1,0 +1,76 @@
+#titlebar {
+	width: 100%;
+	line-height: 26px;
+	/* height: 20px; */
+	background-color: #5c5c5c;
+	color: #cccccc;
+	display: flex;
+	/* opacity: 0.9; */
+	box-shadow: #000000 0 -6px 6px -6px inset, #000000 0 6px 6px -6px inset;
+	font-size: small;
+
+	align-items: center;
+}
+
+#titlebar .app-icon {
+	width: 24px;
+	height: 24px;
+	background-image: url('../ui/svg/app-icon.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 14px;
+	flex-shrink: 0;
+}
+
+#titlebar .title {
+	flex: 0 1 auto;
+	/* font-size: 12px; */
+	font-weight: bolder;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin-left: auto;
+	margin-right: auto;
+	zoom: 1; /* prevent zooming */
+}
+
+#titlebar span.user {
+	margin: 0 4px;
+	/* margin-right: 10px; */
+	/* font-size: 85%; */
+	font-weight: bold;
+}
+
+/* #titlebar .headline {
+	position: absolute;
+	width: 100%;
+} */
+
+#titlebar .headline {
+	font-size: small;
+	font-weight: bolder;
+}
+
+#titlebar span.nouser {
+
+	position: absolute;
+	display: block;
+	width: 100%;
+	transform: translateX(100%); /* Animation start out of the screen */
+
+	/* Add the animation */
+	animation: move 30s linear infinite /* infinite make reapeat the animation indefinitely */;
+}
+
+/* Create the animation */
+@keyframes move {
+	to { transform: translateX(-100%); }
+  }
+
+#titlebar .button {
+	opacity: .8;
+}
+
+#titlebar .button:hover {
+	opacity: unset;
+}

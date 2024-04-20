@@ -1,0 +1,56 @@
+
+<h1 class="wm8"><%- summary %></h1>
+
+<table>
+	<tbody>
+		<tr>
+			<td><b>ID</b></td>
+			<td class="monospace"><b><%- id %></b></td>
+		</tr>
+		<tr>
+			<td><b>Type</b></td>
+			<td class="monospace"><b><%- type %></b></td>
+		</tr>
+		<tr>
+			<td><b>Component</b></td>
+			<td class="monospace"><b><%- component %></b></td>
+		</tr>
+		
+		<tr>
+			<td><b>Milestone</b></td>
+			<td class="monospace"><b><%- milestone %></b></td>
+		</tr>
+		<tr>
+			<td><b>Severity</b></td>
+			<td class="monospace"><b><%- severity %></b></td>
+		</tr>
+		<tr>
+			<td><b>Created</b></td>
+			<td class="monospace"><i><%- Date.formatDate(time) %></i></td>
+		</tr>
+		<tr>
+			<td><b>Updated</b></td>
+			<td class="monospace"><time><%- Date.formatDateShort(changetime) %></time></td>
+		</tr>
+		<tr>
+			<td><b>Reporter</b></td>
+			<td><a><%- reporter %></a></td>
+		</tr>
+		<tr>
+			<td><b>Priority</b></td>
+			<td><span><%- priority %></span></td>
+		</tr>
+		<tr>
+			<td><b>Status</b></td>
+			<td><span><%- status %></span></td>
+		</tr>
+		<tr>
+			<td><b>Owner</b></td>
+			<td class="cr m5"><a><%- owner %></a></td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="md inconsolata-p">
+	<%- description %>
+</div>

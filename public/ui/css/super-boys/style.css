@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Super Boys';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url(font.ttf) format('truetype');
+}
+
+.super-boys, .super {
+  font-family: 'Super Boys';
+}

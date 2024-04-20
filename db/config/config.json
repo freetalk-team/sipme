@@ -1,0 +1,25 @@
+{
+  "development2": {
+    "storage": "/ssd/data/sqlite/chat.db",
+    "dialect": "sqlite",
+    "dialectOptions": {
+      "supports": {
+        "returnValues": true
+      }
+    },
+    "logging": true
+  },
+
+  "development": {
+    "username": "root",
+    "password": "ussdgw",
+    "database": "chat",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres",
+    "logging": true,
+    "dialectOptions": {
+        "useUTC": true
+    }
+  }
+}

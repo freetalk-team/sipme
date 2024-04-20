@@ -1,0 +1,265 @@
+.chat-message {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 2px;
+	/* padding-bottom: 2px; */
+}
+
+.chat-message:not(:hover) {
+	/* background-color: inherit!important; */
+}
+
+.chat-message span.text h1,
+.chat-message span.text h2,
+.chat-message span.text h3,
+.chat-message span.text h4,
+.chat-message span.text h5,
+.chat-message span.text h6,
+.chat-message span.text p,
+.chat-message span.text ul {
+	margin: 0;
+}
+
+
+.chat-message .text p {
+	font-family: 'Roboto', sans-serif;
+	/* font-size: 0.875rem;
+	line-height: 1.25rem; */
+}
+
+.chat-message .text a {
+	font-size: smaller;
+}
+
+.chat-message .text :is(h1,h2,h3,h4) {
+	margin-bottom: 10px!important;
+}
+
+.chat-message .avatar {
+	width: 18px;
+	aspect-ratio: 1/1;
+	margin-right: 5px;
+
+	box-shadow: #888 0 0 1px 1px;
+	border-radius: 50%;
+}
+
+.chat-message span.text {
+	/* white-space: pre-line; */
+	/* word-break: break-all; */
+	/* overflow-wrap: break-word; */
+	max-width: 98%;
+}
+
+.chat-message span.text > *:not(ul):not(ol) {
+	white-space: pre-line;
+	word-break: break-word;
+}
+
+.chat-message p.code,
+.chat-message pre.code
+{
+	/* background-color: #000000aa; */
+	background-color: var(--gray-light);
+	/* margin-block-start: .3em; */
+	/* margin-block-end: .3em; */
+	font-size: smaller;
+	font-weight: bolder;
+	font-family: "Droid Sans Mono", monospace, monospace, "Droid Sans Fallback";
+
+	/* width: 94%; */
+	padding: 2px 5px;
+	/* margin: .4em auto; */
+	margin: .4em 0;
+
+	border-radius: 3px;
+
+	cursor: text;
+	user-select: text;
+}
+
+.chat-message code {
+	background-color: var(--gray-light);
+	/* width: 94%; */
+	padding: 8px;
+	/* margin: .4em auto; */
+	margin: .4em 0;
+
+	border-radius: 3px;
+
+	cursor: text;
+	user-select: text;
+
+	font-weight: bolder;
+	display: inline-block;
+}
+
+/* .chat-message a {
+	
+} */
+
+.chat-message pre {
+	max-width: 94%;
+	margin: 2px;
+	padding: 2px 4px;
+	font-family: unset;
+	overflow-wrap: break-word;
+	white-space: break-spaces;
+
+	/* background-color: #ccffac; */
+}
+
+.chat-message .feed {
+	max-width: 1200px;
+}
+.chat-message .md code {
+	font-family: monospace;
+}
+
+.chat-message .md .relative > .top-right {
+	top: 4px;
+	right: 4px;
+}
+
+.chat-date {
+	display: flex;
+}
+
+.chat-date span {
+	flex: 1;
+	text-align: center;
+	font-size: small;
+	font-weight: bold;
+	/* color: #000000aa; */
+}
+
+.chat-message iframe {
+	/* display: block;
+	margin: 10px auto;
+	max-width: 480px;
+	min-width: 400px;
+	aspect-ratio: 4/3; */
+	border-radius: 5px;
+}
+
+.chat-message img.image {
+	border-radius: 5px;
+}
+
+.chat-message figure {
+	position: relative;
+	max-width: 650px;
+	margin: 10px auto;
+}
+
+.chat-message figure .actions {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	display: flex;
+	opacity: 0;
+	z-index: 10;
+
+	background-color: rgba(0,0,0,0.3);
+	padding: 2px;
+	border-radius: 4px;
+}
+
+.chat-message figure:hover .actions {
+	opacity: 1;
+}
+
+.chat-message.upload {
+	background-color: #efefef;
+	/* margin-top: 5px; */
+	margin: 5px 20px;
+	border: 1px solid #aaa;
+}
+
+.chat-message.upload > * {
+	/* margin: 0 auto; */
+}
+
+.chat-message.upload .footer > * {
+	margin: 3px 0;
+}
+
+.chat-message.upload .footer textarea {
+	overflow: hidden;
+	resize: none;
+	height: 4em;
+	text-indent: unset;
+	padding: 2px 4px;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ddd;
+}
+
+.chat-message.upload .footer button {
+	margin: 0 2px;
+}
+
+ .chat-message.contact .info {
+	background-color: #efefef;
+	/* margin-top: 5px; */
+	border: 1px solid #aaa;
+	border-radius: 5px;
+
+	margin: 5px 20px;
+	padding: 4px 10px;
+	max-width: 900px;
+	width: fit-content;
+}
+
+ .chat-message.contact .info img {
+	width: 36px;
+	aspect-ratio: 1;
+	flex-shrink: 0;
+	align-self: center;
+	margin-right: 8px;
+	box-shadow: #888 0 0 2px 2px;
+	border-radius: 50%;
+}
+
+ .chat-message.contact .actions {
+	margin-top: 4px;
+}
+
+ .chat-message.contact .info button {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+.chat-message .stat.downloading button[name="save"] {
+	display: none;
+}
+
+.chat-message .stat.own .progress {
+	display: none;
+}
+
+.chat-message a.w3-btn-floating {
+	position:absolute;
+	top:45%;
+	background-color:#0004;
+}
+
+.chat-message .contact-share {
+	max-width: 500px;
+}
+
+.chat-message[state="new"] [role="seen"] {
+	--webkit-text-stroke: 0.5px #5c5c5c; 
+	color: #757575;
+	opacity: .3;
+}
+
+.chat-message[state="sent"] [role="seen"] {
+	--webkit-text-stroke: 0.5px #5caa5c; 
+	color: #75ee75;
+	opacity: .8;
+}
+
+.chat-message:not([state]) [role="seen"] {
+	display: none;
+}
+

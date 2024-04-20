@@ -1,0 +1,17 @@
+
+.highlight {
+	/* background-color: #c3c3c330; */
+	-webkit-animation: highlightAnimation 3s forwards; 
+	animation: highlightAnimation 3s forwards;
+}
+
+@keyframes highlightAnimation {
+	0%   {opacity: 1;}
+	60%  {opacity: .6;}
+	100% {opacity: 0;}
+}
+@-webkit-keyframes highlightAnimation {
+	0%   {opacity: 1;}
+	60%  {opacity: .6;}
+	100% {opacity: 0;}
+}

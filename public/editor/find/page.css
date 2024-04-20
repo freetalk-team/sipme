@@ -1,0 +1,51 @@
+
+#find-editor .editor {
+	padding: 2px 3px;
+}
+
+#find-editor .header .fa.icon[name="contact"]:before {
+	content: '\f234';
+}
+
+#find-editor .header .fa.icon[name="channel"]:before {
+	content: '\f57d';
+}
+
+#find-editor .header .fa.icon[name="component"]:before {
+	content: '\f121';
+}
+
+#find-editor .header .fa.icon[name="scraper"]:before {
+	content: '\f0c4';
+}
+
+
+#find-editor .editor {
+	box-shadow: #3c3c3c 0 -2px 2px 1px;
+}
+
+
+#find-editor .editor .list2 .item .avatar {
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	/* background-size: cover; */
+	background-size: 20px;
+	flex-shrink: 0;
+	align-self: center;
+	margin-right: 8px;
+}
+
+#find-editor .editor .list2 .item div.avatar {
+	background-image: url(../../ui/svg/contact-green.svg);
+}
+
+#find-editor .editor .item:not([data-selected=true]) .fa.check {
+	opacity: 0;
+}
+
+#find-editor .editor .item.local button[name="add"] {
+	/* display: none; */
+	visibility: hidden;
+}

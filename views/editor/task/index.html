@@ -1,0 +1,302 @@
+
+<template id="editor-taskboard-actions" classes="right bottom cr m5 center-items">
+	<button class="icon fa lg" name="add" title="New ticket" cmd="add-new-task"></button>
+	<button class="icon fa fa-circle-left fa-2x w3-text-blue" name="back" title="Board" cmd="open-board-task"></button>
+</template>
+
+<template id="editor-taskboard-base" class="welcome taskboard w3-margin-bottom">
+
+	<div view="main">
+		[[search-area,,task,editor-taskboard-result]]
+
+		<div class="cr ci margin-ver smaller justify-end">
+			<input type="radio" name="mode" value="column" checked>
+			<label class="radio">columns</label>
+			<input type="radio" name="mode" value="list">
+			<label class="radio">list</label>
+		</div>
+
+		<div class="w3-panel w3-third cc m10">
+			<h3 class="w3-red w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis">
+				<i class="fa fa-list fa-sm stroke watermark-6"></i>
+				NEW
+			</h3>
+			[[editor-taskboard-group,,issue]]
+			[[editor-taskboard-group,div hide-empty-group,task]]
+			[[editor-taskboard-group,div hide-empty-group,enhancement]]
+		</div>
+		<div class="w3-panel w3-third cc m10">
+			<h3 class="w3-green w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis">
+				<i class="fa fa-spinner fa-sm stroke watermark-6"></i>
+				ASSIGNED
+			</h3>
+
+			<div class="w3-container w3-card-2 cc w3-padding-hor-8">
+				<h4 class="nomargin wm6">Doing</h4>
+				<div class="cc list show-empty" group="assigned" template="editor-taskboard-short-item"></div>
+			</div>
+		
+		</div>
+		<div class="w3-panel w3-third cc m10">
+			<h3 class="w3-blue w3-padding-tiny w3-round w3-card-2 text-stroke text-center gradient ellipsis">
+				<i class="fa fa-tachometer fa-sm stroke watermark-6"></i>
+				CLOSED
+			</h3>
+			<div class="cc list show-empty" group="closed" template="editor-taskboard-short-item"></div>
+		</div>
+
+	</div>
+	
+	<div view="edit" class="max-width center">
+	</div>
+</template>
+
+<template id="editor-taskboard-group" classes="group cc w3-container w3-card-2 w3-padding-hor-8">
+	<div class="cr ci noevents" grouphdr>
+		<h4 class="nomargin fit wm6">{{_0.capitalizeFirstLetter()}}s</h4>
+		<i class="fa fa-angle-down sm show-collapsed"></i>
+	</div>
+	<div class="cc list show-empty content" group="{{_0}}" template="editor-taskboard-short-item" visible="10"></div>
+	<div class="cr m10 hide-container-empty smaller italic" style="justify-content:end;margin-top:5px;">
+		<a name="_less" class="hidden">less</a>
+		<a name="_more" class="hidden">more</a>
+	</div>
+</template>
+
+<template id="editor-taskboard-edit" class="cc w3-container" data-id="{{this.id}}" >
+	<h2 class="text-stroke wm8">{{this.summary}}</h2>
+	[[editor-taskboard-edit-task]]{{this}}
+</template>
+
+<template id="editor-taskboard-short-item" class="cc item relative w3-padding-small nomargin noevents" data-id="{{this.id}}" data-name="{{this.summary}}" cmd="open-ticket-task">
+	<div class="actions top-right mar3 row ci smaller display-hover allevents">
+		<button class="icon fa share sm" name="share" title="Share" cmd="share-task"></button>
+		@if{{app.task.perm('rm',this)}}
+			<button class="icon fa remove" name="remove" title="Remove" cmd="remove-task" display="su"></button>
+		@endif
+	</div>
+	<h4 class="nomargin ellipsis">{{this.summary}}</h4>
+	<div class="cr ci small">
+		<span><b>severity:</b> {{this.severity}}</span>
+		<span><b>comp.:</b> {{this.component}}</span>
+	</div>
+</template>
+
+<template id="editor-taskboard-edit-task" classes="cc m10 fade">
+	@if{{app.task.perm('edit',this)}}
+		[[task-head-admin,table]]{{this}}
+	@else
+		[[task-head,table]]{{this}}
+	@endif
+	<div class="relative" style="padding-right:30px;" hoverable>
+		<button class="icon fa sm fa-edit top-right display-hover" title="Edit" name="edit"></button>
+		<div class="md monospace">
+			{{dom.markdown(this.description)}}
+		</div>
+		<div class="cc edit-area">
+			<div class="events">
+				<textarea class="hidden">{{this.description}}</textarea>
+			</div>
+			<div class="actions cr ci w3-margin-bottom">
+				<button class="icon fa lg" name="submit" title="Update" disabled></button>
+				<button class="icon fa lg" name="cancel" title="Discard"></button>
+			</div>
+		</div>
+	</div>
+
+	<div class="cc w3-container" role="updates" template="editor-taskboard-task-comment">
+		@foreach{{this.change}}
+			[[editor-taskboard-task-comment]]{{this}}
+		@endforeach
+	</div>
+
+	<div class="input-area cr ci m10 w3-margin-24">
+		<div class="expandable-textarea fit w3-round w3-padding-small" contenteditable placeholder="Add a comment"></div>
+		<button name="comment" title="Add comment" class="w3-round w3-btn w3-blue monospace smaller end">comment</button>
+	</div>
+		
+</template>
+
+<template id="editor-taskboard-task-comment" class="item cc fade w3-padding-tiny" data-id="{{this.time}}">
+	<div class="cr ci">
+		@if{{String.isString(this.author)}}
+			<a>{{this.author}}</a>
+		@else
+			[[task-user]]{{this.author}}
+		@endif
+		<b class="wm smaller fit ellipsis">{{this.label||this.type}}</b>
+		<time class="wm8 italic small" data-time="{{Date.toSeconds(this.time)}}">{{Date.timeElapsed(this.time)}}</time>
+	</div>
+	@if{{this.text}}
+		<div class="md compact nomargin monospace">{{dom.markdown(this.text)}}</div>
+	@endif
+</template>
+
+<template id="editor-taskboard-result" classes="cc item fade w3-padding-small relative noevents {{this.local?'local':''}}" data-id="{{this.id}}" cmd="open-ticket-task">
+	<h3 class="nomargin">{{this.summary}}</h3>
+	<div class="cr m10 smaller">
+		<i>{{this.type}}</i>
+		<span>
+			<b>component:</b>
+			<i>{{this.component}}</i>
+		</span>
+		<span>
+			<b>status:</b>
+			<i>{{this.status}}</i>
+		</span>
+	</div>
+	<div class="actions top-right row center-items smaller display-hover allevents">
+		<button class="icon fa fa-sm share" name="share" title="Share" cmd="share-task"></button>
+	</div>
+</template>
+
+<template id="task-user" class="cr ci">
+	@if{{!String.isString(this)}}
+		@if{{app.isme(this)}}
+			<b>{{this.name}}</b>
+		@else
+			<img class="avatar x16 circle" src="{{this.photo||app.defaultAvatar}}"> 
+			<a class="name ellipsis" cmd="open-contact-contact-{{this.id}}" title="Chat">{{this.name}}</a>
+		@endif
+	@else
+		<i>{{this}}</i>
+	@endif
+</template>
+
+<template id="task-owner" class="cr ci">
+	@if{{this}}
+		@if{{app.isme(this)}}
+			<a name="unassign" title="Unassign">unassign</a>
+			<a name="close" title="Close">close</a>
+		@else
+			[[task-user]]{{this}}
+		@endif
+	@else
+		<a name="assign" title="Assign">assign to me</a>
+	@endif
+</template>
+
+
+<template id="task-head" class="w3-table smaller label">
+	<tbody>
+	<tr>
+		<td><b>ID</b></td>
+		<td><b>{{this.id}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Type</b></td>
+		<td class="monospace"><b>{{this.type}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Component</b></td>
+		<td class="monospace"><b role="component">{{this.component||''}}</b></td>
+	</tr>
+	
+	<tr>
+		<td><b>Milestone</b></td>
+		<td class="monospace"><b role="milestone">{{this.milestone}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Severity</b></td>
+		<td class="monospace"><b role="severity">{{this.severity}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Created</b></td>
+		<td class="monospace"><i>{{Date.formatDateShort(this.time)}}</i></td>
+	</tr>
+	<tr>
+		<td><b>Updated</b></td>
+		<td class="monospace"><time data-time="{{Date.toSeconds(this.changetime)}}">{{Date.timeElapsed(this.changetime)}}</time></td>
+	</tr>
+	<tr>
+		<td><b>Reporter</b></td>
+		<td>[[task-user]]{{this.reporter}}</td>
+	</tr>
+	<tr>
+		<td><b>Priority</b></td>
+		<td><span>{{this.priority}}</span></td>
+	</tr>
+	<tr>
+		<td><b>Status</b></td>
+		<td role="status"><span>{{this.status}}</span></td>
+	</tr>
+	<tr>
+		<td><b>Owner</b></td>
+		<td class="cr m5" role="owner">
+			[[task-owner]]{{this.owner}}
+		</td>
+	</tr>
+	</tbody>
+</template>
+
+<template id="task-head-admin" class="w3-table smaller label">
+	<tbody>
+	<tr>
+		<td><b>ID</b></td>
+		<td><b>{{this.id}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Type</b></td>
+		<td class="monospace"><b>{{this.type}}</b></td>
+	</tr>
+	<tr>
+		<td><b>Component</b></td>
+		<td>
+			<select class="monospace" name="component" value="{{this.component}}">
+				{{dom.option(this.component, app.task.components)}}
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td><b>Milestone</b></td>
+		<td>
+			<select class="monospace" name="milestone" value="{{this.milestone}}" style="min-width:250px;">
+				{{dom.option(this.milestone, app.task.milestones)}}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Severity</b></td>
+		<td>
+			<select class="monospace" name="severity" value="{{this.severity}}">
+				{{dom.option(this.severity,app.task.severity)}}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Created</b></td>
+		<td class="monospace"><i>{{Date.formatDateShort(this.time)}}</i></td>
+	</tr>
+	<tr>
+		<td><b>Updated</b></td>
+		<td class="monospace"><time data-time="{{Date.toSeconds(this.changetime)}}">{{Date.timeElapsed(this.changetime)}}</time></td>
+	</tr>
+	<tr>
+		<td><b>Reporter</b></td>
+		<td>[[task-user]]{{this.reporter}}</td>
+	</tr>
+	<tr>
+		<td><b>Priority</b></td>
+		<td>
+			<select class="monospace" name="priority" value="{{this.priority}}">
+				{{dom.option(this.priority,app.task.priority)}}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Status</b></td>
+		<td>
+			<select class="monospace" name="status" value="{{this.status}}" >
+				{{dom.option(this.status,app.task.status)}}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Owner</b></td>
+		<td class="cr m5" role="owner">
+			[[task-owner]]{{this.owner}}
+		</td>
+	</tr>
+	</tbody>
+</template>

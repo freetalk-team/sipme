@@ -1,0 +1,122 @@
+
+<div ux>
+
+	<template id="contact-avatar" classes="avatar circle" data="{{this||app.defaultAvatar}}" type="image/png">
+		<img src="{{app.defaultAvatar}}"> 
+	</template>
+
+	<template id="sidebar-base-item" classes="w3-padding-tiny cr ci m5 fit noevents" _a-cmd="{{this.cmd}}">
+		{{dom.icon(this.icon,'fa-fw fa-xs',this.iconcolor)}}
+		<span class="fit ellipsis">{{this.name||this.id.capitalizeFirstLetter()}}</span>
+		@if{{this.add}}
+			<button class="icon fa fa display-hover" name="add" title="Add" cmd="{{typeof this.add=='string'?this.add:'add-new'}}"></button>
+		@endif
+	</template>
+
+	<template id="sidebar-contact-item" class="contact grid item ci w3-padding-tiny padding-hor-4 noevents" data-name="{{this.username}}">
+		<img class="avatar circle center" src="{{this.photo||app.defaultAvatar}}" role="photo"> 
+		<b class="name ellipsis" role="name">{{this.name}}</b>
+		<button class="icon fa call sm display-hover" name="call" title="Call" cmd="video-call-user"></button>
+		<div class="status cr ci nodisplay-hover small fade">
+			<i class="fa fa-phone-slash fa-shake w3-text-red wm8 counter" data-missed="0"></i>
+			<i class="fa fa-envelope fa-bounce w3-text-blue wm8 counter" data-count="0"></i>
+			@if{{this.ts}}
+				<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+			@else
+				<time class="wm8"></time>
+			@endif
+		</div>
+		<span class="msg ellipsis smaller" role="status">{{this.shortHTML||dom.renderEmojis(this.status||'online')}}</span>
+	</template>
+
+	<template id="sidebar-room-item" classes="contact grid item cr ci w3-padding-tiny padding-hor-4 noevents" data-name="{{this.name}}" data-id="{{this.id}}">
+		<img class="avatar circle center" src="{{this.photo||app.defaultRoom}}"> 
+		<b class="name ellipsis nomargin">{{this.display||this.name}}</b>
+		<div class="status cr ci nodisplay-hover small fade">
+			<i class="fa fa-envelope fa-bounce w3-text-blue wm8 counter" data-count="0"></i>
+			@if{{this.ts}}
+				<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+			@else
+				<time class="wm8"></time>
+			@endif
+		</div>
+		<span class="msg ellipsis smaller"><i>{{this.shortHTML||this.topic||'No topic'}}</i></span>
+	</template>
+
+	<template id="sidebar-user-item" classes="contact grid item w3-padding-tiny noevents ci" data-id="{{this.user.id}}" data-name="{{this.user.name}}">
+		<img class="avatar circle center" src="{{this.user.photo}}"> 
+		<a class="name ellipsis" link="/contact/add/{{this.user.id}}" title="Add as friend">{{this.name}}</a>
+		<button class="icon fa sm call display-hover" name="call" title="Call"></button>
+		<div class="status cr ci nodisplay-hover small fade">
+			<i class="fa fa-envelope fa-bounce w3-text-blue wm8 counter" data-count="0"></i>
+			<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+		</div>
+		<span class="msg ellipsis">{{this.shortHTML||this.status||'online'}}</span>
+	</template>
+
+	<template id="sidebar-player-item" classes="main cr ci noevents" cmd="{{this.cmd||''}}">
+		<i class="fa fa-fw icon {{this.icon}}"></i>
+		<span class="title">{{this.display||this.name}}</span>
+	</template>
+
+	<template id="sidebar-player-item-playlist" classes="playlist noevents column w3-padding-tiny" data-id="{{this.id}}">
+		<div class="cr m2 ci noevents" hoverable>
+			<h4 class="nomargin fit ellipsis">{{this.display||this.name}}</h4>
+			<button class="icon fa fa-xs display-hover" name="share" title="Share" cmd="share-playlist"></button>
+			<button class="icon fa fa-xs display-hover" name="delete" title="Remove" cmd="rm-delete-playlist"></button>
+		</div>
+		<span class="cr ci smaller">
+			<i class="fit">{{this.tracks.length}} tracks</i>
+			<i class="watermark">{{this.genre}}</i>
+		</span>
+	</template>
+
+	<template id="sidebar-radio-item" classes="container-col m2 w3-padding-tiny">
+		<b>{{this.name}}</b>
+		<i class="smaller">{{this.tag}}</i>
+	</template>
+
+	<template id="sidebar-game-invite-item" class="contact grid item ci w3-padding-tiny padding-hor-4 noevents" data-name="{{this.user.name}}" data-id="{{this.id}}">
+		<img class="avatar circle center" src="{{this.user.photo}}"> 
+		<span class="name ellipsis">{{this.user.name}}</span>
+		<time class="status small wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+		<i class="msg ellipsis">{{this.type}}</i>
+	</template>
+
+
+</div>
+
+<div id="sidebar" class="row collapsed">
+
+	<%- include navbar/index.html %> 
+
+	<div class="sidebar dark fit">
+
+		<div class="head column">
+			<div class="row ci fit">
+				<i class="fa icon"></i>
+				<h4 class="title nomargin ellipsis fit watermark-8"></h4>
+				<button class="icon fa sm fa-search display-hover" name="search" title="Find"></button>
+				<button class="icon fa sm display-hover" name="add" title="Create"></button>
+			</div>
+			<input type="text" name="filter" placeholder="filter" spellcheck="false" autocomplete="off"/>
+		</div>
+	
+		<div class="scrollable list2 adjustable" select>
+			<div class="v-scroller">
+				<div class="slider">
+				</div>
+			</div>
+	
+			<div class="area">
+				<div class="shadow"></div>
+				
+				<div class="content list">
+				</div>
+			</div>
+			<!-- <div class="items"></div> -->
+		</div>
+	</div>
+
+	<div class="v-sash dark"></div>
+</div>

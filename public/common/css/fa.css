@@ -1,0 +1,306 @@
+
+.fa {
+	/* font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free"; */
+	font-family: "Font Awesome 6 Brands", var(--fa-style-family,"Font Awesome 6 Free");
+
+	&.stroke { -webkit-text-stroke: 0.8px #aaa; }
+
+	&.sm { font-size: .875em; }
+	&.xs { font-size: .75em; vertical-align: 0.125em; }
+	&.lg { font-size: 1.25em; vertical-align: -0.075em; }
+	&.xl { font-size: 1.5em; vertical-align: -0.125em; }
+}
+
+.dark .fa.stroke {
+	-webkit-text-stroke-color: var(--text-stroke-color);
+}
+
+.fa-remove,
+.fa-minus {
+	color: #e11;
+}
+
+.fa-plus {
+	color: #00c700;
+}
+
+.fa-green {
+	color: var(--fa-green);
+}
+
+.fa-red {
+	color: var(--fa-red);
+}
+
+
+
+.fa-youtube {
+	color: #f00;
+}
+
+.fa.youtube:before,
+.fa[name="youtube"]:before {
+	color: #f00;
+	content: "\f167";
+}
+
+.fa.icon:before {
+	vertical-align: middle;
+}
+
+.fa.icon.id:before {
+	content: attr(icon-id);
+}
+
+.fa.folder,
+.fa[name="files"],
+.fa[name="folder"] {
+	color: var(--info);
+}
+
+.fa.folder:before,
+.fa[name="files"]:before,
+.fa[name="folder"]:before {
+	content: "\f07b";
+}
+
+.fa[name="playlist"]:before {
+	content: "\f550";
+	/* color: var(--green); */
+	color: var(--orange);
+}
+
+.fa.queue:before,
+.fac-queue:before {
+	content: '\f5fd';
+}
+
+.fac-play-recent:before {
+	content: '\f0ca';
+	color: var(--orange);
+}
+
+.fac-social:before {
+	content: '\f1e0';
+	color: orange;
+}
+
+.fac-news:before {
+	content: '\f7a2';
+	color: #006994;
+}
+
+.fa.add:before {
+	content: '\f067';
+	color: #00c700;
+}
+
+.fa.news:before {
+	content: '\f7a2';
+	color: #006994;
+}
+
+.fa.chess:before {
+	content: '\f445';
+}
+
+.fa.backgammon:before {
+	content: '\f527';
+}
+
+.fa.playlist:before {
+	content: '\f550';
+}
+
+.fa[name="audio"]:before,
+.fa.audio:before {
+	content: '\f001';
+}
+
+.fa[name="video"]:before,
+.fa.video:before {
+	content: '\f008';
+}
+
+.fa[name="image"]:before,
+.fa.image:before {
+	content: '\f03e';
+}
+
+.fa[name="text"]:before,
+.fa.text:before {
+	content: '\f037';
+}
+
+.fa[name="pdf"]:before,
+.fa.pdf:before {
+	content: '\f1c1';
+}
+
+.fa[name="zip"]:before,
+.fa.zip:before {
+	content: '\f1c6';
+}
+
+.fa.profile:before {
+	content: '\f2bd';
+}
+
+.fa.storage:before {
+	content: '\f0a0';
+}
+
+.fa[name="share"]:before,
+.fa.share:before {
+	content: '\f1e0';
+}
+
+.fa.support:before {
+	content: '\f059';
+}
+
+.fa[name="search"]:before,
+.fa.search:before {
+	content: '\f002';
+}
+
+.fa.wiki:before {
+	content: '\f059';
+}
+
+.fa-rotate-45 {
+	transform: rotate(45deg);
+}
+.fa.pin:before {
+	content: '\f08d';
+}
+
+.fa.tasks:before {
+	content: '\f022';
+}
+
+.fac-submit:before {
+	content: '\f00c';
+	color: #00c700;
+}
+
+.fa.check:before {
+	content: '\f00c';
+}
+
+/* .fa[value^="f[0-9a-f]{3}"]:before { */
+.fa[value]:before {
+	content: attr(value);
+}
+
+.fa[name="submit"], 
+.fa[name="accept"], 
+.fa[name^="add"] {
+	color: #00c700!important;
+}
+
+.fa[name="accept"]:before, 
+.fa[name="submit"]:before {
+	content: '\f00c';
+}
+
+.fa[name^="add"]:before {
+	content: '\f067';
+}
+
+/*.fa[name="clear"], */
+.fa.remove,
+.fa[name="reject"],
+.fa[name="cancel"], 
+.fa[name="remove"], 
+.fa[name="clear"], 
+.fa[name="delete"] {
+	color: #e11!important;
+}
+
+.fa.remove:before,
+.fa[name="reject"]:before,
+.fa[name="cancel"]:before,
+.fa[name="clear"]:before,
+.fa[name="remove"]:before {
+	content: '\f00d';
+}
+
+.fa[name="delete"]:before {
+	content: '\f068';
+}
+
+.fa[color] {
+	color: attr(color);
+}
+
+.fa[name="contact"]:before {
+	content: '\f500';
+}
+
+.fa[name="channel"]:before {
+	content: '\f57d';
+}
+
+.fa[name="play"]:before,
+.fa.play:before {
+	content: '\f04b';
+}
+
+.fa[name="play"][value="playing"]:before {
+	content: '\f04c';
+}
+
+.fa[name="camera"]:before {
+	content: "\f03d";
+}
+
+.fa.guitar:before {
+	content: '\f7a6';
+}
+
+.fa.guitare:before {
+	content: '\f8be';
+}
+
+.fa.guitars:before {
+	content: '\f8bf';
+}
+
+.fa[name="torrent"]:before,
+.fa.torrent:before {
+	content: "\f57c";
+	color: var(--green);
+}
+
+.fa.copy:before {
+	content: '\f1fb';
+}
+
+.fa.call {
+	color: #4CAF50!important;
+}
+
+.fa.call:before {
+	content: '\f879';
+}
+
+.fa.color-icons[name="search"] {
+	color: var(--blue);
+}
+
+
+.fa.color-icons:not(:disabled) {
+	color: unset;
+}
+
+.fa-color-icons .fa.audio, .fa-color-icons .fa[name="audio"] { color: #4CAF50!important; }
+.fa-color-icons .fa.video, .fa-color-icons .fa[name="video"] { color: #2196F3!important; }
+.fa-color-icons .fa.queue { color: var(--pink)!important; }
+
+.fa.index {
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	font-size: .75em;
+}

@@ -1,0 +1,347 @@
+
+.list2 {
+	user-select: none;
+	outline: none;
+
+	/* flex: 1; */
+	/* height: 100%; */
+
+	.item {
+
+		visibility: visible;
+		opacity: 1;
+		transition: opacity 2s linear;
+
+		&[selected] {
+			.hide-selected { display: none; }
+		}
+
+		&:not([selected]) {
+			.show-selected { display: none; }
+		}
+	}
+
+	.area {
+		/* height: 100%; */
+		/* width: 100%; */
+		width: calc(100% - 10px);
+		display: block;
+		flex: 1;
+	}
+
+	.content {
+		/* width: 100%; */
+		/* height: 100%; */
+		flex: 1;
+		top: 0;
+		/* left: 0; */
+	}
+}
+
+/* .list2 .count .show-selected.counted {
+	content-visibility: hidden;
+	display: unset;
+} */
+
+/* .dark .list2 .item, */
+.dark .list2 {
+	background-color: var(--list-bg-dark);
+	color: var(--list-color-dark);
+}
+
+.list2 .v-scroller {
+	/* height: 100%; */
+	flex: 1;
+	width: 10px !important;
+	min-width: 10px;
+	background-color: rgba(127, 127, 127, .2);
+	border-radius: 4px;
+	opacity: 0;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+	z-index: 9;
+	position: absolute;
+}
+
+.list2:hover .v-scroller {
+	opacity: .8;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+}
+
+.list2 .v-scroller .slider {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 40px;
+	background-color: rgba(127, 127, 127, .3);
+	border-radius: 4px;
+}
+
+.list2 .v-scroller .slider:hover {
+	background-color: rgba(127, 127, 127, .8);
+	cursor: pointer;
+}
+
+
+.dark .list2 .area {
+	/* box-shadow: var(--box-shadow-color) 0 8px 6px -6px inset; */
+}
+
+
+
+.list2 .item:nth-child(even) {
+	background-color: rgba(0,0,0, 0.04);
+}
+
+.dark .list2 .item:nth-child(even) {
+	background-color: rgba(255,255,255,0.03);
+}
+
+.list2 .count {
+	counter-reset: count 0;
+}
+
+.list2 .count .item {
+	counter-increment: count 1;
+}
+
+/* .list2 .count .item:not(.grid):before, */
+.list2 .count .item .counter:before  {
+	content: counter(count, decimal) '. ';
+	margin-right: 5px;
+}
+
+.list2 .count.after .item .counter:after  {
+	content: counter(count, decimal);
+	margin-left: 5px;
+}
+
+
+.list2 .group .content.more:after {
+	content: 'more ...';
+	text-align: center;
+	font-weight: 100;
+	display: block;
+	font-style: italic;
+	font-size: 76%;
+	background-color: rgba(255, 255, 255, 0.04); 
+	/* border-radius: 6px; */
+	padding: 2px;
+	margin-bottom: 5px;
+}
+
+
+.dark .list2 .group-header {
+	background-color: #313132;
+}
+
+.list2 .group-header {
+	display: flex;
+	padding-right: 5px;
+	padding-left: 5px;
+	border-radius: 5px;
+
+	.title {
+
+		flex: 1;
+		overflow: hidden;
+		align-self: center;
+
+		padding: 0 5px;
+		align-items: center;
+
+		.icon {
+			font-size: smaller;
+			margin: 0 4px;
+		}
+	}
+
+	.badge {
+		margin-right: 4px;
+		/* background-color: #007acc; */
+		background-color: rgb(95, 95, 95);
+		color: whitesmoke;
+		border-radius: 50%;
+		display: inline-block;
+		text-align: center;
+		/* padding: 0 3px; */
+		min-width: 20px;
+	}
+}
+
+/* .list2 .group:last-child:not(.hidable:empty) button[name="_dw"], */
+.list2 .group:first-child button[name="_up"],
+.list2 .group:last-child button[name="_dw"] {
+	display: none;
+}
+
+.list2:not(.adjustable) .group {
+	button[name="_up"], button[name="_dw"] { display: none!important; }
+}
+
+
+
+/* .list2 .group-header .arrow {
+	background-image: url('../ui/svg/arrow-down-dark.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 12px;
+	width: 14px !important;
+	min-width: 14px;
+} */
+
+.list2 .group-item.collapsed .group-arrow {
+	transform: rotate(-90deg);
+}
+
+.list2 .group-item .content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	/* margin-left: 10px; */
+	/* transition: .6s ease-in-out; */
+	/* transition: all 2s linear; */
+	/* transition: opacity 2s linear;  */
+}
+
+.list2 .group-item.collapsed .content {
+	display: none;
+	/* opacity: 0; */
+	/* transition: opacity 2s linear;  */
+	/* transition: .6s ease-in-out; */
+}
+
+.group.badge {
+	position: relative;
+}
+
+.group.badge {
+	counter-reset: count;
+}
+
+.group.badge.collapsed {
+	counter-set: count count;
+}
+
+.group:not(.collapsed)[badge="true"]:after,
+.group.badge:not(.collapsed):after {
+
+	content: counter(count, decimal);
+	/* background-color: aquamarine; */
+	/* background-color: rgb(95, 95, 95); */
+	background: radial-gradient(circle at center, #666, rgb(95, 95, 95));
+	box-shadow: 0 2px 4px 0 rgba(220, 220, 220,0.16),0 2px 10px 0 rgba(220,220,220,.12)!important;
+
+	color: whitesmoke;
+	border-radius: 50%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	min-width: 20px;
+	margin: 0 2px;
+	padding: 2px;
+	text-align: center;
+	font-size: small;
+	font-weight: bold;
+	align-self: center;
+
+	animation: fade;
+	animation-duration: 1s;
+}
+
+/* .group:after .group-header:after {
+	content: counter(count, decimal);
+	background: radial-gradient(circle at center, #666, rgb(95, 95, 95));
+	box-shadow: 0 2px 4px 0 rgba(220, 220, 220,0.16),0 2px 10px 0 rgba(220,220,220,.12)!important;
+
+	color: whitesmoke;
+	border-radius: 50%;
+} */
+
+.group.badge > .content > .item {
+	counter-increment: count 1;
+}
+
+.group-header .toolbar {
+	pointer-events: all;
+}
+
+.group:not(.collapsed)[badge="true"] .group-header,
+.group.badge:not(.collapsed) .group-header {
+	padding-right: 32px;
+}
+
+.group.collapsed .group-arrow {
+	transform: rotate(-90deg);
+}
+
+.group.collapsed .content,
+.group.collapsed button[name="_less"] {
+	display: none;
+}
+
+.group .item.hidden {
+	display: unset!important;
+	padding: 0!important;
+	margin: 0!important;
+	border: none!important;
+	content-visibility: hidden;
+
+	visibility: hidden;
+	opacity: 0;
+	/* transition: visibility 0s 2s, opacity 2s linear; */
+	/* transition: content-visibility 0s 2s, opacity 2s linear; */
+}
+
+.list2 .item.filter {
+	display: none!important;
+}
+
+.group:has(.hidable:empty) {
+	display: none;
+}
+
+.group button[name="_less"] {
+	display: none;
+}
+
+.group.less:not(.collapsed) button[name="_less"] {
+	display: unset;
+}
+
+.group .content.help > *:first-child {
+	display: none!important;
+}
+
+.group .content.help > *:only-child {
+	display: unset!important;
+}
+
+/* .group:not(.collapsed):has(.more[visible]) button[name="less"] {
+	display: unset;
+} */
+
+/*
+
+li {
+  background: red
+}
+.more {
+  background: green
+}
+li:nth-of-type(5) + li {
+  display: none
+}
+*/
+
+.item.new {
+	background-color: #4a44;
+}
+
+.group:has(.loading3), .group.collapsed {
+	:is([name="_more"],[name="_less"]) { display: none; }
+}
+
+.group:not(.collapsed) .show-collapsed {
+	display: none;
+}

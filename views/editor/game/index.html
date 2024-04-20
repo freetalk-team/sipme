@@ -1,0 +1,124 @@
+
+<template id="game-editor-stat-item" classes="container-row m2 center-items">
+	<h5 class="nomargin watermark-8 fit w3-gray">{{this.capitalizeFirstLetter()}}:</h5>
+	<span class="container-row reverse fit" role="{{this}}">
+		<b class="score w3-text-green" data-count="0"></b>
+		<b class="score w3-text-red" data-count="0"></b>
+	</span>
+</template>
+
+<template id="game-editor-stat" classes="stat container-row m10">
+	@foreach{{['score', 'total', 'game']}}
+		[[game-editor-stat-item,span]]{{this}}
+	@endforeach
+</template>
+
+<template id="game-editor-stat-col" classes="stat container-col m5" style="min-width:160px;" role="stat">
+	[[game-editor-stat-item,span larger]]{{'score'}}
+	@foreach{{['total','game']}}
+		[[game-editor-stat-item,span]]{{this}}
+	@endforeach
+	<ul class="history fit"></ul>
+</template>
+
+<template id="game-editor-toolbar" class="right cr w3-padding-hor-4" show="game">
+	<!-- <button class="icon fa fa-lg fa-remove w3-text-red" name="reset" title="Reset"></button>
+	<button class="icon circle fa fa-undo" name="undo" title="Undo" disabled></button> -->
+	<!-- <button name="reload" class="icon circle fa fa-refresh w3-red" title="Reload"></button> -->
+	<button name="chat" title="Chat" class="icon circle fa fa-comment w3-blue"></button>
+	<!-- <button name="call" title="Call" class="icon circle fa fa-phone w3-green"></button> -->
+	<button name="resign" title="Resign" class="icon circle fa fa-remove w3-red" cmd="game-resign-user"></button>
+</template> 
+
+<template id="game-editor-backgammon" classes="editor game fit container-row reverse">
+	[[game-editor-stat-col]]
+</template>
+
+<template id="editor-backgammon-history-item" classes="smaller ellipsis container-row center-items si">
+	<!-- <i>{{this.move.join(', ')}}</i> -->
+	<i class="fa dice {{!this.own ? 'white' : ''}}" value="{{this.roll[0]}}"></i>
+	<i class="fa dice {{!this.own ? 'white' : ''}}" value="{{this.roll[1]}}"></i>
+</template>
+
+<template id="sidebar-game-invite" classes="item invite grid contact w3-padding-small noevents" data-id="{{this.id + '@' + this.user}}">
+	<img class="avatar circle" src="{{this.photo||app.defaultAvatar}}" style="align-self:baseline;">
+	<h4 class="nomargin ellipsis name">{{this.name}}</h4>
+	<button class="icon fa display-hover" name="reject" title="Reject" cmd="game-reject"></button> 
+	<span class="desc container-row center-items smaller">
+		<!-- <i class="fa fa-fw fa-sm" value="{{String.fromCodePoint(parseInt(this.icon, 16))}}" style="color:{{this.iconcolor||'inherit'}}"></i> -->
+		<i class="fit ellipsis">{{this.id}}</i>
+	</span>
+</template>
+
+<template id="sidebar-game-active" class="item invite grid contact w3-padding-small noevents" data-id="{{this.id}}">
+	<img class="avatar circle baseline" src="{{this.photo||app.defaultAvatar}}">
+	<h4 class="nomargin ellipsis name">{{this.name}}</h4>
+	<span class="desc container-row center-items smaller">
+		<!-- <i class="fa fa-fw fa-sm" value="{{String.fromCodePoint(parseInt(this.icon, 16))}}" style="color:{{this.iconcolor||'inherit'}}"></i> -->
+		<i class="fit ellipsis">{{this.type||this.id}}</i>
+	</span>
+</template>
+
+<template id="sidebar-game-recent-item" class="item cc w3-padding-small noevents">
+	<div class="cr ci">
+		<img class="avatar x24 circle baseline" src="{{this.user.photo}}">
+		<b class="wm8 ellipsis name fit">{{this.user.name}}</b>
+		<time class="small wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+	</div>
+	<div class="cc m2">
+		<div class="cr ci">
+			<b class="fit">Score:</b>
+			<b class="w3-text-green">{{this.stat.last.win}}</b>
+			<b class="w3-text-red">{{this.stat.last.loss}}</b>
+		</div>
+		<div class="cr ci show-selected smaller">
+			<i class="wm8 fit">Total:</i>
+			<b class="w3-text-green">{{this.stat.total.win}}</b>
+			<b class="w3-text-red">{{this.stat.total.loss}}</b>
+		</div>
+		<div class="cr ci show-selected smaller">
+			<i class="wm8 fit">Games:</i>
+			<b class="w3-text-green">{{this.stat.win}}</b>
+			<b class="w3-text-red">{{this.stat.loss}}</b>
+		</div>
+		
+	</div>
+</template>
+
+<template id="editor-game-info" classes="fade container-col m10">
+	{{dom.markdown(this.md)}}
+	<div class="container-row">
+		<button class="w3-green w3-btn w3-round smaller" cmd="game-invite-user" data-id="{{this.id}}">Invite</button>
+	</div>
+</template>
+
+<template id="editor-game-recent" class="fade container-col">
+	<h3 class="wm8">Recent</h3>
+	<div class="list container-col show-empty" group="recent" cmd="game-new-{{_0}}">
+		@foreach{{this}}
+			[[editor-game-recent-item]]{{this}}
+		@endforeach
+	</div>
+</template>
+
+<template id="editor-game-recent-item" class="item cr w3-padding-small noevents" data-id="{{this.user}}">
+	<img class="avatar x24 circle baseline" src="{{this.photo||app.defaultAvatar}}">
+	<div class="container-col m2 fit">
+		<div class="cr ci">
+			<h4 class="nomargin ellipsis name fit">{{this.name}}</h4>
+			<time class="small wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
+		</div>
+		<span class="cr ci m10">
+			<i class="wm8">Games:</i>
+			<b class="w3-text-green">{{this.stat.win}}</b>
+			<b class="w3-text-red">{{this.stat.loss}}</b>
+			<i class="wm8 w3-margin-left">Total:</i>
+			<b class="w3-text-green">{{this.stat.total.win}}</b>
+			<b class="w3-text-red">{{this.stat.total.loss}}</b>
+		</span>
+	</div>
+</template>
+
+<template id="editor-game-base" classes="fade container-row m10 reverse" style="height:100%;">
+	[[game-editor-stat-col]]
+</template>

@@ -1,0 +1,80 @@
+.scrollable {
+	display: flex;
+	flex-direction: row-reverse;
+	/* width: 100%; */
+	flex: 1;
+	overflow: hidden;
+}
+
+.dark .scrollable {
+	/* background-color: #252526;
+	color: #cccccc; */
+}
+
+
+
+.scrollable .v-scroller {
+	width: 10px !important;
+	min-width: 10px;
+	background-color: rgba(127, 127, 127, .2);
+	border-radius: 4px;
+	opacity: 0;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+	z-index: 9;
+	position: absolute;
+}
+
+.scrollable:hover .v-scroller {
+	opacity: .8;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+}
+
+.scrollable .v-scroller .slider {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 40px;
+	background-color: rgba(127, 127, 127, .3);
+	border-radius: 4px;
+}
+
+.scrollable .v-scroller .slider:hover {
+	background-color: rgba(127, 127, 127, .8);
+	cursor: pointer;
+}
+
+.scrollable > .area {
+	/* height: 100%; */
+	/* width: 100%; */
+	width: calc(100% - 10px);
+	display: block;
+	flex: 1;
+	/* left: 0; */
+}
+
+.scrollable > .area > .shadow {
+	display: block;
+	position: relative;
+	top: 0;
+	left: 0;
+	height: 3px;
+	width: 100%;
+	box-shadow: #000000 0 6px 6px -6px inset;
+	z-index: 2;
+}
+
+.scrollable > .area > .content {
+	/* width: 100%; */
+	/* height: 100%; */
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	top: 0;
+	/* left: 0; */
+}
+
+.scrollable .area > .content.max-height {
+	height: calc(100% - 10px);
+}

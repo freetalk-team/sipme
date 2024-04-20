@@ -1,0 +1,2 @@
+
+import '../../public/app.css'

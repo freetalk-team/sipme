@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/app.css">
+		<link rel="stylesheet" href="/site.css">
+
+		<style>
+			td { padding: 8px 16px; }
+			a.item { color: unset; }
+		</style>
+	</head>
+	<body class="column">
+		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
+			<img class="x64" src="<%- Config.product.logo %>">
+			<div class="cc m2 fit">
+				<h1 class="wm8 text-stroke nomargin cartoon">Trac</h1>
+				<b><%- Config.company.name %></b>
+				<i class="smaller"><%- Config.company.desc %></i>
+			</div>
+			<span class="cr ci m10 smaller baseline nounderline">
+				<a href="/" class="cr ci"><i class="fa sm wm6 margin-right-tiny fa-home"></i>home</a>
+				<a href="/doc/wiki" class="cr ci">wiki</a>
+			</span>
+		</header>
+
+		<div class="scroll-area custom cc m15">
+
+			<div class="w3-container w3-padding max-width wider center">
+				<%- body %>
+				<%- include ../footer %>
+			</div>
+		</div>
+	</body>
+</html>

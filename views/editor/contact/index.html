@@ -1,0 +1,229 @@
+<template id="editor-header-contact" classes="header cr">
+	<img class="avatar circle" src="/ui/svg/contact.svg" role="photo">
+	<div class="cc m2 fit">
+		<div class="cr ci">
+			<h2 class="fit ellipsis text-stroke wm8 nomargin" role="name">Welcome</h2>
+			<button name="call" title="Call" class="icon baseline hover" cmd="video-call-user">
+				<i class="fa lg call"></i>
+			</button>
+			<button name="invite" title="Invite users" class="icon hover" cmd="chat-invite-users">
+				<i class="fa lg fa-user-plus w3-text-green"></i>
+			</button>
+			<button name="add" title="Add contact" class="icon hover" cmd="chat-add-contact">
+				<i class="fa lg fa-plus w3-text-green"></i>
+			</button>
+		</div>
+		<div class="cr ci m2">
+			<i class="ns fit" role="status">No status</i>
+		
+			<button name="share" title="Share" class="icon hover" cmd="share-contact">
+				<i class="fa sm fa-share-alt w3-text-khaki"></i>
+			</button>
+			<button name="clear" title="Clear history" class="icon hover" cmd="chat-clear-history">
+				<!-- <i class="fa sm fa-chart-bar relative">
+					<i class="fa index xs fa-plus w3-text-green"></i>
+				</i> -->
+
+				<i class="fa sm fa-bars-staggered w3-text-red"></i>
+			</button>
+			<button name="remove" title="Delete" class="icon fa fa-remove" cmd="contact-rm"></button>
+		</div>
+	</div>
+</template>
+
+<template id="torrent-share" classes="grid torrent ci w3-card-2 w3-round w3-container w3-padding-bottom" data-id="{{this.uri}}" data-size="{{this.files.reduce((a, b) => a + b.size, 0)}}">
+	<h3 class="title nomargin ellipsis margin-ver">{{this.title}}</h3>
+	<button class="icon toolbar display-hover fa fa-fw" name="remove" title="Delete"></button>
+	<button class="icon toolbar display-hover fa fa-fw fa-sm" name="share" title="Share"></button>
+	<button class="icon toolbar display-hover fa fa-fw fa-sm fa-save" name="saveall" title="Save all"></button>
+	<button class="icon toolbar display-hover fa fa-fw fa-sm fa-download" name="download" title="Download" cmd="torrent-download"></button>
+	<div class="progress cr w3-padding-small ci">
+		<progress class="fit" value="0" max="100"></progress>
+		<b class="small" role="speed">0 KB/s</b>
+	</div>
+	<div class="files column">
+		<h4 class="nomargin w3-padding-tiny w3-grey w3-round fit">{{this.files.length}} files</h4>
+		<ul class="w3-ul w3-border">
+			@foreach{{this.files}}
+				<li  class="cr ci" data-id="{{this.id||this.name.hashCode()}}">
+					<i class="fa {{fileX.getTypeFromFilename(this.name)}}"></i>
+					<div class="fit ellipsis">{{this.display || fileX.getName(this.name)}}</div>
+					<b class="small">{{fileX.formatSize(this.size)}}</b>
+					<button class="icon display-hover fa fa-fw fa-sm fa-play" name="play" title="Play" cmd="player-play"></button>
+				</li>
+			@endforeach
+		</ul>
+	</div>
+		
+</template>
+
+<template id="torrent-file" classes="row">
+	<i class="fa {{icon}} center"></i>
+	<div class="fit3 ellipsis w3-margin-left">{{this.name}}</div>
+	<b class="w3-small w3-col s1 w3-right-align center ellipsis">{{this.size}}</b>
+	<button name="save" class="icon" title="Save"><i class="fa fa-save"></i></button>
+</template>
+
+<template id="contact-info" classes="cr w3-margin-bottom">
+	<img  class="x48 shadow center avatar circle" src="{{this.photo||app.defaultAvatar}}">
+	<div class="cc m2">
+		<h4 class="nomargin text-stroke ellipsis">{{this.name}}</h4>
+		<i class="nomargin italic ellipsis">{{this.desc || this.topic || this.email}}</i>
+	</div>
+</template> 
+
+<template id="contact-share" classes="contact-share w3-container w3-card-2 w3-border w3-light-grey w3-round w3-padding-small w3-margin cc" data-id="{{this.id}}" data-type="contact">
+	<div class="row ci" data-type="contact" data-id="{{this.id}}" hoverable>
+		<h3 class="fit nomargin text-stroke watermark">Contact</h3>
+		<button class="icon fa sm display-hover" name="share" title="Share"></button>
+		<button class="icon fa display-hover" name="add" cmd="add-import-contact" title="Invite"></button>
+	</div>
+	[[contact-info]]{{this}}
+</template>
+
+<template id="room-share" classes="contact-share w3-container w3-card-2 w3-border w3-light-grey w3-round w3-padding-small w3-margin cc">
+	<div class="row ci" data-type="room" data-id="{{this.id}}" hoverable>
+		<h3 class="fit nomargin text-stroke watermark">Room</h3>
+		<button class="icon fa fa-sm display-hover" name="share" title="Share"></button>
+		<button class="icon fa display-hover" name="add" title="Join" cmd="join-room"></button>
+	</div>
+	[[contact-info]]{{this}}
+</template>
+
+<template id="game-share" classes="w3-container w3-border w3-round w3-padding-small cr m2 ci max-width" data-id="{{this.id}}@{{this.user}}">
+	<h4 class="nomargin fit">New game: <i>{{this.id}}</i></h4>
+	<button class="icon fa display-hover" name="accept" title="Accept" cmd="open-new-game"></button>
+	<button class="icon fa display-hover" name="reject" title="Reject"></button>
+</template>
+
+<template id="task-share" classes="w3-card-2 w3-border w3-light-grey w3-round w3-padding-small w3-margin cc max-width noevents" data-id="{{this.id}}" cmd="open-ticket-task">
+	<div class="cr ci" hoverable>
+		<h3 class="fit nomargin text-stroke watermark">Task</h3>
+		<button class="icon fa fa-sm display-hover" name="share" title="Share" cmd="share-task"></button>
+	</div>
+	<h3 class="nomargin ellipsis">{{this.summary}}</h3>
+	<div class="cr ci small mb">
+		<span><b>status:</b> {{this.status}}</span>
+		<span><b>severity:</b> {{this.severity}}</span>
+	</div>
+</template>
+
+<template id="wiki-share" class="w3-card-2 w3-border w3-light-grey w3-round w3-padding-small w3-margin cc max-width noevents" data-id="{{this.id}}" expandable>
+	<div class="cr ci" hoverable>
+		<h3 class="fit nomargin text-stroke watermark">Wiki</h3>
+		<button class="icon fa fa-sm display-hover" name="share" title="Share" cmd="share-wiki"></button>
+	</div>
+	<div class="md text-expand">{{dom.markdown(this.content)}}</div>
+</template>
+
+<template id="game-invite" classes="contact-share w3-container w3-card-2 w3-border w3-light-grey w3-round w3-padding-small w3-margin column">
+	<div class="row ci" data-type="game">
+		<h2 class="fit text-stroke watermark"><i class="fa icon {{this.type}}"></i> {{this.type.capitalizeFirstLetter()}}</h2>
+		<button class="icon fa display-hover" name="add" title="Accept"></button>
+	</div>
+	[[contact-info]]{{this}}
+</template>
+
+<template id="file-upload-file" classes="cr w3-margin-4 ci" data-id="{{this.name.hashCode()}}">
+	<input class="checkbox" type="checkbox" checked="checked">
+	<i class="fa fa-fw center {{_0}}"></i>
+	<span class="fit ellipsis bold smaller">{{fileX.getName(this.name)}}</span>
+	<progress class="hidden"></progress>
+	<span class="small w3-right-align center" style="min-width: 40px;">{{fileX.getExtension(this.name)}}</span>
+	<b class="small w3-right-align center ellipsis" style="min-width: 50px;">{{fileX.formatSize(this.size)}}</b>
+</template>
+
+<template id="file-upload-message" classes="chat-message upload w3-card-2 w3-round w3-light-grey">
+
+	<div class="w3-container wm6">
+		<h2 class="text-stroke w3-center">Share {{this.total}} files</h2>
+	</div>
+
+	<div class="w3-container cc" style="min-width: 80%;">
+		@if{{this.images.length > 0}}
+			[[slideshow,div w3-container]]{{this.images}}
+		@endif
+		<div class="w3-container" files>
+			@foreach{{this.images}}
+				[[file-upload-file,,image]]{{this}}
+			@endforeach
+			@foreach{{this.audio}}
+				[[file-upload-file,,audio]]{{this}}
+			@endforeach
+			@foreach{{this.video}}
+				[[file-upload-file,,video]]{{this}}
+			@endforeach
+			@foreach{{this.text}}
+				[[file-upload-file,,text]]{{this}}
+			@endforeach
+			@foreach{{this.pdf}}
+				[[file-upload-file,,pdf]]{{this}}
+			@endforeach
+			@foreach{{this.zip}}
+				[[file-upload-file,,zip]]{{this}}
+			@endforeach
+		</div>
+
+		
+	</div>
+
+	<div class="cc w3-padding" options>
+
+		<h3 class="watermark-8">Upload options</h3>
+		<div class="cr m15">
+			@foreach{{this.options}}
+				<div class="cr">
+					{{dom.radio('type','google')}}
+				</div>
+			@endforeach
+		</div>
+	</div>
+
+	<div class="w3-content cr w3-btn-group w3-margin-top w3-margin-bottom" actions>
+		<button class="w3-bnt icon fa fa-lg" name="submit" title="Share"></button>
+		<button class="w3-bnt icon fa fa-lg" name="cancel" title="Cancel"></button>
+	</div>
+</template>
+
+<template id="editor-contact-chat-message" class="chat-message column w3-padding-tiny">
+	<div class="user cr ci smaller">
+		<time class="smaller watermark-6 bold">{{time(this.ts)}}</time>
+		<span class="uri bold ellipsis fit">{{this.own?'you':this.user.name}}</span>
+		@if{{this.own}}
+			<i class="fa fa-circle fa-xs" role="seen"></i>
+		@endif
+	</div>
+	[[editor-contact-chat-message-item]]{{this}}
+</template>
+
+<template id="editor-contact-room-message" class="chat-message column w3-padding-tiny">
+	<div class="user cr ci smaller">
+		<time class="smaller watermark-6 bold">{{time(this.ts)}}</time>
+		@if{{this.own}}
+			<span class="uri bold ellipsis fit">you</span>
+		@else
+			<img class="avatar" src="{{this.user.photo}}">
+			<span class="uri bold ellipsis fit">{{this.user.name}}</span>
+		@endif
+	</div>
+	[[editor-contact-chat-message-item]]{{this}}
+</template>
+
+<template id="editor-contact-chat-message-item" class="column">
+	@if{{this.text}}
+		<span class="text md serif-p">{{this.md||dom.markdowne(this.text)}}</span>
+	@else
+		[[{{this.msg._type}}-share]]{{this.msg}}
+	@endif
+</template>
+
+<template id="editor-chat" classes="editor fit column-reverse">
+	<div class="chat-input input-area cr m2 w3-padding-small w3-padding-bottom">
+		<div tabindex="1" contenteditable role="textbox" class="expandable-textarea fit" placeholder="type a message"></div>
+		<button name="emoji" tabindex="-1" title="Emoji" class="icon fa fa-fw fa-smile"></button>
+		<button name="file" tabindex="-1" title="Upload file" class="icon fa fa-fw fa-paperclip"></button>
+		<button name="send" tabindex="2" class="icon fa fa-fw fa-send" title="Send" disabled></button>
+	</div>
+
+	[[scrollable]]{{this}}
+</template>

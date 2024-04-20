@@ -1,0 +1,41 @@
+
+<template id="editor-find-base" classes="editor column fit container dark">
+	<div class="cr ci w3-padding search">
+		<label class="label">name:</label>
+		<input class="value smaller fit" type="text" name="query" spellcheck="false" placeholder="search" autocomplete="off">
+		<button name="search" class="icon fa fa-search" title="Search" disabled></button>
+	</div>
+	[[scrollable-list]]{{this}}
+</template>
+
+<template id="editor-find-toolbar" classes="right bottom container-row">
+	<button class="icon fa xl add" name="new" title="New"></button>
+	<button class="icon fa xl" name="submit" title="Done"></button>
+	<button class="icon fa xl" name="cancel" title="Cancel"></button>
+</template>
+
+<template id="find-contact-item" classes="container-row align center-items noevents w3-padding-small">
+	<img class="avatar circle" src="{{this.photo||app.defaultAvatar}}">
+	<div class="cr ci align fit ellipsis">
+		<span class="name fit">{{this.name}}</span>
+		<b class="smaller fit watermark-8">user</b>
+		<i class="smaller fit2">{{dom.renderEmojis(this.status||this.email)}}</i>
+		<i class="smaller fa fa-user"></i>
+	</div>
+</template>
+
+<template id="find-room-item" classes="container-row align center-items noevents w3-padding-small">
+	<img class="avatar circle" src="{{app.defaultAvatar}}">
+	<div class="container-row align fit center-items ellipsis">
+		<span class="name fit">{{this.name}}</span>
+		<b class="smaller fit watermark-8">room</b>
+		<i class="smaller fit2">{{this.topic}}</i>
+		<i class="smaller fa fa-user-friends"></i>
+	</div>
+</template>
+
+<template id="find-radio-item" classes="item container-row center-items noevents w3-padding-tiny" cmd="edit-radio" data-id="{{this.id}}">
+	<span class="fit2 ellipsis">{{this.name}}</span>
+	<b class="fit ellipsis smaller text-center">{{this.tag}}</b>
+	<i class="fit smaller text-right">{{this.desc}}</i>
+</template>

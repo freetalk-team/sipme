@@ -1,0 +1,18 @@
+version: '3'
+services:
+   kamailio:
+     image: kamailio:5.6.3-alpine
+     build: .
+     hostname: kamailio
+     container_name: kamailio
+     volumes:
+      - ./kamailio.sample.cfg:/etc/kamailio/kamailio.cfg
+
+      # - /ssd/data/sqlite/chat.db:/var/app.db
+      # - /ssd/data/sqlite/kamailio.db:/var/kamailio.db
+     #tty: true
+     ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "4080:80/tcp" # WS
+   

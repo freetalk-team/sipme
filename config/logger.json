@@ -1,0 +1,19 @@
+{
+	"appenders": {
+		"default": {
+			"type": "console",
+			"layout": {
+				"type": "pattern",
+				"pattern": "%d{ABSOLUTETIME} %[[%p]:%] %m"
+			}
+		}
+	},
+	"categories": { 
+		"default": { 
+			"appenders": ["default"], 
+			"level": "debug",
+			"layout": { "type": "colored" }
+		}
+	},
+	"replaceConsole": true 
+}

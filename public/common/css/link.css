@@ -1,0 +1,11 @@
+a {
+	color: #0000ee;
+}
+
+.dark a {
+	color: #44e;
+}
+
+a:hover {
+	opacity: .8;
+}

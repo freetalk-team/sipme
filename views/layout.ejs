@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/site.css">
+		<link rel="stylesheet" href="/app.css">
+
+		<script type="text/javascript" src="config"></script>
+
+		<% if (user) { %>
+			<script type="text/javascript" src="user"></script>
+
+			<script src="/dist/sip.js"></script>
+			<script src="/dist/codemirror.js"></script>
+		<% } %>
+	</head>
+	<body class="column">
+		<div id="titlebar" class="cr ci dark">
+			<div class="app-icon"></div>
+			<b class="fit"><%- Config.title %></b>
+			<span class="raleway">ver. 0.8.8</span>
+			<button class="button icon fa fa-question-circle" title="Help" cmd="help-current-editor"></button>
+			<% if (user) { %>
+				<i class="fa fa-fw fa-universal-access w3-text-red" display="su"></i>
+				<span class="user" role="username"><%- user.name %></span>
+				<button title="Logout" class="icon fa fa-sign-out" onclick="app.signOut()"></button>
+			<% } %>
+		</div>
+		<%- body %>
+	</body>
+</html>

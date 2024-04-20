@@ -1,0 +1,54 @@
+
+<template id="editor-wiki-toolbar" classes="right bottom color-icons">
+	<button class="icon fa sm fa-edit" name="edit" title="Edit" display="su" role="view"></button> 
+	<button class="icon fa sm share" name="share" title="Share" role="view" cmd="share-wiki"></button>
+	<!-- <button class="icon fa fa-fw" name="add" title="New" role="su"></button> -->
+</template>
+
+<template id="wiki-editor-content" classes="cc m10 max-width wider center w3-container">
+	[[search-area,,wiki,wiki-search-result]]
+	[[editor-wiki-doc-edit]]
+	<div class="main hide pointer-links" role="view"></div>
+</template>
+
+<template id="editor-wiki-doc-edit" classes="w3-container w3-card-4 cc" role="edit">
+	<h2>Edit <b class="w3-text-blue-grey"></b></h2>
+	<textarea name="content" class="hidden" placeholder="document content"></textarea>
+	<div class="actions w3-content cr w3-margin-bottom" container>
+		<button class="icon fa lg" name="submit" title="Update"></button>
+		<button class="icon fa lg" name="cancel" title="Discard"></button>
+	</div>
+</template>
+
+<template id="editor-wiki-doc-content" classes="cc" container data-id="{{this.id}}">
+	<div class="cr fit w3-padding-ver-16 path" role="view"></div>
+	<span class="md stroke light relative inconsolata-p">
+		{{dom.markdown(this.text, this.marked)}}
+	</span>
+</template>
+
+<template id="wiki-search-result" classes="cc m2 result" data-id="{{this.id}}">
+	<a class="row no-child-pointer-events">
+		<h3 class="title fit nomargin ellipsis">{{this.title}}</h3>
+		<div class="cr m2 ci" style="font-size: 90%;">
+		@foreach{{this.tags.split(' ')}}
+			<span class="w3-tag w3-light-green">{{this}}</span>
+		@endforeach
+		</div>
+	</a>
+	<span class="md compact">{{dom.markdown(this.short)}}</span>
+	<div class="w3-container cr small ci no-child-pointer-events">
+		@if{{this.date}}
+			<i>{{this.date.formatTimeDate()}}</i>
+		@endif
+		@if{{this.channel}}
+			{{dom.icon(this.channel.icon,this.channel.iconcolor)}}
+			<b>{{this.channel.display || this.channel.name}}</b>
+		@endif
+		@if{{this.user}}
+			<i class="fit text-right">{{'Author: ' + this.user.name}}</i>
+		@endif
+	</div>
+</template>
+
+

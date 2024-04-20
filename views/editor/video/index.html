@@ -1,0 +1,24 @@
+<template id="editor-video-toolbar" class="right cr w3-padding-hor-4">
+
+	<button class="icon circle2 fa fa-lg fa-desktop" name="screen" title="Share screen" cmd="video-screen-share"></button>
+	<button class="icon circle fa camera" name="camera" title="Turn on" state="off" cmd="video-toggle-camera"></button>
+	<button class="icon circle fa fa-phone-slash w3-red" name="hangup" title="Hangup" cmd="video-call-hangup"></button>
+	<!-- <button class="icon fa fa-phone w3-green" name="answer" title="Answer"></button> -->
+</template>
+
+<template id="editor-video-base" classes="editor column container dark">
+	
+	<div class="video-container">
+		<!-- <video id="remote-video" controls="" preload="none" poster="/ui/svg/contact.svg"></video> -->
+		<video id="remote-video" class="call" controls="" preload="none"></video>
+		<video id="local-video" class="hidden" autoplay></video>
+	</div>
+
+	<div class="call-animation">
+		<div class="phone">
+			<i class="fa fa-phone"></i>
+		</div>
+		<div class="inner-circle"></div>
+		<div class="outer-circle"></div>
+	</div>
+</template>

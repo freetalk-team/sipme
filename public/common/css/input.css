@@ -1,0 +1,166 @@
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active */
+
+input:-webkit-autofill,
+select:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected {
+	transition: background-color 5000s ease-in-out 0s;
+	-webkit-text-fill-color: rgb(204, 204, 204);
+	/* -webkit-box-shadow: 0 0 0 30px gray inset !important; */
+	caret-color: rgb(204, 204, 204);
+}
+
+.dark input:-internal-autofill-selected {
+	background-color: rgb(60, 60, 60) !important;
+}
+
+
+
+[contenteditable] {
+	background-color: unset;
+	/* color: var(--dark-text-color); */
+}
+
+/* input:-internal-autofill-selected {
+	background-color: rgb(60, 60, 60);
+	color: rgb(204, 204, 204);
+} */
+
+/* input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #1b1b1b inset !important;
+  -webkit-text-fill-color: white !important;
+} */
+
+textarea,
+input:not([type="checkbox"]),
+[contenteditable],
+select 
+{
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	/* padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0px; */
+	/* border: 1px solid #DDDDDD; */
+	border-radius: 5px; 
+	border: solid 1px;
+	/* border-color: skyblue; */
+	border-color: transparent;
+	/* outline-color: #007fd4; */
+	text-indent: 4px;
+
+	background-color: var(--light);
+
+	/* -webkit-appearance: none;
+  	-moz-appearance: none;
+	appearance: none; */
+}
+
+.dark textarea,
+.dark input:not([type="checkbox"]),
+/* .dark input[type="time"]::-webkit-calendar-picker-indicator, */
+.dark select {
+	background-color: var(--input-bg-dark);
+	color: var(--input-color-dark);
+}
+
+.dark ::-webkit-calendar-picker-indicator {
+	filter: invert(.8); 
+}
+
+textarea:focus,
+input:not([type="checkbox"]):focus,
+[contenteditable]:focus,
+select:focus {
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  	/* padding: 3px 0px 3px 3px;
+  	margin: 5px 1px 3px 0px; */
+  	/* border: 1px solid rgba(81, 203, 238, 1); */
+  	border: 1px solid #4D90FE;
+	/* border-color: #4D90FE; */
+	outline: auto 0;
+}
+
+.dark option, 
+.dark option:checked, 
+.dark option:hover, 
+.dark option:disabled {
+	background-color: rgb(60, 60, 60);
+	color: rgb(204, 204, 204);
+}
+
+/* option.fa {
+	font-family: "Font Awesome 5 Free", 'sans-serif';
+} */
+
+/* Firefox */
+select {
+	-moz-appearance: none;
+	/* background-color:s rgb(60, 60, 60); */
+}
+
+select.fa-icon,
+select.fa-icon option {
+	font-family: "Font Awesome 5 Free", "Ubuntu", "Droid Sans", sans-serif;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:not([type="checkbox"]).error,
+[contenteditable].error,
+textarea.error {
+	outline-color: #d40000;
+	background-color: rgba(212, 0, 0, .2);
+	border-color: #d40000;
+}
+
+select.fa, select > option.fa {
+	font-family: 'Font Awesome 5 Brands', 'Font Awesome 5 Free', 'Ubuntu';
+}
+
+input[exp] {
+	font-family: monospace;
+	/* font-size: smaller;
+	font-weight: bold; */
+	padding: 5px 4px;
+
+	/* color: #2196F3; */
+	color: blue!important;
+}
+
+[contenteditable][placeholder] {
+
+	&:empty::before {
+		content: attr(placeholder);
+		font-style: italic;
+		/* color: #5f6368; */
+		opacity: .6;
+		white-space: pre;
+		display: block;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
+	&:focus::before {
+		content: none;
+	}
+}

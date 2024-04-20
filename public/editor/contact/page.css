@@ -1,0 +1,133 @@
+@import 'css/input.css';
+@import 'css/message.css';
+
+
+#contact-editor .header .avatar {
+	margin-right: 8px;
+}
+
+#contact-editor .editor .scrollable .area {
+	box-shadow: #afafaf 0 -8px 8px -6px inset;
+}
+
+#contact-editor .editor .scrollable .shadow {
+	box-shadow: #afafaf 0 8px 6px -6px inset;
+	height: 6px;
+}
+
+/* #contact-editor .editor .list.shadow:before {
+	box-shadow: #afafaf 0px 10px 6px -6px inset;
+} */
+
+#contact-editor .editor .scrollable.shadow-top {
+	/* box-shadow: #afafaf 0 -8px 8px -6px inset; */
+	box-shadow: #afafaf 0px 10px 6px -6px inset, #afafaf 0 -8px 8px -6px inset;
+	padding-top: 2px;
+	/* height: 8px; */
+}
+
+#contact-editor .show-empty:empty:before {
+	content: 'No chat history';
+	opacity: .5;
+	font-size: xx-large;
+	min-height: 100px;
+}
+
+/* #contact-editor .chat-content i.emoji {
+	font-style: unset;
+	font-family: emoji;
+} */
+
+#contact-editor .editor .list2 .group-header {
+	/* background-color: unset; */
+	background-color: #11111111;
+	box-shadow: unset;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	font-size: small;
+	padding: 2px;
+}
+
+#contact-editor .editor .scrollable .group:first-child {
+	margin-bottom: 10px;
+}
+
+/* #contact-editor .editor .max-width {
+	--max-width: 650px;
+} */
+
+/* *[contenteditable] {
+	-webkit-user-select: auto !important;
+} */
+
+#contact-editor .editor .grid.torrent {
+	display: grid;
+	grid-template-areas: 
+		"title 		b4 b3 b2 b1"
+		"progress 	progress progress progress progress"
+		"files 		files files files files"
+		;
+	grid-template-columns: 1fr;
+	column-gap: 5px;
+
+	max-width: 800px;
+}
+
+
+#contact-editor .fa.image {
+	color: var(--orange);
+}
+
+#contact-editor .fa.audio {
+	color:var(--green);
+}
+
+#contact-editor .fa.video {
+	color: var(--blue);
+}
+
+#contact-editor .fa.text {
+	color: var(--gray);
+}
+
+#contact-editor .fa.pdf {
+	color: var(--red);
+}
+
+#contact-editor .fa.zip {
+	color: var(--apple-blossom);
+}
+
+.chat-message .md > :is(table) {
+	max-width: 800px;
+	margin-left: 10px 0 10px 20px;
+}
+
+.chat-message .post {
+	box-shadow: unset!important;
+}
+
+#contact-editor .editor .grid.torrent:not([state="done"]) button[name="play"],
+#contact-editor .editor .grid.torrent:not([state]) .progress {
+	display: none;
+}
+
+#contact-editor {
+	&:not([mode="contact"]) {
+		.header {
+			:is(button[name="call"]) { display: none; }
+		}
+	}
+
+	&:not([mode="room"]) {
+		.header {
+			:is(button[name="invite"]) { display: none; }
+		}
+	}
+
+	&:not([mode="user"]) {
+		.header {
+			:is(button[name="add"]) { display: none; }
+		}
+	}
+}

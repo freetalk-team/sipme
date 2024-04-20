@@ -1,0 +1,23 @@
+
+.v-sash {
+	--sash-width: 4px;
+
+	width: var(--sash-width);
+	/* min-width: 4px; */
+	height: 100%;
+	/* background-color:lightcoral; */
+	background-color: #b5b5b5;
+
+	border-radius: 80%;
+    max-height: 98%;
+    margin: auto;
+}
+
+.dark .v-sash,
+.v-sash.dark {
+	background-color: #616162;
+}
+
+.v-sash:hover {
+	cursor: e-resize;
+}

@@ -1,0 +1,17 @@
+
+#contact-editor .chat-input {
+	/* border-radius: calc(48px/2); */
+	border-radius: 5px;
+	/* background-color: rgba(241,243,244,0.749); */
+	background-color: rgba(241,243,244);
+}
+
+#contact-editor .chat-input button:not(:disabled) {
+	color: blue;
+}
+
+#contact-editor .chat-input button:disabled,
+#contact-editor .chat-input button:disabled:hover {
+	color: var(--gray);
+	opacity: unset;
+}

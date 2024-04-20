@@ -1,0 +1,71 @@
+<div ux>
+
+<template id="scrollable" classes="scrollable">
+	<div class="v-scroller"><div class="slider"></div></div>
+	<div class="area">
+		<div class="shadow"></div>
+		<div class="content">
+			[[_0]]{{this}}
+		</div>
+	</div>
+</template>
+
+<template id="scrollable-list" classes="scrollable list2">
+	<div class="v-scroller"><div class="slider"></div></div>
+	<div class="area">
+		<div class="shadow"></div>
+		<div class="content {{_1||''}}">
+			[[_0]]{{this}}
+		</div>
+	</div>
+</template>
+
+<template id="list-group" classes="group column relative" badge="{{this.badge?'true':'false'}}">
+	[[list-group-header]]{{this}}
+	[[list-group-content,,_0]]{{this}}
+</template>
+
+<template id="list-group-header" classes="group-header noevents cr ci m2 {{this.header||''}}" grouphdr>
+	@if{{this.icon}}
+		<i class="fa icon {{this.icon}}"></i>
+	@endif
+	@if{{this.collapse}}
+		<i class="fa fa-angle-down group-arrow stroke"></i>
+	@endif
+	<span class="title fit ellipsis {{this.titlestyles||''}}">{{this.title||this.name.capitalizeFirstLetter()}}</span>
+	<div class="row display-hover wm8 fade smaller" hoverable>
+		<button class="icon fa fa-angle-up" name="_up" title="Move up"></button>
+		<!-- <button class="icon fa fa-angle-down" name="_dw" title="Move down"></button> -->
+	</div>
+	<!-- <button class="icon fa fa-angle-up smaller wm8 fade display-hover" name="_up" title="Move up"></button>
+	<button class="icon fa fa-angle-down smaller wm8 fade display-hover" name="_dw" title="Move down"></button> -->
+	@foreach{{this.actions}}[name]
+		<button class="icon fa sm display-hover {{this.icon||''}}" title="{{this.title||this.name.capitalizeFirstLetter()}}" name="{{this.name}}" cmd="{{this.cmd||''}}"></button>
+	@endforeach
+	@if{{this.visible}}
+		<button class="icon fa fa-caret-up stroke watermark-8 fade display-hover" name="_less" title="Less"></button>
+	@endif
+</template>
+
+<template id="list-group-content" classes="content fade column {{len(_0)>this.visible?'more':''}} {{this.content||''}}" visible="{{this.visible||-1}}" template="{{this.item}}" cmd="{{this.cmd}}" _a-group="{{this.name}}">
+@foreach{{_0}}[visible,item]
+	@if{{le(_0, _1)}}
+		[[_2]]{{this}}
+	@else
+		[[_2,div hidden]]{{this}}
+	@endif
+@endforeach
+</template>
+
+
+
+<template id="list-group-noheader" classes="group column">
+	[[list-group-content,,_0]]{{this}}
+</template>
+
+<template id="list-base-item" classes="w3-padding-tiny container-row m5 fit center-items noevents">
+	<i class="fa {{this.icon||this.type}} item-icon"></i>
+	<span class="fit ellipsis">{{this.name||this.type}}</span>
+</template>
+
+</div>

@@ -1,0 +1,147 @@
+
+.welcome .group-header {
+	margin-block-end: 0.5em;
+}
+
+.welcome .group-header .title {
+	font-size: 1.17em;
+	font-weight: bold;
+	opacity: .4;
+}
+
+.welcome .group-header button.icon {
+	font-size: smaller;
+}
+
+.contact.grid {
+	grid-template-areas:
+		"avatar name rest"
+		"avatar msg msg"
+		"empty input input"
+	;
+
+	grid-template-columns: auto 1fr;
+	column-gap: 5px;
+	row-gap: 3px;
+}
+
+.welcome .contact[data-room="true"] {
+	background-color: #eee;
+}
+
+.welcome .contact .avatar {
+	align-self: baseline;
+	margin-top: 5px;
+}
+
+.contact.grid .name {
+	/* margin-right: auto; */
+	max-width: fit-content;
+}
+
+.contact.grid .msg > em {
+	opacity: .8;
+}
+
+.welcome :is(.contact,.comment):not([selected]) .input {
+	display: none;
+}
+
+.welcome [data-replies]:before { content: ''; }
+.welcome [data-replies]:not([data-replies="0"]):before {
+	content: 'and ' attr(data-replies) ' others ';
+}
+
+.welcome .player .track.file {
+	grid-template-areas: 
+		'title title time'
+		'desc  rating rating'
+		'video video video'
+		;
+}
+
+.welcome .player .track button.icon {
+	display: none;
+}
+
+.welcome .own.selected .ellipsis:is(.r2,.r3,.r4) {
+	-webkit-line-clamp: unset!important;
+}
+
+.welcome .border-bottom {
+	border-bottom: 1px solid #0005;
+}
+
+.welcome .max-height {
+	--max-height: 200px;
+    --shadow-height: 40px;
+    position: relative;
+    max-height: var(--max-height);
+    overflow: hidden;
+}
+
+.welcome .max-height:after {
+	content: '';
+	height: var(--shadow-height);
+	width: 100%;
+	background: linear-gradient(transparent 12px, white);
+	position: absolute;
+	top: calc(var(--max-height) - var(--shadow-height));
+    left: 0;
+}
+
+.welcome .group:not(.collapsed)[badge="true"]:after,
+.welcome .group.badge:not(.collapsed):after {
+	top: 4px;
+	background: radial-gradient(circle at center, #eee, #ddd);
+	color: #111a;
+}
+
+.welcome .post.grid {
+	grid-template-areas:
+		"head"
+		"article"
+		"footer"
+		"comment"
+		;
+	row-gap: 5px;
+}
+
+.welcome .post.grid .head { grid-area: head; }
+.welcome .post.grid .article.md { grid-area: article; }
+.welcome .post.grid .footer { grid-area: footer; }
+.welcome .post.grid .comment { grid-area: comment; }
+
+.welcome .item.contact.new {
+	background-color: #0f02;
+}
+
+.welcome .post img.thumb {
+	float: left;
+	margin-right: 1em;
+}
+
+/* .welcome .post p.image {
+	margin-block-start: 0;
+	margin-block-end: 0;
+} */
+
+[edit] > .md {
+	display: none;
+} 
+
+[edit] > button[name="edit"] {
+	display: none;
+}
+
+.edit-area .actions {
+	display: none;
+}
+
+[edit] .edit-area .actions {
+	display: unset;
+}
+
+.welcome a[title]{
+	cursor: pointer;
+}

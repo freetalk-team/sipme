@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/app.css">
+		<link rel="stylesheet" href="/site.css">
+	</head>
+	<body class="column">
+		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
+			<img class="x64" src="<%- Config.product.logo %>">
+			<div class="cc m2 fit">
+				<h1 class="wm8 text-stroke nomargin"><%- Config.product.name %></h1>
+				<b><%- Config.company.name %></b>
+				<i class="smaller"><%- Config.company.desc %></i>
+			</div>
+			<span class="cr ci m10 smaller baseline nounderline">
+				<a href="/" class="cr ci"><i class="fa sm wm6 margin-right-tiny fa-home"></i>home</a>
+				<a href="/trac" class="cr ci">trac</a>
+				<a href="/doc/wiki" class="cr ci">wiki</a>
+			</span>
+		</header>
+
+		<div class="scroll-area custom cc m15">
+
+			<div class="w3-container w3-padding max-width wider center">
+
+				<div class="md light inconsolata-p">
+					<h1 >Terms of Service</h1>
+					<p>These Terms of Service (&quot;Terms&quot;) govern your use of <strong>Web Messanger</strong> (&quot;the App&quot;), an open-source software provided by <strong>Freetalk Team</strong> (&quot;the Company&quot;). By accessing or using the App, you agree to be bound by these Terms.</p>
+					<h2>1. Acceptance of Terms</h2>
+					<p>By accessing or using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you may not access or use the App.</p>
+					<h2>2. Use of the App</h2>
+					<h3>2.1 License</h3>
+					<p>The App is provided under an open-source license, allowing you to use, modify, and distribute the source code for any purpose, including commercial purposes, without any restrictions.</p>
+					<h3>2.2 Restrictions</h3>
+					<p>While there are no restrictions on the use of the App itself, you are still required to comply with all applicable laws and regulations when using or distributing the App.</p>
+					<h2>3. Contributions</h2>
+					<p>You are welcome to contribute to the development of the App by submitting patches, bug reports, feature requests, or other feedback. By contributing to the App, you agree to license your contributions under the same open-source license as the rest of the App.</p>
+					<h2>4. No Warranty</h2>
+					<p>The App is provided on an &quot;as-is&quot; basis, without any warranties of any kind, express or implied. The Company makes no warranties or representations about the accuracy or reliability of the App or its suitability for any particular purpose.</p>
+					<h2>5. Limitation of Liability</h2>
+					<p>In no event shall the Company be liable for any damages arising out of or in connection with the use or performance of the App, including but not limited to direct, indirect, incidental, special, consequential, or punitive damages.</p>
+					<h2>6. Governing Law</h2>
+					<p>These Terms shall be governed by and construed in accordance with the laws of Bulgaria, without regard to its conflict of law provisions.</p>
+					<h2>7. Contact Us</h2>
+					<p>If you have any questions about these Terms or the App, please contact us at <a href="mailto:&#x74;&#101;&#x61;&#109;&#46;&#x66;&#114;&#x65;&#101;&#x74;&#x61;&#x6c;&#x6b;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;">&#x74;&#101;&#x61;&#109;&#46;&#x66;&#114;&#x65;&#101;&#x74;&#x61;&#x6c;&#x6b;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;</a>.</p>
+					<p>This Terms of Service agreement was last updated on 12 Dec 2023.</p>
+				</div>
+
+				<%- include footer %>
+			</div>
+		</div>
+	</body>
+</html>

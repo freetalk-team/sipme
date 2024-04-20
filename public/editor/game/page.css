@@ -1,0 +1,83 @@
+#game-editor .header {
+
+	&[mode="game"] [role="icon"] { display: none!important; }
+	&[mode="new"] .avatar { display: none!important }
+	
+	&:not([mode="game"]) {
+		[show="game"] { display: none!important; } 
+	}
+}
+
+#game-editor .editor canvas {
+	border-radius: 5px;
+}
+
+#backgammon {
+	max-height: 100%;
+	/* margin: auto; */
+}
+
+.fa.dice[value="1"]:before {
+	content: '\f525';
+}
+
+.fa.dice[value="2"]:before {
+	content: '\f528';
+}
+
+.fa.dice[value="3"]:before {
+	content: '\f527';
+}
+
+.fa.dice[value="4"]:before {
+	content: '\f524';
+}
+
+.fa.dice[value="5"]:before {
+	content: '\f523';
+}
+
+.fa.dice[value="6"]:before {
+	content: '\f526';
+}
+
+
+.fa.dice.white {
+	color: #ADAD85;
+	/* color: #000; */
+	/* background-color: #000; */
+
+	/* border-color: #000; */
+	/* border-radius: 1px; */
+}
+
+ul.history li {
+	padding-left: 0;
+}
+
+#game-editor .score[data-count]:after {
+	content: attr(data-count);
+}
+
+#game-editor .stat {
+	border-bottom: 1px solid #0002;
+}
+
+#game-editor .sidebar .invite {
+	grid-template-areas:
+		"avatar name reject"
+		"avatar desc time"
+	;
+
+	grid-template-columns: auto 1fr;
+	column-gap: 2px;
+	row-gap: 3px;
+}
+
+#game-editor .sidebar .invite button[name="reject"] {
+	grid-area: reject;
+}
+
+#game-editor .sidebar .item[new] {
+	background-color: #4443;
+}

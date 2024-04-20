@@ -1,0 +1,10 @@
+
+
+.dark ul.w3-ul li{
+	border-bottom:1px solid var(--gray-dark);
+}
+
+.dark progress::-moz-progress-bar,
+.dark progress::-webkit-progress-value {
+	background: var(--gray-light);
+}

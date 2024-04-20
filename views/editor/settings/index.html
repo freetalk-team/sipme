@@ -1,0 +1,311 @@
+
+<div id="settings-editor" class="hidden">
+
+<template id="settings-string-field" classes="row">
+	<label class="label">{{this.title || this.name.capitalizeFirstLetter()}}</label>
+	<div class="cc m2 value">
+		<input type="text" name="{{this.name.toLowerCase()}}" spellcheck="false" value="{{this.val}}" placeholder="{{this.placeholder}}">
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<template id="settings-number-field" classes="row">
+	<label class="label">{{this.title || this.name}}</label>
+	<div class="cc value">
+		<input type="number" class="value" name="{{this.name.toLowerCase()}}" value="{{this.val}}">
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<template id="settings-time-field" classes="row">
+	<label class="label">{{this.title || this.name}}</label>
+	<input type="time" class="value" name="{{this.name.toLowerCase()}}" value="{{this.val}}">
+	@if{{this.desc}}
+		<i class="smaller">{{this.desc}}</i>
+	@endif
+</template>
+
+<template id="settings-text-field" classes="row no-scroller">
+	<label class="label">{{this.title || this.name}}</label>
+	<div class="cc value">
+		<textarea rows="5" name="{{this.name.toLowerCase()}}" value="{{this.val}}" placeholder="{{this.placeholder}}"
+		></textarea>
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<!-- <template id="settings-option-field" classes="row">
+	<label class="label">{{this.title || this.name}}</label>
+	<select  class="value fa" name="{{this.name.toLowerCase()}}" value="{{this.val || ''}}">
+		@foreach{{this.options}}
+			<option class="fa" value="{{this.toLowerCase()}}">&#xf042; {{this}}</option>
+		@endforeach
+		<option>&#127463; Bulgaria</option>
+		<option style="font-family: apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol, inherit;">🇧🇬 Bulgaria</option>
+		<option style="font-family: apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol, ubuntu;">🇧🇬 Bulgaria</option>
+	</select>
+</template> -->
+
+<template id="settings-option-value" classes="cc value">
+	<select name="{{this.name.toLowerCase()}}">
+		{{dom.option(this.val, this.options)}}
+		
+		@foreach{{this.su}}
+			<option value="{{this.toLowerCase()}}" role="su">{{this}}</option>
+		@endforeach
+	</select>
+	@if{{this.desc}}
+		<i class="smaller">{{this.desc}}</i>
+	@endif
+</template>
+
+<template id="settings-option-field" classes="row">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	[[settings-option-value]]{{this}}
+</template>
+
+<template id="settings-bool-field" classes="row">
+	<label class="label">{{this.title || this.name}}</label>
+	<input type="checkbox" class="checkbox left value" name="{{this.name.toLowerCase()}}" value="{{this.val}}">
+</template>
+
+<template id="settings-radio-field" classes="row">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<div class="cc value">
+		<div class="row">
+			<input type="radio" name="{{this.name.toLowerCase()}}" value="{{this.options[0].toLowerCase()}}" checked>
+			<label class="radio">{{this.options[0]}}</label>
+			@foreach{{this.options.slice(1)}}[name]
+				<input type="radio" name="{{_1.toLowerCase()}}" value="{{this.toLowerCase()}}">
+				<label class="radio">{{this}}</label>
+			@endforeach
+		</div>
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<template id="settings-content-field" classes="cc">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<textarea class="value" name="{{this.name.toLowerCase()}}" style="min-height: 600px;"></textarea>
+</template>
+
+<template id="settings-edit-field" class="column">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<textarea class="value" data-mode="md" name="{{this.name.toLowerCase()}}" >{{this.val||''}}</textarea>
+</template>
+
+<template id="settings-list-field" class="cc w3-padding">
+	<label class="label">{{this.title || this.name.capitalizeFirstLetter()}}</label>
+	<ul class="w3-ul count" name="{{this.name}}">
+		@foreach{{this.items}}[template]
+			[[{{_1}},li]]{{this}}
+		@endforeach
+	</ul>
+</template>
+
+<template id="settings-autocomplete-field" class="row">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<div class="value relative">
+		<input type="text" name="{{this.name.toLowerCase()}}" spellcheck="false" autocomplete="off" ds="{{this.ds}}">
+	</div>
+</template>
+
+<template id="settings-photo-field" classes="row">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<div class="value">
+		<div class="dropzone">
+			@if{{this.val}}
+			<img src="{{this.val}}">
+			@endif
+		</div>
+	</div>
+</template>
+
+<template id="settings-region-field" classes="row">
+	<label class="label">{{this.title || this.name.capitalizeFirstLetter()}}</label>
+	<div class="cc value">
+		<select name="{{this.name.toLowerCase()}}" value="{{this.val || 'eu'}}" style="max-width: 260px">
+			<optgroup label="Europe"></optgroup>
+			<option value="eu">🇪🇺 EU</option>
+			<option value="au">🇦🇺 Australia</option>
+			<option value="at">🇦🇹 Österreich</option>
+			<option value="az">🇦🇿 Azərbaycan</option>
+			<option value="al">🇦🇱 Shqipëria</option>
+			<option value="ba">🇧🇦 Bosna i Hercegovina</option>
+			<option value="bg">🇧🇬 България</option>
+			<option value="ca">🇨🇦 Canada</option>
+			<option value="es">🇪🇸 España</option>
+			<option value="gr">🇬🇷 Ελλάδα</option>
+			<option value="pt">🇵🇹 Portugal</option>
+			<option value="ro">🇷🇴 România</option> Canada</option>
+			<option value="tr">🇹🇷 Türkiye</option>
+			<option value="gb">🇬🇧 UK</option>
+			<optgroup label="America"></optgroup>
+			<option value="us">🇺🇸 USA</option>
+			<option value="uy">🇺🇾 Uruguay</option>
+			<option style="font-style: italic;">other</option>
+		</select>
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<template id="settings-icon-field" classes="row">
+	<label class="label">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+	<div class="cc value">
+		<div class="container-row">
+			<select class="fa" name="{{this.name.toLowerCase()}}" style="max-width: 50px">
+				@foreach{{this.options}}
+					<option class="fa text-center" value="{{this}}">&#x{{this}};</option>
+				@endforeach
+			</select>
+			<input type="color" name="{{this.name.toLowerCase()}}color" value="#006994" style="max-width: 30px">
+		</div>
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+	</div>
+</template>
+
+<template id="settings-optiontab-page" classes="cc fit">
+	@foreach{{this}}
+		@if{{!(this.su && !app.sudo)}}
+			[[settings-{{this.type}}-field]]{{this}}
+		@endif
+	@endforeach
+</template>
+
+<template id="settings-optiontab-field" classes="row">
+	<label class="label top">{{this.title||this.name.capitalizeFirstLetter()}}</label>
+
+	<div class="cc value tabpage">
+
+		<select name="{{this.name.toLowerCase()}}" value="{{this.val}}" tab>
+			@foreach{{this.options}}
+				@if{{!(this.su && !app.sudo)}}
+					<option value="{{this.name.toLowerCase()}}">{{this.name}}</option>
+				@endif
+			@endforeach
+		</select>
+		@if{{this.desc}}
+			<i class="smaller">{{this.desc}}</i>
+		@endif
+
+		@foreach{{this.options}}
+			[[settings-optiontab-page]]{{this.fields}}[[tab=this.name]]
+		@endforeach
+
+	</div>
+
+</template>
+
+<template id="settings-faicon-field" classes="row">
+	<label class="label top">{{this.title || this.name.capitalizeFirstLetter()}}</label>
+	<!-- <button type="button" class="picmo__emoji-button empty"></button> -->
+	<div class="picker value">
+		<div class="picmo__picker picmo__dark custom-theme picmo__skeleton" style="--category-count: 4; --emojis-per-row: 8; --row-count: 6;">
+			<header class="picmo__headerSkeleton">
+				<div class="picmo__searchSkeleton">
+					<div class="picmo__searchInput picmo__placeholder"></div>
+				</div>
+				<div class="picmo__categoryTabsSkeleton">
+					<div class="picmo__placeholder picmo__categoryTab"></div>
+					<div class="picmo__placeholder picmo__categoryTab"></div>
+					<div class="picmo__placeholder picmo__categoryTab"></div>
+					<div class="picmo__placeholder picmo__categoryTab"></div>
+				</div>
+			</header>
+
+			<div class="picmo__contentSkeleton">
+				<div class="picmo__placeholder picmo__categoryName"></div>
+				<div class="picmo__emojiGrid">
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+					<div class="picmo__placeholder picmo__emoji"></div>
+				</div>
+			</div>
+			<div class="picmo__previewSkeleton">
+				<div class="picmo__placeholder picmo__previewEmoji"></div>
+				<div class="picmo__placeholder picmo__previewName"></div>
+				<ul class="picmo__tagList">
+					<li class="picmo__placeholder picmo__tag"></li>
+					<li class="picmo__placeholder picmo__tag"></li>
+					<li class="picmo__placeholder picmo__tag"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</template>
+	
+<!-- <template id="settings-optiontab-field" classes="row">
+	<label class="label">{{this.title || this.name.capitalizeFirstLetter()}}</label>
+	<div class="value tabpage">
+
+		@foreach{{this.options}}
+		<input class="tab" type="radio" name="test" id="{{this.name}}">
+		<div class="content-holder">
+			<label class="center-items" for="{{this.name}}"><i class="fa fa-circle smaller"></i>{{this.name}}</label>
+			<div>{{this.name}} => All my content for the first tab goes here.</div>
+		</div>
+
+		@endforeach
+		
+	</div>
+
+</template> -->
+
+</div>

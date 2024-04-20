@@ -1,0 +1,73 @@
+
+.list2 .channel {
+	/* padding: 4px 2px; */
+	/* flex-direction: column; */
+	display: flex;
+}
+
+.list2 .item.channel.selected:after {
+	background-color: #cccccc;
+	opacity: .5;
+	content: "";
+	width: 3px;
+	margin: 2px 0;
+}
+
+.list2 .channel .info {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	margin-right: 9px;
+	flex: 1;
+}
+
+.list2 .channel .header {
+	display: flex;
+	margin: 0;
+	flex: 1;
+}
+
+.list2 .channel .header .flag-icon {
+	width: 14px;
+}
+
+.list2 .channel.missed .header i.fa {
+	display: unset;
+}
+
+.list2 .channel.missed {
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.list2 .channel.missed .header i.fa:before {
+	content: '\f0e0';
+	color: #007acc
+}
+
+.list2 .channel .footer {
+	font-size: 80%;
+	/* font-weight: 600; */
+	font-style: italic;
+	display: flex;
+	padding-right: 2px;
+}
+
+.list2 .channel .footer span.status {
+	flex: 1;
+	/* display: flex; */
+	text-overflow: ellipsis;
+}
+
+.list2 .channel .footer i {
+	font-size: 90%;
+	opacity: .8;
+}
+
+.list2 .channel .header span {
+	flex: 1;
+}
+
+.list2 .channel.modified i.fa {
+	display: unset;
+}

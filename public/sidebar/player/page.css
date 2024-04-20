@@ -1,0 +1,28 @@
+
+
+.sb-player .item .info {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.sb-player .item span {
+	font-style: italic;
+}
+
+.sb-player .item.selected span {
+	font-style: unset;
+	font-weight: bold;
+}
+
+.sb-player .item span.count {
+	font-size: smaller;
+	font-style: italic;
+	font-weight: normal;
+}
+
+#sidebar .list2 .sb-player .item.main {
+	display: flex;
+	margin: 3px 2px;
+}
+

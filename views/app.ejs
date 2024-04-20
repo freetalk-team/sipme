@@ -1,0 +1,46 @@
+
+<!-- Notification Popup Structure -->
+<div id="notification-popup" class="hidden cc">
+	<div class="cr ci">
+		<img class="avatar circle x24">
+		<h4 class="name text-stroke ellipsis nomargin"></h4>
+	</div>
+	<!-- <p>You have an incoming call...</p> -->
+	<div class="cr">
+		<button id="answer-btn" class="icon circle fa fa-fw fa-phone w3-green" title="Answer"></button>
+		<button id="reject-btn" class="icon circle fa fa-fw fa-phone-slash w3-red" title="Reject"></button>
+	</div>
+</div>
+
+<%- include common/index.html %> 
+
+<div id="app-page" class="row">
+
+	<%- include sidebar/index.html %>
+	<%- include editor/index.html %>
+</div>
+
+<div ux>
+	<template id="editor-welcome-header" class="header cr ci">
+		<img class="x48" src="<%- Config.product.logo %>">
+		<h1 class="text-stroke wm8 fit nomargin"><%- Config.company.name %></h1>
+		<button class="icon circle fa fa-cog" cmd="edit-profile" title="Profile settings"></button>
+	</template>
+</div>
+
+<script type="module">
+
+	import { App } from '/app.js';
+
+	function startApp() {
+
+		console.debug('STARTING APP', User);
+
+		const app = new App;
+
+		app.load(User);
+	}
+	
+	startApp();
+
+</script>

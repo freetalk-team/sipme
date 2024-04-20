@@ -1,0 +1,78 @@
+
+<template id="editor-admin-actions" class="right end-items">
+	<button class="icon fa xl add w3-text-blue" name="add" title="New"></button>
+</template>
+
+<template id="editor-admin-content" class="cc max-width center wider w3-container w3-margin-bottom">
+	[[search-area]]
+	<div class="cc show-empty" role="main" template="editor-admin-user-item"></div>
+</template>
+
+<template id="editor-admin-user-item" class="contact grid item noevents w3-padding-small" data-id="{{this.id}}" data-name="{{this.name}}">
+
+	<img class="avatar circle center" src="{{this.photo||app.defaultAvatar}}"> 
+	<a class="name ellipsis" cmd="open-contact-contact" title="Open chat">{{this.name}}</a>
+	<i class="msg ellipsis">{{this.email}}</i>
+	
+	<div class="status row ci display-hover">
+		<button class="icon fa call sm" name="call" title="Call" cmd="video-call-user"></button>
+		<button class="icon fa" name="remove" title="Remove"></button>
+	</div>
+
+	<div class="input smaller">
+		<div class="cc hide-selected">
+			<span class="cr ci m10">
+				<span><b>perm: </b><i> wiki</i></span>
+			</span>
+		</div>
+		<div class="cc m10 fade show-selected w3-container">
+			<h4 class="nomargin wm8">Permissions</h4>
+			<div class="cr ci m10">
+				<input class="checkbox" type="checkbox">
+				<b>invite</b>
+			</div>
+			<div class="cr ci m10">
+				<input class="checkbox" type="checkbox">
+				<b>task board</b>
+			</div>
+			<div class="cr ci m10">
+				<input class="checkbox" type="checkbox">
+				<b >wiki</b>
+			</div>
+			<div class="actions cr ci">
+				<button class="w3-btn w3-blue w3-round">Update</button>
+				<!-- <button class="w3-btn w3-blue w3-round">Reset</button> -->
+			</div>
+			<a>reset password</a>
+		</div>
+	</div>
+</template>
+
+<template id="editor-admin-room-item" class="cc item noevents w3-padding-small" data-id="{{this.uid}}" data-name="{{this.name}}">
+	<div class="row ci" hoverable>
+		<h3 class="nomargin fit">{{this.display||this.name}}</h3>
+		<button class="icon fa display-hover" name="add" title="Add member" cmd="room-add-user"></button>
+		<button class="icon fa display-hover" name="remove" title="Remove" cmd="rm-room"></button>
+	</div>
+	<!-- <span class="smaller"><b>ns:</b> {{this.domain}}</span> -->
+	<i>{{this.topic}}</i>
+
+	<div class="w3-container count smaller">
+		<span class="hide-selected wm8 counter" role="count"><b>members:</b> {{this.members.length}}</span>
+		<div class="cc show-selected">
+			<h4 class="nomargin wm8">Members</h4>
+			<div class="col show-empty left events" role="members">
+			@foreach{{this.members}}[uid]
+				[[editor-admin-room-member,,_1]]{{this}}
+			@endforeach
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="editor-admin-room-member" class="cr ci item w3-padding-small" data-id="{{this.id}}">
+	<img class="avatar x24 circle center" src="{{this.photo||app.defaultAvatar}}"> 
+	<a class="name" cmd="open-contact-contact" title="Open chat">{{this.name}}</a>
+	<span class="fit"></span>
+	<button class="icon fa display-hover" name="delete" title="Remove" cmd="room-rm-user-{{_0}}"></button>
+</template>

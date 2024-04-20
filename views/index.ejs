@@ -1,0 +1,8 @@
+<% layout('layout') -%>
+<% if (!user) { %>
+	<%- include login %> 
+<% } else if (!user.complete) { %>
+	<%- include setup %> 
+<% } else { %>
+	<%- include app %> 
+<% } %>

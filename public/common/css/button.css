@@ -1,0 +1,84 @@
+button.ux {
+	border-radius: 4px;
+	border: solid 1px;
+	border-color: #007fd4;
+	background-color: #007fd4;
+	/* background-color: #007acc; */
+	/* background-color: #2a5c7e; */
+	/* color: rgb(60, 60, 60); */
+	/* color: #cccccc; */
+	/* margin: 0 4px; */
+}
+
+button.ux:not(.icon) {
+	color: var(--light);
+	width: fit-content;
+	padding: 4px 10px;
+}
+
+.dark button.ux {
+	/* color: #f1f1f1; */
+}
+
+button.ux:hover, button.icon:hover {
+	opacity: .8;
+}
+
+button.ux:focus, button.icon:focus {
+	outline: none;
+}
+
+button.ux:disabled  {
+	opacity: .8;
+	border-color: grey;
+	background-color: gray;
+}
+
+button.ux:disabled:hover, 
+button.icon:disabled:hover {
+	opacity: .8;
+}
+
+button.icon {
+	border: none;
+	background-color: transparent;
+	/* color: var(--dark); */
+	color: unset;
+	/* display: flex; */
+}
+
+button.icon:disabled {
+	opacity: .8;
+}
+
+button.icon.circle {
+	box-sizing: unset;
+	border-radius: 50%;
+	padding: 8px;
+	text-align: center;
+	/* font-size: smaller; */
+	aspect-ratio: 1;
+}
+
+button.icon.circle:hover {
+	background-color: var(--gray-light);
+}
+
+/* .dark button.icon {
+	color: var(--light);
+} */
+
+button.icon i.fa,
+button.icon i.fas {
+	align-self: center;
+	pointer-events: none;
+}
+
+button:disabled.icon {
+	/* opacity: .6; */
+	color: #888!important;
+}
+
+button.hover:hover > .fa {
+	transform: scale(1.15);
+} 

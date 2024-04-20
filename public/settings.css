@@ -1,0 +1,173 @@
+
+.settings {
+	/* margin: 0 5px; */
+	/* padding: 0 5px; */
+	width: calc(100% - 10px);
+	/* max-width: calc(100% - 20px); */
+	/* max-width: 90%; */
+	/* margin: 2px 15px 5px 5px; */
+	margin: 5px auto;
+	max-width: min(98%, 1200px);
+
+	padding-top: 40px;
+}
+
+.settings .item:last-child {
+	/* margin-bottom: 15px; */
+}
+
+
+.settings .item.group .item:nth-child(even) {
+	background-color: unset;
+}
+
+.settings .item:hover,
+.settings .item.selected,
+.settings .item.group .item:nth-child(even):hover,
+.settings .item:nth-child(even):not(.group):hover
+{
+	opacity: unset;
+	background-color: unset;
+}
+
+/* .settings .item .info .header span {
+	font-size: 90%;
+	font-weight: bold;
+	text-transform: lowercase;
+} */
+
+.settings .labels {
+	flex: 2 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.settings .values {
+	flex: 3 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.settings .item.row {
+	padding: 6px 0;
+}
+
+.settings label.label {
+	flex: 2 1;
+	text-align: center;
+	font-weight: bold;
+	align-self: center;
+	opacity: .8;
+}
+
+.settings .value {
+	flex: 3 0;
+	/* padding-right: 10px; */
+	/* margin-right: 10px; */
+	display: flex;
+}
+
+.settings .value select,
+.settings .value textarea,
+.settings .value input:not([type="radio"]) {
+	flex: 1;
+	padding: 2px 4px;
+	font-size: smaller;
+}
+
+.settings .value input[type=number] {
+	max-width: 80px;
+}
+
+/* .settings .value select,
+.settings .value textarea,
+.settings .value input[type=time],
+.settings .value input[type=text] */
+.settings .value > * {
+	max-width: 600px;
+}
+
+.settings .value input::-webkit-outer-spin-button,
+.settings .value input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.settings button.icon {
+	display: flex;
+}
+
+.settings button.icon i.fa {
+	font-size: large;
+	align-self: center;
+}
+
+/* .settings .list .content .value input[type="checkbox" i] {
+	background-color: green;
+} */
+
+/* .settings input.value[type="number"] {
+	max-width: 200px;
+} */
+
+.settings textarea {
+	resize: none;
+	overflow: hidden;
+}
+
+.settings .CodeMirror {
+	height: auto;
+}
+
+/* .value.tabpage {
+	display: block;
+	position: relative;
+	width: 600px;
+	height: 450px;
+	border: solid 1px black;   
+}
+
+.value.tabpage input[type="radio"].tab {
+    position: absolute;
+    left: -100%;
+    top: -100%;
+    height: 0;
+    display: none;
+}
+
+.value.tabpage input[type="radio"].tab + div.content-holder > label {
+    display: inline-block;
+    background-color: #7BE;
+    border-radius: 2px;
+    color: #333;
+    height: 35px;
+    margin: 5px 0 0 2px;
+    padding: 15px 0 0 0;
+    text-align: center;
+    width: 33%;
+    float: left;
+}
+
+.value.tabpage input[type="radio"].tab + div.content-holder > div {
+	position: absolute;
+    width: 100%;
+    text-align: center;
+	top: 30px;
+	display: none;
+}
+
+.value.tabpage input[type="radio"].tab:checked + div.content-holder > div {
+	display: block;
+}
+
+.value.tabpage input[type="radio"].tab:checked + div.content-holder > label {
+	background-color: #B1CF6F;
+} */
+
+
+.value.tabpage > div:not(:first-of-type) {
+	display: none;
+}
+
+.settings .CodeMirror-vscrollbar {
+	display: none!important;
+}

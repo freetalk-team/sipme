@@ -1,0 +1,100 @@
+
+[data-theme="dark"] {
+	--navbar-bg-color: #3c3c3c;
+	--navbar-color: var(--dark-text-color);
+	--navbar-box-shadow: #000000 -6px 0 6px -6px inset;
+}
+
+[data-theme="light"] {
+	--navbar-bg-color: #dde;
+	--navbar-color: var(--text-color);
+	--navbar-box-shadow: #55f -6px 0 6px -6px inset;
+}
+
+#navbar {
+	/* width: 60px !important; */
+	min-width: 48px;
+	/* height: calc(100% - 30px); */
+	height: 100%;
+
+	background-color: var(--navbar-bg-color);
+	color: var(--navbar-color);
+	box-shadow: var(--navbar-box-shadow);
+
+	display: flex;
+	flex-direction: column-reverse;
+
+	align-items: center;
+
+	font-size: 130%;
+
+	/* padding-top: 8px; */
+	padding: 0 5px;
+
+
+	:is(button) {
+		position: relative;
+
+		&:hover { transform: scale(1.1); }
+		&.selected { transform: scale(1.15); opacity: 1; }
+	}
+}
+
+#navbar .main {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	margin-bottom: 8px;
+}
+
+#navbar .actions {
+	/* flex: 1; */
+	/* overflow: hidden; */
+	margin: auto;
+}
+
+#navbar .item {
+	height: 32px;
+	opacity: .6;
+}
+
+#navbar .badge {
+	background-color: #007acc;
+	box-shadow: #000000 -6px 0 6px -6px inset;
+
+	color: whitesmoke;
+	border-radius: 50%;
+	display: inline-block;
+	text-align: center;
+
+	pointer-events: none;
+
+	/* line-height: 14px;
+	min-width: 16px;
+	font-size: x-small; */
+
+	line-height: 16px;
+	/* min-width: 18px; */
+	min-width: 22px;
+	font-weight: bold;
+	font-size: small;
+
+	position: absolute;
+	bottom: 0;
+	right: -6px;
+}
+
+.missed {
+	-webkit-animation-name: fa-bounce;
+	animation-name: fa-bounce;
+	-webkit-animation-delay: var(--fa-animation-delay,0s);
+	animation-delay: var(--fa-animation-delay,0s);
+	-webkit-animation-direction: var(--fa-animation-direction,normal);
+	animation-direction: var(--fa-animation-direction,normal);
+	-webkit-animation-duration: var(--fa-animation-duration,1s);
+	animation-duration: var(--fa-animation-duration,1s);
+	-webkit-animation-iteration-count: var(--fa-animation-iteration-count,infinite);
+	animation-iteration-count: var(--fa-animation-iteration-count,infinite);
+	-webkit-animation-timing-function: var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));
+	animation-timing-function: var(--fa-animation-timing,cubic-bezier(.28,.84,.42,1));
+}

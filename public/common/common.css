@@ -1,0 +1,231 @@
+
+
+@import 'css/link.css';
+@import 'css/input.css';
+@import 'css/checkbox.css';
+@import 'css/file.css';
+@import 'css/button.css';
+@import 'css/autocomplete.css';
+@import 'css/radio2.css';
+@import 'css/fa.css';
+@import 'css/slideshow.css';
+@import 'css/flex.css';
+@import 'css/grid.css';
+@import 'css/dark.css';
+@import 'css/rating.css';
+@import 'css/md.css';
+@import 'css/table.css';
+
+@import 'utils.css';
+@import 'scrollable.css';
+@import 'list2.css';
+@import 'list.css';
+@import 'sash.css';
+
+.text-expand {
+
+	--max-height: 300px;
+	--shadow-height: 50px;
+
+}
+
+[expandable]:not(.expanded) .text-expand {
+	position: relative;
+	max-height: var(--max-height);
+	overflow: hidden;
+
+	&:not(.loading3):after {
+		/* content: "more";
+		font-size: smaller;
+		font-style: italic; 
+		opacity: .6;
+		text-align: center;
+		*/
+	
+		content: "\2304";
+		text-align: right;
+		opacity: .9;
+		position: absolute;
+		top: calc(var(--max-height) - var(--shadow-height));
+		left: 0;
+		height: var(--shadow-height);
+		width: 100%;
+		background: linear-gradient(transparent 12px, white);
+		cursor: pointer;
+	}
+}
+
+.text-expand.long {
+	--max-height: 650px;
+}
+
+.counter[data-count]:after {
+	content: attr(data-count);
+	margin-left: 4px;
+}
+
+.counter[data-count][value]:after {
+	content: attr(value);
+	margin-left: 4px;
+}
+
+.counter[data-count="0"]:after {
+	content: "";
+}
+
+.fa.counter:after {
+	font-family: var(--font);
+}
+
+.count {
+	counter-reset: count 0;
+}
+
+.count .counter.after:after {
+	content: counter(count, decimal);
+}
+
+ul.count li, ol.count li {
+	counter-increment: count 1;
+}
+
+ul.count li:before, ol.count li:before {
+	content: counter(count, decimal) '. ';
+	margin-right: 5px;
+}
+
+ul.count li.si:before, ol.count li.si:before {
+	font-size: smaller;
+	font-style: italic;
+}
+
+.loading3.hide > * {
+	display: none;
+}
+
+.loader, 
+.loading3:after, 
+.loading-top:before,
+.loading2:after { 
+	--border-width: 6px;
+
+	width: 60px;
+	height: 60px;
+
+	border: var(--border-width) solid #f3f3f3; 
+	border-top: var(--border-width) solid #3498db !important; 
+	border-radius: 50%; 
+	animation: spin 1.2s linear infinite; 
+}
+
+.dark .loading3:after,
+.dark .loading-top:before {
+	border-color: #555;
+}
+
+.loading-top:before,
+.loading3:after {
+	display: block;
+    content: '';
+    margin: 40px auto;
+}
+
+.loading2 {
+	position: relative;
+	min-height: 80px;
+}
+
+.loading2:after { 
+	display: inline-block;
+	content: '';
+	/* margin: 40px auto; */
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	animation-name: spin-center;
+}
+	
+.loader {
+	margin: 40px auto; 
+	/* position: fixed; top: 40%; left: 40%;  */
+}
+
+.dark .loader, .dark .loading2:after {
+	border: var(--border-width) solid #8884;
+	border-top: var(--border-width) solid #3498db; 
+}
+
+@keyframes spin { 
+	0% { 
+		transform: rotate(0deg); 
+	} 
+	100% { 
+		transform: rotate(360deg); 
+	} 
+}
+
+@keyframes spin-center { 
+	0% { 
+		transform: translate(-50%,-50%) rotate(0deg); 
+	} 
+	100% { 
+		transform: translate(-50%,-50%) rotate(360deg); 
+	} 
+}
+
+.show-empty:empty:before {
+/* .show-empty:blank:before { */
+	content: 'No items';
+	width: 100%;
+	margin: auto;
+	font-style: italic;
+	opacity: .5;
+	display: inline-block;
+	text-align: center;
+}
+
+.show-empty[role]:empty:before {
+	content: 'No ' attr(role);
+} 
+
+.show-empty.left:empty:before {
+	text-align: left;
+}
+
+div:has(.container-empty:not(:empty)) > .show-container-empty { display: none; }
+div:has(.container-empty:empty) > .hide-container-empty { display: none; }
+
+.slider {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 8px;
+	border-radius: 5px;  
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+  }
+  
+  .slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%; 
+	background: #04AA6D;
+	cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: #04AA6D;
+	cursor: pointer;
+  }
+
+.hide-empty-group:has([group]:empty) { 
+	display: none; 
+}

@@ -1,0 +1,76 @@
+
+
+.edit-task {
+
+	width: 100%;
+	max-width: min(92%, 980px);
+
+	margin: auto;
+}
+
+.edit-task .avatar {
+	width: 18px;
+}
+
+.edit-task .settings {
+	padding-left: 16px;
+	margin: unset;
+}
+
+.edit-task .settings label.label {
+	text-align: left;
+}
+
+.taskboard .max-width {
+	--max-width: 980px;
+}
+
+.taskboard .item.md > *:first-child {
+	margin-right: 20px;
+}
+
+.taskboard button:disabled.icon {
+	opacity: .3;
+}
+
+.welcome .count .item:before {
+    font-style: italic;
+    font-size: smaller;
+    font-weight: bold;
+	opacity: .8;
+	content: counter(count, decimal) '. ';
+	position: absolute;
+	top: 8px;
+	left: 0;
+}
+
+.welcome .count .item {
+	padding-left: 30px!important;
+}
+
+.edit[mode="board"] [view="edit"],
+.edit[mode="board"] button[name="back"],
+.edit[mode="task"] button[name="add"],
+.edit[mode="task"] [view="main"] { 
+	display: none; 
+}
+
+[group="task"] select, .edit[mode="task"] select {
+	width: 250px;
+}
+
+
+[view="main"][mode="list"] {
+
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+
+	display: flex;
+	flex-direction: column;
+
+	> .w3-third {
+		width: unset!important;
+	}
+}
+

@@ -1,0 +1,38 @@
+title: SIPme
+version: 0.9.2
+domain: chat.home.eu.org
+port: 3000
+uploads: 
+  photo: public/avatars
+company:
+  name: Freetalk Team
+  desc: Open Source solutions
+  logo: /ui/svg/app-icon.svg
+  address: Sofia, Bulgaria
+  support: team.freetalk@gmail.com
+product:
+  name: Web Messanger
+  desc: Chat with friends, share files, listen music, play games and more
+  logo: /ui/svg/sipme.svg
+sip:
+  domain: ftalk.net
+  internal: internal
+  bot: alice
+  proxy: tcp://127.0.0.1:5060
+ui:
+  theme: light-theme
+  ringtone: /ui/ogg/ringtone.ogg
+  ringbacktone: /ui/ogg/ringback-tone.ogg
+  messagetone: /ui/ogg/popsound.mp3
+  sip:
+    # proxy: ws://ext.app.home.eu.org/messenger/sip
+    proxy: ws://127.0.0.1:4080
+    domain: ftalk.net
+    publish: true
+    room: chat-
+    ua: simpe-0.9.2-beta
+  ice:
+    servers:
+      - stun:stun.l.google.com:19302
+  task:
+    update: 120

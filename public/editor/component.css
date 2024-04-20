@@ -1,0 +1,119 @@
+@import '../ui/lib/codemirror2/lib/codemirror.css';
+@import '../ui/lib/codemirror2/addon/scroll/simplescrollbars.css';
+@import '../ui/lib/codemirror2/addon/fold/foldgutter.css';
+@import '../ui/lib/codemirror2/addon/hint/show-hint.css';
+@import '../ui/lib/codemirror2/addon/lint/lint.css';
+
+@import '../ui/lib/codemirror2/theme/base16-dark.css';
+
+#component-editor {
+	flex: 1;
+	/* width: 100%; */
+	height: 100%; 
+	display: flex;
+	/* overflow: unset; */
+}
+
+#component-editor .header h2, 
+#component-editor .header h3, 
+#component-editor .header h4 {
+	color: rgba(0, 0, 0, 0.8);
+	/* box-shadow: #000000 0 -6px 6px -6px inset, #000000 0 6px 6px -6px inset; */
+	-webkit-text-stroke: 0.5px #5c5c5c;
+}
+
+#component-editor .header {
+	margin: 0 5px;
+	margin-bottom: 5px;
+}
+
+#component-editor .header .toolbar {
+	font-size: large;
+}
+
+#component-editor .header .toolbar button.icon {
+	font-size: large;
+}
+
+#component-editor .header i.fa,
+#component-editor .header i.fas
+{
+	/* font-size: 1.2rem; */
+	align-self: center;
+}
+
+#component-editor .header span {
+	align-self: center;
+	flex: 1;
+}
+
+#component-editor .header .status {
+	margin: 0 10px;
+}
+
+#component-editor .header .status span {
+	flex: unset;
+
+}
+
+#component-editor .editor {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	/* height: 100%; */
+}
+
+#component-editor .cm-editor {
+	/* height: 100%; */
+	overflow: hidden;
+	flex: 1;
+}
+
+#component-editor .CodeMirror {
+	flex: 1;
+	/* width: 100%; */
+	/* height: 100%;  */
+	/* overflow-x: hidden; */
+	background-color: #f4f4f4;
+	box-shadow: #333333 0 6px 6px -6px inset;
+}
+
+#component-editor .CodeMirror-gutters {
+	/* box-shadow: inset -6px 0 6px -6px #333333; */
+}
+
+/* #component-editor .CodeMirror pre {
+	white-space: pre-wrap;
+	word-break: break-all;
+	word-wrap: break-word;
+} */
+
+#component-editor .CodeMirror * {
+	/* font-family: "Droid Sans Mono", monospace, monospace, "Droid Sans Fallback"; */
+	/* font-family: inherit;	
+	font-weight: normal;
+	font-size: 16px;
+	font-feature-settings: "liga" 0, "calt" 0;
+	line-height: 19px;
+	letter-spacing: 0px; */
+	/* font-size: 16px; */
+}
+
+/* #component-editor .CodeMirror .CodeMirror-cursors {
+	visibility: visible;
+} */
+
+#component-editor .CodeMirror .CodeMirror-overlayscroll-vertical {
+	opacity: 0;
+	transition: opacity 600ms cubic-bezier(1, 1, 0, 1);
+}
+
+#component-editor:hover .CodeMirror .CodeMirror-overlayscroll-vertical {
+	opacity: 1;
+}
+/* 
+#component-editor .CodeMirror-linenumber {
+	padding: 1px 8px 0 5px;
+	color: #c8d2d7;
+	font-size: 10px;
+} */

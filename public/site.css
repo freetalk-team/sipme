@@ -1,0 +1,226 @@
+
+
+:root {
+	--nav-width: 100px;
+	--nav-bg-col: #e1e1e1;
+	--nav-col: #111;
+}
+
+body {
+	color: #111;
+}
+
+.slideset {
+	box-shadow: 2px 4px 4px grey;
+	color: var(--nav-col);
+}
+
+.slideset > *:nth-child(1) {animation-delay: 0s}
+.slideset > *:nth-child(2) {animation-delay: 4s}
+.slideset > *:nth-child(3) {animation-delay: 8s}
+
+/* ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: var(--nav-width);
+}
+li a {
+	display: block;
+	color: var(--nav-col);
+	padding: 8px 16px;
+	text-decoration: none;
+} */
+
+/* Change the link color on hover */
+/* li a:hover {
+	background-color: #c1c1c1;
+	color: #fff;
+}
+li a.active {
+	background-color: #a1a1a1;
+} */
+
+.link-icon {
+	margin-right: 10px;
+}
+
+header {
+	background-color: var(--nav-bg-col);
+}
+
+navbar {
+	background-color: var(--nav-bg-col);
+	box-shadow: 2px 4px 4px 2px grey;
+}
+
+.container {
+	height: 100%;
+}
+
+.logo {
+	width: var(--nav-width);
+	/* height: 100%; */
+	position: relative;
+	background-image: url('ui/svg/app-icon.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 60px;
+	flex-shrink: 0;
+}
+
+.page {
+	margin: 1em;
+}
+
+form.login {
+	border: 3px solid #f1f1f1;
+}
+
+.login {
+	max-width: 650px;
+
+	:is(button), .button {
+		background-color: #04AA6D;
+		color: white;
+		padding: 14px 20px;
+		margin: 8px 0;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+	}
+
+	.imgcontainer {
+		text-align: center;
+		margin: 24px 0 12px 0;
+	}
+
+	.container {
+		padding: 16px;
+	}
+
+	.avatar {
+		border-radius: 50%;
+		max-width: 300px;
+	}
+
+	:is(input[type="text"],input[type="password"]) {
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+	} 
+}
+
+.wizard {
+	background-color: #ffffff;
+	margin: 100px auto;
+	font-family: Raleway;
+	padding: 40px;
+	width: 70%;
+	min-width: 300px;
+
+	:is(input) {
+		padding: 10px;
+		width: 100%;
+		font-size: 17px;
+		font-family: Raleway;
+		border: 1px solid #aaaaaa;
+	}
+
+	.tab {
+		display: none;
+	}
+
+	:is(button) {
+		border: none;
+		padding: 10px 20px;
+		font-size: 17px;
+		font-family: Raleway;
+		cursor: pointer;
+
+		&:not(:disabled) {
+			background-color: #04AA6D;
+			color: #ffffff;
+		}
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	/* Make circles that indicate the steps of the form: */
+	.step {
+		height: 15px;
+		width: 15px;
+		margin: 0 2px;
+		background-color: #bbbbbb;
+		border: none;  
+		border-radius: 50%;
+		display: inline-block;
+		opacity: 0.5;
+	}
+
+	.step.active {
+		opacity: 1;
+	}
+
+	/* Mark the steps that are finished and valid: */
+	.step.finish {
+		background-color: #04AA6D;
+	}
+
+}
+
+#prevBtn {
+	/* background-color: #bbbbbb; */
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+	span.psw {
+		display: block;
+		float: none;
+	}
+	.cancelbtn {
+		width: 100%;
+	}
+}
+
+input[type=checkbox] {
+	display: unset;
+}
+
+/* footer {
+	background-color: #ccc;
+} */
+
+footer :is(p,ul) {
+	font-family: "Inconsolata";
+}
+
+#notification-popup {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: #afffaf;
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	z-index: 9999;
+	min-width: 250px;
+}
+
+footer {
+	margin-block-start: 50px;
+	margin-block-end: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+li p {
+	margin: 5px 0;
+}
