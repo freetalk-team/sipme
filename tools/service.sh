@@ -15,10 +15,21 @@ start_service() {
 
 	case $service in
 
-	"push")
-		(monitor push_proxy > /dev/null 2>&1 &)
+	"nginx")
+		(monitor nginx -g'daemon off;' > /dev/null 2>&1 &)
 		;;
 
+	"kamailio")
+		(monitor kamailio -E -n1 -N1 -DD > /dev/null 2>&1 &)
+		;;
+
+	"tracker")
+		(monitor bittorrent-tracker --ws --http > /dev/null 2>&1 &)
+		;;
+
+	"push")
+		(monitor push_proxy 9012 > /dev/null 2>&1 &)
+		;;
 
 	*)
 		echo "Unknown service name: $service"

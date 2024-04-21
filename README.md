@@ -68,6 +68,11 @@ npx sequelize-cli db:seed --seed seeders/internal-rooms.js
 
 4. Setup SIP proxy
 
+* Create Kamailio database if you don't have
+```
+sqlite3 /path/to/kamailio.db < deploy/kamailio/db/sqlite/tables.sql
+```
+
 * Edit configuration file
 ```
 cd deploy/kamailio

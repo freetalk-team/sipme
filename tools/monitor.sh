@@ -24,7 +24,7 @@ echo "Starting service: $service"
 echo -n $$ > $path/$service-monitor.pid
 
 while true; do
-	$@ > /dev/null 2>&1 &
+	$service "$@" > /dev/null 2>&1 &
 	pid=$!
 	echo -n $pid > $path/$service.pid
 	wait $pid
