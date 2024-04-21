@@ -1,0 +1,13 @@
+{
+  "development": {
+    "storage": "[PATH_TO_FILE]",
+    "dialect": "sqlite",
+    "dialectOptions": {
+      "supports": {
+        "returnValues": true
+      }
+    },
+    "logging": true
+  }
+  
+}
