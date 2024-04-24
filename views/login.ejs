@@ -58,9 +58,21 @@
 				</div>
 				
 				<div class="column w3-card-2 w3-margin-top inconsolata-p">
-					<h3 class="nomargin w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Site</h3>
+					<h3 class="wm8 text-stroke nomargin w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Site</h3>
 					<%- include static/links.html %>
 				</div>
+
+				<div class="column w3-card-2 w3-margin-top inconsolata-p"></div>
+				<h3 class="wm8 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h3>
+				<ul class="cc m10 nounderline">
+					<li>
+						<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
+						<p class="smaller">Browse project source code in Github</p>
+					</li>
+					<li>
+						<strong>Version: </strong><%- Config.version %>
+					</li>
+				</ul>
 			</div>
 
 		</div>

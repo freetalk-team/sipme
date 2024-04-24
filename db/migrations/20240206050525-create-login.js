@@ -16,7 +16,7 @@ module.exports = {
 			password: { type: Sequelize.STRING(64), allowNull: false },
 
 			login: { type: Sequelize.INTEGER, defaultValue: 0 },
-			state: { type: Sequelize.ENUM('initial', 'complete'), defaultValue: 'initial'},
+			state: { type: Sequelize.ENUM('initial', 'complete', 'gmail'), defaultValue: 'initial'},
 
 			data: Sequelize.JSONB,
 			perm: Sequelize.JSONB,

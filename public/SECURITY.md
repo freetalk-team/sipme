@@ -1,6 +1,6 @@
 # Security Policy
 
-**Web Messanger** is committed to ensuring the security of our users' data and maintaining the integrity of our systems. This Security Policy outlines the measures we take to safeguard your information and protect against unauthorized access, use, or disclosure.
+**Web Messenger** is committed to ensuring the security of our users' data and maintaining the integrity of our systems. This Security Policy outlines the measures we take to safeguard your information and protect against unauthorized access, use, or disclosure.
 
 ## Information Security
 

@@ -45,13 +45,13 @@
 
 	<template id="sidebar-user-item" classes="contact grid item w3-padding-tiny noevents ci" data-id="{{this.user.id}}" data-name="{{this.user.name}}">
 		<img class="avatar circle center" src="{{this.user.photo}}"> 
-		<a class="name ellipsis" link="/contact/add/{{this.user.id}}" title="Add as friend">{{this.name}}</a>
+		<a class="name ellipsis" link="/contact/add/{{this.user.id}}" title="Add as friend">{{this.user.name}}</a>
 		<button class="icon fa sm call display-hover" name="call" title="Call"></button>
 		<div class="status cr ci nodisplay-hover small fade">
 			<i class="fa fa-envelope fa-bounce w3-text-blue wm8 counter" data-count="0"></i>
 			<time class="wm8" data-time="{{this.ts}}">{{Date.secondsElapsed(this.ts)}}</time>
 		</div>
-		<span class="msg ellipsis">{{this.shortHTML||this.status||'online'}}</span>
+		<span class="msg ellipsis small">{{this.shortHTML||this.status||'online'}}</span>
 	</template>
 
 	<template id="sidebar-player-item" classes="main cr ci noevents" cmd="{{this.cmd||''}}">
@@ -95,9 +95,10 @@
 		<div class="head column">
 			<div class="row ci fit">
 				<i class="fa icon"></i>
-				<h4 class="title nomargin ellipsis fit watermark-8"></h4>
+				<h4 class="title nomargin ellipsis fit wm8"></h4>
 				<button class="icon fa sm fa-search display-hover" name="search" title="Find"></button>
 				<button class="icon fa sm display-hover" name="add" title="Create"></button>
+				<button class="icon fa fa-circle-down w3-text-green sm display-hover" name="import" title="Import"></button>
 			</div>
 			<input type="text" name="filter" placeholder="filter" spellcheck="false" autocomplete="off"/>
 		</div>

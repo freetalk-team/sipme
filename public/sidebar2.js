@@ -17,6 +17,7 @@ class Sidebar extends UX.List {
 	#title;
 	#filter;
 	#add;
+	#import;
 	#search;
 	#navbar;
 	#collapsed = true;
@@ -46,10 +47,12 @@ class Sidebar extends UX.List {
 		this.#title = head.querySelector('.title');
 		this.#filter = head.querySelector('input[name="filter"]');
 		this.#add = head.querySelector('button[name="add"]');
+		this.#import = head.querySelector('button[name="import"]');
 		this.#search = head.querySelector('button[name="search"]');
 
 		this.#add.onclick = () => this.#onAdd();
 		this.#search.onclick = () => this.#onSearch();
+		this.#import.onclick = () => this.onAction('import', null, this.#import);
 
 		this.#navbar = new Navbar;
 		this.#navbar.onChange = (id) => {
@@ -327,6 +330,32 @@ class Sidebar extends UX.List {
 
 		if (search) dom.showElement(this.#search);
 		else dom.hideElement(this.#search);
+
+		const imp = p.showImport;
+
+		this.#import.title = 'Import';
+		this.#import.removeAttribute('cmd');
+
+		if (imp) {
+
+			if (typeof imp == 'string') {
+				this.#import.title = imp;
+			}
+			else if (typeof imp == 'object') {
+				this.#import.title = imp.title;
+
+				if (imp.cmd)
+					this.#import.setAttribute('cmd', imp.cmd);
+			}
+
+			dom.showElement(this.#import);
+		}
+		else {
+			this.#import.title = 'Import';
+			this.#import.removeAttribute('cmd');
+
+			dom.hideElement(this.#import);
+		}
 	}
 
 	#onAdd() {

@@ -1,4 +1,6 @@
 
+const kRedirectUrl = '/';
+
 function setupUser(user) {
 	user.username = user.email.split('@')[0];
 	user.complete = user.state != 'initial';
@@ -12,22 +14,25 @@ function setupUser(user) {
 }
 
 function sessionChecker(req, res, next) {
-	next();
+
+	if (req.session && req.user)
+		next();
+	else {
+		console.error('Session check failed', req.path);
+		res.redirect(kRedirectUrl);
+	}
+
 }
 
 function sessionCheckerAdmin(req, res, next) {
 
-	next();
-	return;
-	
-	if (!req.session.user || !req.cookies.user_sid || !req.session.user.su) {
-		console.error('Session check failed', req.path);
-		res.redirect('/');
-	} else {
+	if (req.session && req.user && req.user.su)
 		next();
-	} 
+	else {
+		console.error('Session Admin check failed', req.path);
+		res.redirect(kRedirectUrl);
+	}
 }
-
 
 module.exports = {
 	setupUser,

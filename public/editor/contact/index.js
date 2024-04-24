@@ -107,6 +107,64 @@ App.Commands.register('add-new-room', () => {
 	app.openEditor('add', 'new', 'room', params);
 });
 
+App.Commands.register('import-gmail-contacts', async () => {
+
+	try {
+
+		const contacts = await app.google.contacts();
+		const users = [];
+
+		if (contacts.length > 0) {
+
+			const ts = Date.seconds();
+			const ds = app.ds('email');
+
+			let user;
+
+			for (const i of contacts) {
+
+				user = await ds.get(i.email);
+				if (user) {
+
+					if (user.type == 'contact') 
+						continue;
+
+					i.ts = ts;
+					i.status = user.status;
+					i.user = user;
+
+					
+				}
+				else {
+
+					i.id = i.email.hashHex();
+
+					user = { ...i };
+
+					i.ts = ts;
+					i.type = 'gmail';
+					i.remote = true;
+
+					await ds.put(i);
+
+					Object.assign(i, { user, status: 'not invited' });
+
+				}
+
+				users.push(i);
+			}
+
+			if (users.length > 0)
+				app.emit('useradd', users);
+
+		}
+	}
+	catch (e) {
+		console.error('Failed to import Gmail contact:', e);
+	}
+
+});
+
 const kRoomFields = [
 	{ ...CommonFields.name, placeholder: 'room name' }
 	// , CommonFields.ns

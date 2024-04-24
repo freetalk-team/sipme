@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 		email: { type: DataTypes.STRING, unique: true },
 		password: DataTypes.STRING(64),
 		login: DataTypes.INTEGER,
-		state: DataTypes.ENUM('initial', 'complete'),
+		state: DataTypes.ENUM('initial', 'complete', 'gmail'),
 		data: DataTypes.JSONB,
 		perm: DataTypes.JSONB,
 		token: DataTypes.STRING

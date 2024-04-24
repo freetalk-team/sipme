@@ -116,11 +116,7 @@ export class App extends AppBase {
 		this.initGame();
 
 		await this.startGoogleAPI();
-
-		if (firebase) {
-			await this.startFirebase();
-			await startServiceWorker(this.firebase);
-		}
+		await this.startFirebase();
 
 		if (this.sudo) {
 			document.body.setAttribute('su', '');
@@ -227,13 +223,10 @@ export class App extends AppBase {
 
 					let update = true;
 
-					// switch (type) {
-					// }
-
 					if (update) {
 
 						info.remote = undefined;
-						ds.update(info);
+						ds.update(info, action);
 					}
 				}
 				break;
@@ -293,11 +286,28 @@ class DataSourceUser extends DataSourceDatabase {
 
 		data = Array.isArray(data) ? data : [ data ];
 
-		for (const i of data)
+		for (const i of data) {
+
+			if (i.data) {
+				Object.assign(i, i.data);
+				delete i.data;
+			}
+
+			i.type = i.type || 'user';
+
 			// todo: improve
 			i.username = i.email.split('@')[0];
+		}
 
 		return super.put(data);
+	}
+
+	update(data, action) {
+		if (action == 'import') {
+			data.type = 'contact';
+		}
+
+		return super.update(data);
 	}
 }
 
@@ -320,8 +330,15 @@ class DataSourceUserEmail extends DataSourceCache {
 
 	}
 
-	get(id) {
-		return id == app.email ? app.user : super.get(id);
+	async get(id) {
+		const user = app.isme(id) ? app.user : await super.get(id);
+
+		if (user && user.data) {
+			Object.assign(user, user.data);
+			delete user.data;
+		}
+
+		return user;
 	}
 }
 
@@ -408,61 +425,7 @@ function buildName(name) {
 
 	
 
-async function startServiceWorker(firebase) {
-	if ('serviceWorker' in navigator) {
 
-		const id = `did-${app.uid}`;
-
-		let sw;
-		let token = localStorage.getItem(id);
-
-		const opt = {
-			scope: '/',
-			//type: 'module'
-		};
-
-		const params = new URLSearchParams(Object.entries(Config.firebase));
-		const path = 'sw.js?' + params.toString();
-
-		const registration = await navigator.serviceWorker.register(path, opt);
-		
-		if (!token) {
-
-			token = await firebase.getRegistrationToken(registration);
-
-			console.log('Registration token:\n', token);
-
-			try {
-
-				// const { key } = await ajax.post('/app/register', { token });
-				// this.deviceId = key;
-
-				// if (Config.internalPush)
-
-				// Should assign device ID with 'user' topic
-				await ajax.post('/api/register', { token });
-
-				localStorage.setItem(id, token);
-
-			}
-			catch (e) {
-				console.error('Failed to register device token');
-			}
-			
-		}
-
-		if (registration.active) {
-			sw = registration.active;
-			
-		}
-
-		navigator.serviceWorker.addEventListener('message', function (event) {
-			// console.log('SwerviceWorker message:', event.data);
-
-			app.onPushMessage(event.data);
-		});
-	}
-}
 
 	// async updateToken() {
 	// 	const token = await this.#fb.getRegistrationToken(this.#registration);

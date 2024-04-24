@@ -37,8 +37,12 @@ export class DataSourceRest extends DataSourceBase {
 		return data || []; 
 	}
 
-	get(idOrParams) {
-		return this.query(null, idOrParams); 
+	async get(idOrParams) {
+		const data = await this.query(null, idOrParams); 
+		if (data && Array.isArray(data))
+			return data.length > 0 ? data[0] : null;
+
+		return data;
 	}
 
 	query(path, idOrParams) { 

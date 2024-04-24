@@ -145,7 +145,6 @@ export class Messenger {
 					_attr: [['id', 'status']],
 					// _attr: [['id', 's' + Math.floor(Math.random() * 10000)]],
 					status: { basic: 'open', im: 'online' },
-					contact: '1234566',
 					//contact: '123' + Math.floor(Math.random() * 10000),
 					...data
 				}

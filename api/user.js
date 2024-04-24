@@ -524,11 +524,11 @@ router.post('/login', sessionChecker, async (req, res) => {
 	const id = email.hashHex();
 	const password = (email.split('@')[0] + '123').md5()
 
-	const data = { id, name, email, password };
+	const data = { id, name, email, password, state: 'initial', login: 0 };
 
 	try {
 
-		await db.create('login', data);
+		await db.createOrUpdate('login', data, 'state', 'login');
 
 	}
 	catch (e) {

@@ -497,7 +497,10 @@ class List extends Scrollable {
 				this.add(i);
 		}
 
-		
+		g.push = function(...items) {
+			for (const i of items)
+				this.add(i);
+		}
 
 		return g;
 	}
@@ -824,6 +827,12 @@ function createGroup(content, o) {
 			for (const i of data)
 				this.add(i);
 		}
+
+		, push(...items) {
+			for (const i of items)
+				this.add(i);
+		}
+
 	};
 }
 

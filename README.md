@@ -1,10 +1,10 @@
-# Web Messanger
+# Web Messenger
 
 Free, Open Source software. Developed collaboratively by a dedicated team of developers and contributors, this software offers a range of features and functionalities to support various web projects.
 
 ## About
 
-**Web Messanger** is a sophisticated communication tool that enables users to engage in text-based conversations, audio calls, video calls, and screen sharing sessions over the internet.. It is 100% free and open source, allowing users to modify the code and use it inside their software.
+**Web Messenger** is a sophisticated communication tool that enables users to engage in text-based conversations, audio calls, video calls, and screen sharing sessions over the internet.. It is 100% free and open source, allowing users to modify the code and use it inside their software.
 
 ## Features
 
@@ -108,9 +108,18 @@ npm start
 
 [Open in browser](http://127.0.0.1:3000)
 
+Default **admin** credentials
+
+```
+username: su
+password: admin123
+```
+
+> On first login, user will be forced to change the *password*
+
 ## Contributing
 
-We welcome contributions from the community! If you'd like to contribute to **Web Messanger**, please follow these guidelines:
+We welcome contributions from the community! If you'd like to contribute to **Web Messenger**, please follow these guidelines:
 - Fork the repository
 - Create a new branch
 - Make your changes
@@ -118,11 +127,11 @@ We welcome contributions from the community! If you'd like to contribute to **We
 
 ## License
 
-**Web Messanger** is licensed under the Public license
+**Web Messenger** is licensed under the Public license
 
 ## Acknowledgements
 
-We would like to thank the following contributors for their valuable contributions to **Web Messanger**
+We would like to thank the following contributors for their valuable contributions to **Web Messenger**
 
 - Pavel Patarinski (pavelp.work@gmail.com)
 

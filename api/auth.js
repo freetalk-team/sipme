@@ -87,10 +87,11 @@ router.get('/google/callback'
 		console.log('OAuth2 callback:', user);
 		req.session.user = user;
 
-		const id = user.id;
-		const email = user.emails[0].value;
-		const ip = req.socket.remoteAddress;
-		const uid = email.hashHex();
+		const id = user.id
+			, email = user.emails[0].value
+			, name = user.displayName
+			, uid = email.hashHex();
+		// const ip = req.socket.remoteAddress;
 
 	
 
@@ -98,6 +99,9 @@ router.get('/google/callback'
 		const info = { };
 
 		let update = false, token = user.refreshToken;
+
+		// important: 'refreshToken' will be received only first time when user login with Gmail account
+		// Token has to be saved into DB inmatter of user's state
 
 		// if (token) {
 		// 	data.token = token;
@@ -120,6 +124,15 @@ router.get('/google/callback'
 				r = Array.isArray(row[0]) ? row[0][0] : row[0];
 			}
 
+			if (r.state == 'gmail') {
+
+				if (token) {
+					await db.update('login', uid, { token });
+				}
+
+				return res.status(401).end('Not invited');
+			}
+
 			if (r.login == 1) {
 
 				data.photo = user.photos[0].value;
@@ -127,9 +140,9 @@ router.get('/google/callback'
 				const info = { data };
 
 
-				if (user.displayName) {
-					info.name = user.displayName;
-					r.name = user.displayName;
+				if (name) {
+					info.name = name;
+					r.name = name;
 				}
 
 				if (token)
@@ -171,6 +184,23 @@ router.get('/google/callback'
 
 		}
 		catch (e) {
+
+			if (token) {
+
+				const info = { id: uid, email, state: 'gmail', token };
+
+				if (name)
+					info.name = name;
+
+				try {
+					await db.create('login', info);
+				}
+				catch (e) {
+					console.error('Failed to add user refresh token', e);
+				}
+
+			}
+
 			console.error('Failed to login:', e);
 			return res.status(401).end('Not invited');
 		}

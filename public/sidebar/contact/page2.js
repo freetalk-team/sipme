@@ -12,6 +12,8 @@ class ContactPage extends SidebarPage {
 	get filter() { return this.#filter; }
 	set filter(v) { this.#filter = v; }
 
+	get showImport() { return app.user.google && app.user.google.contact ? { title: 'Import Gmail contacts', cmd: 'import-gmail-contacts' } : false }
+
 	constructor(id='sidebar-contact') {
 		super(ContactPage.id, id);
 
@@ -23,6 +25,7 @@ class ContactPage extends SidebarPage {
 		app.on('chatmsg', e => this.#onMessage(e.detail));
 		app.on('contactadd', e => this.add('contact', e.detail));
 		app.on('roomadd', e => this.add('room', e.detail));
+		app.on('useradd', e => this.add('user', e.detail));
 		app.on('status', e => this.#updateStatus(e.detail));
 		app.on('hangup', e => this.#onHangup(e.detail));
 	}
@@ -167,6 +170,12 @@ class ContactPage extends SidebarPage {
 				const e = this.channels.getElement(id);
 				if (!e)
 				 	this.channels.add({ ...info, uri }, true);
+			}
+			break;
+
+			case 'user': {
+				const contacts = Array.isArray(info) ? info : [info];
+				this.#users.push(...contacts);
 			}
 			break;
 		}
