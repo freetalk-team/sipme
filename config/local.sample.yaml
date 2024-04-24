@@ -2,6 +2,7 @@ title: SIPme
 version: 0.9.2
 domain: chat.home.eu.org
 port: 3000
+repo: https://github.com/freetalk-team/sipme
 uploads: 
   photo: public/avatars
 company:
@@ -11,7 +12,7 @@ company:
   address: Sofia, Bulgaria
   support: team.freetalk@gmail.com
 product:
-  name: Web Messanger
+  name: Web Messenger
   desc: Chat with friends, share files, listen music, play games and more
   logo: /ui/svg/sipme.svg
 sip:
@@ -31,6 +32,7 @@ ui:
     publish: true
     room: chat-
     ua: simpe-0.9.2-beta
+    inactiveTimeout: 120
   ice:
     servers:
       - stun:stun.l.google.com:19302
