@@ -78,18 +78,12 @@ export class App extends AppBase {
 	async setupDatabase(db) {
 
 		try {
+			await Task.setup(db);
 
-			const data = await ajax.get('/api/ticketenum');
-			console.debug('TICKET enums', data);
-
-			for (const i of data) {
-				if (typeof i.value == 'string')
-					i.value = JSON.parse(i.value);
-			}
-
-			await db.put('enum', data);
+			const games = await ajax.get('/api/game');
+			if (games.length > 0)
+				await db.put('game', games);
 		}
-
 		catch (e) {
 			console.error('Failed to setup databse', e);
 		}
@@ -302,12 +296,13 @@ class DataSourceUser extends DataSourceDatabase {
 		return super.put(data);
 	}
 
-	update(data, action) {
+	update(data, action, ...args) {
 		if (action == 'import') {
 			data.type = 'contact';
+			return super.update(data);
 		}
 
-		return super.update(data);
+		return super.update(data, action, ...args);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 const { createIndex, deleteIndex } = require('../common');
 
-const searchFields = ['title', 'short'],
+const searchFields = ['title', 'tags', 'head', 'short'],
 	tableName = 'wiki';
 
 module.exports = {
@@ -13,9 +13,9 @@ module.exports = {
 		return createIndex(sequelize, tableName, searchFields);
 	},
 
-	down (queryInterface, Sequelize) {
+	async down (queryInterface, Sequelize) {
 		const sequelize = queryInterface.sequelize;
 
-		return deleteIndex(sequelize, tableName);
+		await deleteIndex(sequelize, tableName);
 	}
 };

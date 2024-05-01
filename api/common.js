@@ -3,7 +3,7 @@ const kRedirectUrl = '/';
 
 function setupUser(user) {
 	user.username = user.email.split('@')[0];
-	user.complete = user.state != 'initial';
+	user.complete = user.state == 'complete';
 	user.su = user.id == 'su';
 	user.refreshToken = user.refreshToken || user.token;
 
@@ -11,6 +11,10 @@ function setupUser(user) {
 
 	Object.assign(user, data);
 	delete user.data;
+}
+
+function generatePassword(email) {
+	return (email.split('@')[0] + '123').md5();
 }
 
 function sessionChecker(req, res, next) {
@@ -36,6 +40,7 @@ function sessionCheckerAdmin(req, res, next) {
 
 module.exports = {
 	setupUser,
+	generatePassword,
 	sessionChecker,
 	sessionCheckerAdmin
 }

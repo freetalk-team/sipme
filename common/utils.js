@@ -10,6 +10,8 @@ require('./string');
 require('./date');
 require('./object');
 
+const { parse } = require('./marked');
+
 String.prototype.md5 = function() {
 	return crypto.createHash('md5').update(this.valueOf()).digest("hex");
 }
@@ -29,6 +31,8 @@ global.isPromise = function(p) {
   
 	return false;
 }
+
+global.markdown = parse;
 
 global.loadConfig = function(fname) {
 	const ext = Path.extname(fname);

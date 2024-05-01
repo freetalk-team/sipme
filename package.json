@@ -10,11 +10,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-
     "build": "npm run build-js && npm run build-css",
-    "build-js": "cd build/app && npx webpack",
-    "build-css": "cd build/css && npx webpack"
-
+    "build-js": "cd build/app && NODE_ENV=production npx webpack",
+    "build-css": "npm run build-css-app && npm run build-css-main",
+    "build-css-app": "cd build/css/app && NODE_ENV=production npx webpack",
+    "build-css-main": "cd build/css/main && NODE_ENV=production npx webpack"
   },
   "keywords": [
     "sip",
@@ -36,8 +36,10 @@
     "ejs-loader": "^0.5.0",
     "ejs-locals": "^1.0.2",
     "esm": "^3.2.25",
+    "etag": "^1.8.1",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "express-useragent": "^1.0.15",
     "file-loader": "^6.2.0",
     "firebase-admin": "^12.0.0",
     "firebase-functions": "^4.9.0",

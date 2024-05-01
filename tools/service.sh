@@ -20,7 +20,7 @@ start_service() {
 		;;
 
 	"kamailio")
-		(monitor kamailio -E -n1 -N1 -DD > /dev/null 2>&1 &)
+		(monitor kamailio -E -DD > /dev/null 2>&1 &)
 		;;
 
 	"tracker")
@@ -75,6 +75,59 @@ case "$cmd" in
 	sleep 1
 	;;
 
+"stop")
+	#echo "Stop"
+	
+	if [ "$#" -eq "0" ]; then
+		for service in $services; do
+			stop_service $service
+		done
+	else
+		while [ "$#" -gt "0" ]; do
+			stop_service $1
+			shift
+		done
+	fi
+	;;
+
+"restart")
+	if [ "$#" -eq "0" ]; then
+		echo "Missing service name"
+		exit 0
+	fi
+
+	while [ "$#" -gt "0" ]; do
+		stop_service $1
+		start_service $1
+		shift
+	done
+
+	sleep 1
+	;;
+
+"status")
+	if [ "$#" -eq "0" ]; then
+		echo "Missing service name"
+		exit 0
+	fi
+
+	while [ "$#" -gt "0" ]; do
+		status $1
+		shift
+	done
+	;;
+
+"version" | "ver")
+	cat $cwd/../share/manifest
+	;;
+
+"prefix")
+	realpath $bin/..
+	;;
+
+"X")
+	(cd $bin; $@ )
+	;;
 
 *)
 	echo "Unkwnon command: $cmd"

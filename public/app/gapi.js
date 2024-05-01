@@ -65,46 +65,53 @@ const GoogleApiMixin = {
 		, async contacts() {
 
 			const url = 'https://people.googleapis.com/v1/people/me/connections?personFields=names,emailAddresses,photos';
-			const headers = {
-				'authorization': `Bearer ${this.accessToken}`
-				, 'accept': 'application/json'
-			};
-
 			const contacts = [];
 
 			try {
 
+				const accessToken = await this.refreshToken();
+
+				if (!accessToken)
+					throw new Error('GAPI: No access token');
+
+				const headers = {
+					'authorization': `Bearer ${accessToken}`
+					, 'accept': 'application/json'
+				};
+
 				const res = await ajax.get(url, headers);
 
-				for (const i of res.connections) {
+				if (res.connections) {
+					for (const i of res.connections) {
 
-					const data = {};
+						const data = {};
 
-					data.name = i.names[0].displayName;
+						data.name = i.names[0].displayName;
 
-					if (i.photos)
-						data.photo = i.photos[0].url;
+						if (i.photos)
+							data.photo = i.photos[0].url;
 
-					if (!i.emailAddresses) {
-						console.debug('GAPI skiping contact without email:', name);
-						continue;
-					}
-
-					for (const email of i.emailAddresses) {
-
-						// todo: add more domains ???
-						if (email.endsWith('gmail.com')) {
-							data.email = email;
-							break;
+						if (!i.emailAddresses) {
+							console.debug('GAPI skiping contact without email:', name);
+							continue;
 						}
-					}
 
-					if (!data.email) {
-						console.debug('GAPI skiping contact with non gmail address:', name);
-						continue;
-					}
+						for (const email of i.emailAddresses) {
 
-					contacts.push(data);
+							// todo: add more domains ???
+							if (email.value.endsWith('gmail.com')) {
+								data.email = email.value;
+								break;
+							}
+						}
+
+						if (!data.email) {
+							console.debug('GAPI skiping contact with non gmail address:', name);
+							continue;
+						}
+
+						contacts.push(data);
+					}
 				}
 			}
 			catch (e) {

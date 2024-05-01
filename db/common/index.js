@@ -22,8 +22,9 @@ function deleteIndex(sequelize, ...args) {
 		case 'sqlite':
 		return deleteIndexSqlite(sequelize, ...args);
 
-		//case 'pg':
-		//return createIndexPg(sequelize, ...args);
+		case 'pg':
+		case 'postgres':
+		return deleteIndexPg(sequelize, ...args);
 	}
 }
 
@@ -89,9 +90,27 @@ async function createIndexPg(sequelize, table, fields, view=table) {
 	const kQuery = fields.map((name,i) => `setweight(to_tsvector(new.${name}), '${kRank[i]}')`).join(' || ')
 
 	await sequelize.query(`ALTER TABLE ${table} ADD COLUMN ${kVector} TSVECTOR`);
-	await sequelize.query(`CREATE FUNCTION ${kTrigger}() RETURNS trigger AS $$ BEGIN new.search = ${kQuery}; return new; END $$ LANGUAGE plpgsql`);
-	await sequelize.query(`CREATE TRIGGER np_vector_update BEFORE INSERT OR UPDATE ON "${table}" FOR EACH ROW EXECUTE PROCEDURE ${kTrigger}()`);
+	// await sequelize.query(`CREATE FUNCTION ${kTrigger}() RETURNS trigger AS $$ BEGIN new.search = ${kQuery}; return new; END $$ LANGUAGE plpgsql`);
+	// await sequelize.query(`CREATE TRIGGER np_vector_update BEFORE INSERT OR UPDATE ON "${table}" FOR EACH ROW EXECUTE PROCEDURE ${kTrigger}()`);
+
+	await sequelize.query('UPDATE "' + table + '" SET "' + kVector + '" = to_tsvector(\'english\', ' + fields.join(' || \' \' || ') + ')');
+	await sequelize.query('CREATE TRIGGER np_vector_update BEFORE INSERT OR UPDATE ON "' + table + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + kVector + '", \'pg_catalog.english\', ' + fields.join(', ') + ')');
 	await sequelize.query(`CREATE INDEX ${kIndex} ON "${table}" USING gin("${kVector}")`);
+
+
+}
+
+async function deleteIndexPg(sequelize, table) {
+	const kVector = 'search';
+	const kIndex = `${table}_search_idx`;
+	const kTrigger = `${table}_tsvector_trigger`;
+
+	await sequelize.query(`DROP INDEX ${kIndex}`);
+	await sequelize.query(`DROP TRIGGER np_vector_update ON "${table}"`);
+	// await sequelize.query(`DROP FUNCTION ${kTrigger}`);
+
+	await sequelize.query(`ALTER TABLE ${table} DROP COLUMN ${kVector}`);
+
 }
 
 module.exports = {

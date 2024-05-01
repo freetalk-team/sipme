@@ -68,10 +68,17 @@ img[alt^="z60"] { width: 60%; }
 img[alt^="z50"] { width: 50%; }
 img[alt^="z40"] { width: 40%; }
 img[alt^="z20"] { width: 20%; }
-.md img[alt^="logo"] { 
-	width: 48px; 
-	height: 48px;
+
+.md img[alt^="logo"] {
+	--size: 48px;
+	width: var(--size); 
+	height: var(--size);
 }
+
+[mobile="true"] .md img[alt^="logo"] {
+	--size: 92px;
+}
+
 .md img[alt^="thumb"] {
 	max-width: 160px;
 }
@@ -159,7 +166,8 @@ img[alt^="z20"] { width: 20%; }
 }
 
 .md.inconsolata,
-.md.inconsolata-p p {
+.md.inconsolata-p p,
+.md.inconsolata-li :is(p,li) {
 	font-family: "Inconsolata", sans-serif;
 }
 

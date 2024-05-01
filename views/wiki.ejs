@@ -6,9 +6,13 @@
 		<link rel="stylesheet" href="/app.css">
 		<link rel="stylesheet" href="/site.css">
 	</head>
-	<body class="column">
+	<body class="column" mobile="<%- isMobile %>" >
 		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
-			<img class="x64" src="<%- Config.product.logo %>">
+
+			<% if (!isMobile) { %>
+				<img class="x64" src="<%- Config.product.logo %>">
+			<% } %>
+
 			<div class="cc m2 fit">
 				<h1 class="wm8 text-stroke nomargin cartoon">Wiki</h1>
 				<b><%- Config.company.name %></b>
@@ -24,7 +28,7 @@
 
 			<div class="w3-container w3-padding max-width wider center">
 
-				<div class="md light inconsolata-p">
+				<div class="md light inconsolata-li">
 					<%- html %>
 				</div>
 

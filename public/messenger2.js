@@ -11,6 +11,15 @@ const SimpleUser = SIP.Web.SimpleUser;
 
 const kMessageTone = Config.messagetone || Config.sip.messagetone || '/ui/ogg/popsound.mp3';
 
+function _log(fn, ...args) {
+	fn('SIP', new Date().toLocaleTimeString() + ':', ...args);
+}
+
+function log(...args) { return _log(console.log, ...args) }
+function error(...args) { return _log(console.error, ...args) }
+function debug(...args) { return _log(console.debug, ...args) }
+
+
 export class Messenger {
 
 	#timeout;
@@ -55,6 +64,7 @@ export class Messenger {
 
 		const defaultOptions = {
 			domain: 'ftalk.net',
+			registrationExpires: 600,
 			inactiveTimeout: 60,
 			userAgent: 'ftalk-beta'
 		};
@@ -93,16 +103,14 @@ export class Messenger {
 				displayName: name
 				, logLevel: 'error'
 				, userAgentString: this.#opt.userAgent 
-				, register: true
-				, registerExpires: 600
 				// , hackIpInContact: true
 				// , hackViaTcp: true
 				, sessionDescriptionHandlerFactoryOptions: {
 					iceGatheringTimeout: 5000, //currently, the smallest allowed value
 					peerConnectionConfiguration: {
 					  iceServers: [ 
-						  { urls: 'stun:192.168.8.68:3478' } 
-						  //, { urls: "stun:stun.l.google.com:19302" }
+						//   { urls: 'stun:192.168.8.68:3478' } 
+						  , { urls: "stun:stun.l.google.com:19302" }
 						]
 					  , iceTransportPolicy: "all"
 					  , rtcpMuxPolicy: "require"
@@ -121,7 +129,7 @@ export class Messenger {
 	}
 
 	async offline() { 
-		console.log('SIP: Go offline');
+		log('Go offline');
 
 		await this.unregister();
 		await this.ua.disconnect(); 
@@ -152,7 +160,7 @@ export class Messenger {
 			break;
 		}
 
-		console.debug('Sending PUBLISH:', msg);
+		debug('Sending PUBLISH:', msg);
 
 		await this.#checkRegistered();
 		
@@ -166,7 +174,7 @@ export class Messenger {
 
 	// SimpleUser delegates
 	onServerConnect() {
-		console.log('SIP: Connected to server');
+		log('Connected to server');
 
 		// try {
 		// 	await this.ua.register();
@@ -177,12 +185,12 @@ export class Messenger {
 	}
 
 	onServerDisconnect() {
-		console.error('Disconnected!!!');
+		error('Disconnected!!!');
 	}
 
 	onRegistered() {
 
-		console.log('SIP: Registered');
+		log('Registered');
 
 		this.#resetInactiveTimeout();
 
@@ -195,14 +203,15 @@ export class Messenger {
 	}
 
 	onUnregistered() {
-		console.log('Unregistered');
+		log('Unregistered');
+
 		this.#timeout = null;
 		app.onUnregister();
 	}
 
 	onNotify({ request }) {
 
-		console.debug('SIP notification received:', request);
+		debug('notification received:', request);
 
 		const parser = new DOMParser;
 
@@ -642,8 +651,10 @@ export class Messenger {
 	async #register() {
 		await this.ua.connect();
 
-		if (!this.registering)
-			await this.ua.register();
+		if (!this.registering) {
+			debug('Registering ...', this.#opt.registrationExpires);
+			await this.ua.register({ expires: this.#opt.registrationExpires });
+		}
 
 		this.#resetInactiveTimeout();
 	}

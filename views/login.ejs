@@ -4,7 +4,7 @@
 	<div class="max-width wider center">
 
 		<div class="w3-container w3-row">
-			<div class="cc w3-border-bottom" style="background: url(/ui/svg/team.svg) no-repeat center right;background-size: contain">
+			<header class="cc w3-border-bottom" style="background: url(/ui/svg/team.svg) no-repeat center right;background-size: contain">
 				<div class="cr ci">
 					<img class="x64" src="<%- Config.product.logo %>">
 					<h1 class="text-stroke wm8 fit"><%- Config.product.name %></h1>
@@ -12,31 +12,30 @@
 				</div>
 				<!-- <p class="wm8"><%- Config.company.desc %></p> -->
 				<h4 class="inconsolata"><%- Config.product.desc %></h4>
-			</div>
+			</header>
 
 			<div class="w3-twothird">
-				
-
 
 				<div class="w3-panel w3-leftbar w3-sand smaller w3-margin-hor-12" style="max-width: 450px;">
 					<p ><b>Note: </b>Only invited user can login</p>
 				</div>
 
-				<form action="/login" method="post" class="login w3-card-2">
+				<form action="/login" method="post" class="login w3-card-2 w3-margin-bottom">
 					<div class="imgcontainer">
 						<img src="/ui/png/img_avatar2.png" alt="Avatar" class="avatar">
 					</div>
 				
 					<div class="container-col container">
-						<label for="uname"><b>Username</b></label>
+						<label for="username"><b>Username</b></label>
 						<input type="text" placeholder="Enter Username" name="username" autocomplete="username" required>
 					
-						<label for="psw"><b>Password</b></label>
+						<label for="password"><b>Password</b></label>
 						<input type="password" placeholder="Enter Password" name="password" autocomplete="current-password" required>
 							
 						<button class="w3-round" type="submit">Login</button>
 
 						<% if (Config.google) { %>
+							<i class="text-center">or</i>
 							<a class="w3-round w3-blue text-center button nounderline" href="/auth/google/callback"><i class="fa fa-google margin-right"></i>Login with Gmail</a>
 						<% } %>
 
@@ -50,29 +49,47 @@
 					<span class="psw">Forgot <a href="#">password?</a></span>
 					</div>
 				</form>
+
+				<div class="md inconsolata-li list2">
+
+					<div class="item w3-padding w3-border-bottom">
+						<h3 class="wm8">Need an internal messenger for your company or domain ?</h3>
+						<p>Install <strong>Web Messenger</strong> on your server or hosting in 10 min</p>
+						<a>Read more</a>
+					</div>
+
+					<div class="item w3-padding">
+						<h3 class="wm8">Want to integrate the app with an existing software ?</h3>
+						<p>We can help you to integrate <strong>Web Messenger</strong> with your software</p>
+
+					</div>
+
+					
+				</div>
 			</div>
 			<div class="w3-third w3-container" style="margin-top: 30px;">
 				<div class="column w3-card-2 w3-light-grey">
-					<h3 class="nomargin w3-blue w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Features</h3>
+					<h3 class="w3-margin-tiny nomargin w3-blue w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Features</h3>
 					<%- include static/features.html %>
 				</div>
 				
 				<div class="column w3-card-2 w3-margin-top inconsolata-p">
-					<h3 class="wm8 text-stroke nomargin w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Site</h3>
+					<h4 class="w3-margin-tiny wm6 text-stroke nomargin w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Site</h4>
 					<%- include static/links.html %>
 				</div>
 
-				<div class="column w3-card-2 w3-margin-top inconsolata-p"></div>
-				<h3 class="wm8 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h3>
-				<ul class="cc m10 nounderline">
-					<li>
-						<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
-						<p class="smaller">Browse project source code in Github</p>
-					</li>
-					<li>
-						<strong>Version: </strong><%- Config.version %>
-					</li>
-				</ul>
+				<div class="column w3-card-2 w3-margin-top inconsolata-p">
+					<h4 class="w3-margin-tiny wm6 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h4>
+					<ul class="cc m10 nounderline">
+						<li>
+							<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
+							<p class="smaller">Browse project source code in Github</p>
+						</li>
+						<li class="smaller">
+							<strong>Version: </strong><%- Config.version %>
+						</li>
+					</ul>
+				</div>
 			</div>
 
 		</div>
@@ -81,3 +98,19 @@
 
 	</div>
 </div>
+
+<!-- <script>
+	const header = document.querySelector('header');
+
+	if (header) {
+
+		const images = ['/ui/svg/github.svg', '/ui/svg/team.svg'];
+
+		let i = 0;
+
+		setInterval(() => {
+			console.debug('Changing background:', i);
+			header.style.backgroundImage = `url('${images[i++ % images.length]}')`;
+		}, 10000);
+	}
+</script> -->

@@ -12,6 +12,7 @@ const express = require('express')
 	, methodOverride = require('method-override')
 	, session = require('express-session')
 	, favicon = require('serve-favicon')
+	, useragent = require('express-useragent')
 	, cors = require('cors')
 
 	, LocalStrategy = require('passport-local').Strategy
@@ -27,6 +28,7 @@ require('@common/logger');
 
 
 const kPort = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV == 'production';
 
 const ALLOWED_DOMAINS = [
 	{
@@ -298,6 +300,7 @@ app.use(logger('dev', { skip: function (req, res) { return res.statusCode < 400 
 app.use(express.static(__dirname + '/public'));
 // favicon
 app.use(favicon(join(__dirname, 'public/ui/ico', 'favicon.ico')));
+app.use(useragent.express());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -397,7 +400,8 @@ app.post('/setup', ensureAuthenticated, async (req, res) => {
 	const { fname, lname, email, phone, dd, mm, yyyy, password } = req.body;
 	const name = `${fname} ${lname}`;
 
-	const data = db.info('login', user, 'data');
+	const exclude = ['complete', 'provider', 'refreshToken', 'accessToken', 'accessTokenExpire', 'firebaseToken', 'firebaseTokenExpire'];
+	const data = db.info('login', user, 'data', ...exclude);
 
 	Object.assign(data, {
 		phone,
@@ -406,6 +410,8 @@ app.post('/setup', ensureAuthenticated, async (req, res) => {
 
 	if (user.photo)
 		data.photo = user.photo;
+
+	console.debug('USER Complete:', data);
 
 	try {
 
@@ -472,6 +478,33 @@ app.use('/policy', require('./api/policy'));
 
 if (Config.google) {
 	app.use('/auth', require('./api/auth'));
+}
+
+if (!isProduction) {
+
+	app.use('/m', (req, res) => res.render('index-mo'));
+
+	app.get('/send', (req, res) => res.render('send', { isMobile: req.useragent.isMobile }));
+	app.post('/send', async (req, res) => {
+
+		const data = req.body;
+
+		try { 
+
+			const id = data.uid.isEmail() ? data.uid.hashHex() : data.uid;
+
+			console.log('Sending message to:', id);
+
+			await bot.sendMessage(id, data.msg, true);
+		}
+		catch (e) {
+			console.error('Failed to send message', e);
+			res.statusCode = 500;
+		}
+
+		res.redirect('/send')
+	});
+
 }
 
 app.listen(kPort, async function() {

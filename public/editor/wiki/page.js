@@ -87,7 +87,7 @@ export class WikiEditor extends UX.ListPage {
 
 	async open(action, id) {
 
-		if (this.#id == id) {
+		if (id && this.#id == id) {
 			return;
 		}
 

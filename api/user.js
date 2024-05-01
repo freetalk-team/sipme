@@ -7,7 +7,7 @@ const express = require('express')
 	, upload = multer({ dest: /*os.tmpdir() */ Config.uploads.photo })
 	;
 
-const { sessionChecker, sessionCheckerAdmin } = require('./common');
+const { sessionChecker, sessionCheckerAdmin, generatePassword } = require('./common');
 
 const router = express.Router();
 
@@ -522,13 +522,16 @@ router.post('/login', sessionChecker, async (req, res) => {
 	const { name, email } = req.body;
 
 	const id = email.hashHex();
-	const password = (email.split('@')[0] + '123').md5()
+	const password = generatePassword(email);
 
 	const data = { id, name, email, password, state: 'initial', login: 0 };
 
+	console.debug('Creating user:', data);
+
 	try {
 
-		await db.createOrUpdate('login', data, 'state', 'login');
+		await db.createOrUpdate('login', data);
+		// await db.create('login', data);
 
 	}
 	catch (e) {

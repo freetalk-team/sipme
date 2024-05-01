@@ -1,12 +1,14 @@
 const path = require('path');
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
 	entry: path.resolve(__dirname, 'index.js'),
 	mode: 'production',
 	output: {
 		filename: "[name].js",
-		path: path.resolve(__dirname, '../../public/dist'),
+		path: path.resolve(__dirname, '../../../public/dist'),
 		publicPath: '',
 		assetModuleFilename: (pathData) => {
 
@@ -19,9 +21,16 @@ module.exports = {
 			
 		},
 	},
+	optimization: {
+		minimizer: [
+		  // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+		  // `...`,
+		  new CssMinimizerPlugin(),
+		],
+	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: "app.min.css",
+			filename: "main.min.css",
 		}),
 	],
 	module: {

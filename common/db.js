@@ -135,12 +135,14 @@ class Database {
 		return this.dialect == dialect;
 	}
 
-	info(table, data, col='info') {
+	info(table, data, col='info', ...exclude) {
 		const attr = this.attributes(table, col);
 		const r = { ...data };
 
+		attr.push(...exclude);
+
 		for (const k of Object.keys(r)) {
-			if (attr.includes(k))
+			if (!r[k] || attr.includes(k))
 				delete r[k];
 		}
 

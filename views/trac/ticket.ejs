@@ -54,3 +54,25 @@
 <div class="md inconsolata-p">
 	<%- description %>
 </div>
+
+<div class="cc">
+
+<% for (const i of change) { %>
+
+	<div class="cc">
+
+		<div class="cr ci m10">
+			<b><%- i.name %></b>
+			<b class="fit wm6 smaller"><%- i.field == 'comment' ? 'commented' : 'changed ' + i.field %></b>
+			<i class="smaller monospace wm8"><%- Date.formatDateShort(i.time) %></i>
+		</div>
+		<% if (i.field == 'comment') { %>
+			<div class="md nomargin compact w3-margin-bottom">
+				<%- markdown(i.newvalue) %>
+			</div>
+		<% } %>
+	</div>
+
+<% } %>
+
+</div>

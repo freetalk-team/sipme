@@ -64,7 +64,6 @@ async function handleRequest(res, msg, headers) {
 		, room = headers['x-room']
 		, type = headers['x-type']
 		, body = msg, data = { user: from, type }
-		, notification = true
 		;
 
 
@@ -75,18 +74,34 @@ async function handleRequest(res, msg, headers) {
 	if (name.startsWith('"'))
 		name = name.slice(1, - 1);
 
-	if (typeof msg == 'object') {
-		console.log('Checking payload type');
+	let notification, title = name;
 
-		//data = msg;
-		body = "todo";
+	switch (type) {
+
+		case 'invite':
+		break;
+
+		default:
+
+		if (typeof msg == 'object') {
+			console.log('Checking payload type');
+
+			const { id, _type } = msg;
+
+			body = `${_type}: ${id}`;
+			data.body = JSON.stringify(msg);
+		}
+
+		notification = {
+			// body : "This is a Firebase Cloud Messaging Topic Message!",
+			body,
+			title
+		};
+
+		break;
+
 	}
-
-	if (type == 'invite') {
-		// body = 'Incomming call';
-		notification = false;
-	}
-
+	
 	try {
 
 		if (!token) {
@@ -108,18 +123,12 @@ async function handleRequest(res, msg, headers) {
 			data
 		};
 
-		if (notification) {
-			message.notification = {
-				// body : "This is a Firebase Cloud Messaging Topic Message!",
-				body,
-				title: name
-			};
-		}
-
+		if (notification) 
+			message.notification = notification;
 
 		console.log('FCM request:', message);
 
-		const r = await sendMessage(PUSH_ENDPOINT, m, null, token);
+		const r = await sendMessage(PUSH_ENDPOINT, { message }, null, token);
 		console.log('FCM response:', r);
 
 		res.writeHead(200);
@@ -127,6 +136,7 @@ async function handleRequest(res, msg, headers) {
 
 	}
 	catch (e) {
+		console.error('Error sending push message:', e);
 		res.writeHead(500);
 	}
 

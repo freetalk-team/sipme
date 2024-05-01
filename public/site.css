@@ -8,6 +8,62 @@
 
 body {
 	color: #111;
+	font-family: var(--font);
+
+	&[mobile="true"] {
+		font-size: 36px!important;
+	}
+}
+
+header {
+	background-color: var(--nav-bg-col);
+}
+
+navbar {
+	background-color: var(--nav-bg-col);
+	box-shadow: 2px 4px 4px 2px grey;
+}
+
+input[type=checkbox] {
+	display: unset;
+}
+
+textarea.message {
+	resize: none;
+	width: 100%;
+	min-height: 250px;
+}
+
+/* footer {
+	background-color: #ccc;
+} */
+
+footer :is(p,ul) {
+	font-family: "Inconsolata";
+}
+
+footer {
+	margin-block-start: 50px;
+	margin-block-end: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+/* li p {
+	margin: 5px 0;
+} */
+
+#notification-popup {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: #afffaf;
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	z-index: 9999;
+	min-width: 250px;
 }
 
 .slideset {
@@ -45,14 +101,7 @@ li a.active {
 	margin-right: 10px;
 }
 
-header {
-	background-color: var(--nav-bg-col);
-}
 
-navbar {
-	background-color: var(--nav-bg-col);
-	box-shadow: 2px 4px 4px 2px grey;
-}
 
 .container {
 	height: 100%;
@@ -104,7 +153,7 @@ form.login {
 		max-width: 300px;
 	}
 
-	:is(input[type="text"],input[type="password"]) {
+	:is(input[type="text"],input[type="password"],textarea) {
 		width: 100%;
 		padding: 12px 20px;
 		margin: 8px 0;
@@ -189,38 +238,5 @@ form.login {
 	}
 }
 
-input[type=checkbox] {
-	display: unset;
-}
 
-/* footer {
-	background-color: #ccc;
-} */
 
-footer :is(p,ul) {
-	font-family: "Inconsolata";
-}
-
-#notification-popup {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	background-color: #afffaf;
-	padding: 10px 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	z-index: 9999;
-	min-width: 250px;
-}
-
-footer {
-	margin-block-start: 50px;
-	margin-block-end: 5px;
-	margin-left: 20px;
-	margin-right: 20px;
-}
-
-li p {
-	margin: 5px 0;
-}

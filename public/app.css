@@ -27,7 +27,6 @@ html {
 
 body {
 	margin: 0;
-	font-family: var(--font);
 	/* zoom: 110%; */ /* Brakes CodeMirror !!! */
 	overflow: hidden;
 	/* font-size: 11px; */

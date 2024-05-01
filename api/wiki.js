@@ -1,16 +1,18 @@
 const express = require('express')
+	, etag = require('etag')
 	, pako = require('pako')
-	,  marked = require('@common/marked')
 	;
 
+const marked = require('@common/marked');
 
 const router = express.Router();
 	
 router.get('/:id', async (req, res) => {
 
+	const isMobile = req.useragent.isMobile;
 	const { id } = req.params;
 
-	console.debug('WIKI page:', id);
+	console.debug('WIKI page:', id, isMobile);
 
 	try {
 
@@ -24,7 +26,10 @@ router.get('/:id', async (req, res) => {
 
 			const html = marked.parse(md);
 
-			return res.render('wiki', { html } );
+			res.setHeader('ETag', etag(r.content, { weak: true }));
+			res.setHeader('Cache-Control', 'public, max-age=300');
+
+			return res.render('wiki', { html, isMobile } );
 		}
 
 	}

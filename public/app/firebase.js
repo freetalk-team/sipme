@@ -96,41 +96,66 @@ async function startServiceWorker(firebase) {
 		const path = '/sw.js?' + params.toString();
 
 		const registration = await navigator.serviceWorker.register(path, opt);
+
+
+		if (registration.installing) 
+			sw = registration.installing;
+		else if (registration.waiting) 
+			sw = registration.waiting;
+		else if (registration.active) 
+			sw = registration.active;
 		
 		if (!token) {
 
-			token = await firebase.getRegistrationToken(registration);
+			// if (sw.state === 'activated') {
+			// 	updateToken(firebase, registration, id);
+			// }
+			// else {
 
-			console.log('Registration token:\n', token);
+			// 	sw.addEventListener('statechange', async (state) => {
+			// 		if (state === 'activated') 
+			// 			updateToken(firebase, registration, id);
+			// 	});
 
-			try {
+			// }
 
-				// const { key } = await ajax.post('/app/register', { token });
-				// this.deviceId = key;
-
-				// if (Config.internalPush)
-
-				// Should assign device ID with 'user' topic
-				await ajax.post('/api/register', { token });
-
-				localStorage.setItem(id, token);
-
-			}
-			catch (e) {
-				console.error('Failed to register device token');
-			}
+			updateToken(firebase, registration, id);
 			
 		}
 
-		if (registration.active) {
-			sw = registration.active;
+		// if (registration.active) {
+		// 	sw = registration.active;
 			
-		}
+		// }
 
 		navigator.serviceWorker.addEventListener('message', function (event) {
 			// console.log('SwerviceWorker message:', event.data);
 
 			app.onPushMessage(event.data);
 		});
+	}
+}
+
+async function updateToken(firebase, registration, id) {
+
+	try {
+
+		let token = await firebase.getRegistrationToken(registration);
+
+		console.log('Registration token:\n', token);
+
+		// const { key } = await ajax.post('/app/register', { token });
+		// this.deviceId = key;
+
+		// if (Config.internalPush)
+
+		// Should assign device ID with 'user' topic
+		await ajax.post('/api/register', { token });
+
+		localStorage.setItem(id, token);
+
+	}
+	catch (e) {
+		console.error('Failed to register device token');
 	}
 }

@@ -1,0 +1,15 @@
+FROM kamailio:5.6.3-alpine
+
+RUN apk add --update \
+    make g++ cgdb \
+    pkgconf \
+    linux-headers \
+    bison flex \
+    postgresql14-dev \
+    json-c-dev \
+    libxml2-dev \
+    libunistring-dev \
+    libevent-dev \
+    curl-dev
+
+ENTRYPOINT sh

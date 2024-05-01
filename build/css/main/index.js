@@ -1,0 +1,2 @@
+
+import '../../../public/main.css'

@@ -94,10 +94,17 @@ class UserAgent {
 		return this.ua.unregister();
 	}
 
-	sendMessage(to, message) {
+	sendMessage(to, message, push=false) {
 		const uri = `sip:${to}`;
 		console.log('SIP: sending msg, type:', typeof message);
-		return this.ua.message(uri, message);
+
+		const headers = [];
+
+		if (push) {
+			headers.push('X-push: 1');
+		}
+
+		return this.ua.message(uri, message, headers);
 	}
 
 	call(to, muted=false) {
@@ -223,7 +230,7 @@ function transportOptions(url) {
 			// 	, outbound: true
 				}
 			, transportConstructor: SipTcpTransport
-			, transportOptions
+			// , transportOptions
 			, hackViaTcp: true
 			// , hackIpInContact: true
 			// , hackIpInContact: '127.0.0.1'

@@ -34,7 +34,7 @@ export const RecentMixin = {
 		const ts = Date.seconds();
 
 		const chats = await this.db.lsByRange('recent', 'latest', ['chat', 0], ['chat', ts], true);
-		console.debug('##', chats);
+		// console.debug('##', chats);
 
 		for (const i of chats)
 			await this.loadContact(i);
@@ -191,7 +191,7 @@ async function loadRecentComments() {
 
 	const comments = await app.db.lsByRange('recent', 'latest', ['comment', 0], ['comment', Date.seconds()], true);
 		
-	console.debug('##', comments);
+	// console.debug('##', comments);
 
 	let channel, recent = [];
 

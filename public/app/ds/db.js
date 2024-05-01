@@ -50,7 +50,7 @@ export class DataSourceDatabase extends DataSourceBase {
 			params.unshift(id.id);
 
 		const data = params[1];
-		if (data.content)
+		if (data && data.content)
 			data.content = zip(data.content);
 
 		return app.db.update(this.name, ...params); 

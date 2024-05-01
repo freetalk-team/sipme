@@ -11,9 +11,14 @@ module.exports = {
 				// , autoIncrement: true
 			},
 
-			tags: Sequelize.STRING,
+			tags: {
+				type: Sequelize.STRING,
+				allowNull: false,
+				defaultValue: ''
+			},
 			title: Sequelize.STRING,
 			short: Sequelize.TEXT,
+			head: Sequelize.TEXT,
 			text: Sequelize.TEXT,
 			content: Sequelize.STRING.BINARY,
 			info: Sequelize.JSONB,

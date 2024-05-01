@@ -58,11 +58,11 @@ router.get('/', async (req, res) => {
 			where.status = 'new';
 		}
 
-		console.debug('ARGS', args);
+		// console.debug('ARGS', args);
 
 		r = await db.ls(table, args);
 
-		console.log('Got results:', r);
+		// console.log('Got results:', r);
 	}
 	catch (e) {
 		console.error('Failed to serch db:', e);
@@ -93,6 +93,36 @@ router.get('/updates', async (req, res) => {
 		const attributes = ['ticket', 'author', 'field', 'time', 'newvalue', 'oldvalue'];
 
 		data = await db.ls('ticketupdate', { where, order, attributes });
+
+	}
+	catch (e) {
+		console.error('Not found', e);
+
+		return res.status(404).end();
+	}
+
+	res.json(data);
+});
+
+router.get('/own', async (req, res) => {
+
+	const db = app.db;
+
+	let { time } = req.query;
+	const user = req.user.email;
+
+	let data;
+
+	try {
+
+		const where = db.and(
+			db.or({ owner: user}, { reporter: user }), 
+			{ time: db.gt(time) }
+			);
+
+		const order = [ ['time' ] ];
+
+		data = await db.ls('ticketinfo', { where, order });
 
 	}
 	catch (e) {

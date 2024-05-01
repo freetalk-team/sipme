@@ -38,6 +38,9 @@ export class Task {
 		app.addDS(this, 'task');
 	}
 
+	// only for initial setup
+	
+
 	async init() {
 
 		const db = app.db;
@@ -268,6 +271,30 @@ export class Task {
 		}
 
 		return false;
+	}
+
+	static async setup(db) {
+		let data;
+
+		// ticket enums
+		data = await ajax.get('/api/ticketenum');
+		console.debug('TICKET enums', data);
+
+		for (const i of data) {
+			if (typeof i.value == 'string')
+				i.value = JSON.parse(i.value);
+		}
+
+		await db.put('enum', data);
+
+		// todo: games
+
+		// own tickets
+		data = await ajax.get('/api/ticket/own');
+		console.debug('Own tasks', data);
+
+		if (data.length > 0)
+			await db.put('task', data);
 	}
 }
 

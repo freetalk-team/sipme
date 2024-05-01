@@ -1,5 +1,13 @@
 
-<h2 class="text-stroke wm6 w3-indigo w3-padding w3-round">Tickets</h2>
+<div class="w3-indigo w3-padding w3-round w3-margin-bottom cr ci m10">
+	<h2 class="nomargin text-stroke wm6 w3-round fit">Tickets</h2>
+	<% if (less) { %>
+		<a href="/trac?o=<%- less - 1 %>" title="Previous"><i class="w3-text-light-green fa xl fa-circle-arrow-left"></i></a>
+	<% } %>
+	<% if (more) { %>
+		<a href="/trac?o=<%- more - 1 %>" title="More"><i class="w3-text-light-green fa fa-2x fa-circle-arrow-right"></i></a>
+	<% } %>
+</div>
 
 <div class="list2 list nounderline">
 
@@ -8,14 +16,21 @@
 
 	<a href="/trac/<%- i.id %>" class="item cc w3-padding w3-border-bottom">
 		<span class="cr ci">
-			<h3 class="nomargin text-stroke wm8 ellipsis fit"><%- i.summary %></h3>
+			<h3 class="nomargin-tiny text-stroke wm8 ellipsis fit"><%- i.summary %></h3>
 			<b class="wm6">#<%- i.id %></b>
 		</span>
-		<div class="cr m10 monospace smaller">
-			<span class="cr ci"><b>Status:</b><i><%- i.status %></i></span>
-			<span class="cr ci"><b>Type:</b><i><%- i.type %></i></span>
-			<span class="cr ci"><b>Component:</b><i><%- i.component %></i></span>
-			<span class="cr ci"><b>Priority:</b><i><%- i.priority %></i></span>
+		<div class="monospace smaller w3-row">
+			<div class="w3-third w3-padding-tiny">
+				<span class="cr ci"><b>Status:</b><i class="ellipsis"><%- i.status %></i></span>
+				<span class="cr ci"><b>Type:</b><i><%- i.type %></i></span>
+				<span class="cr ci"><b>Prio:</b><i><%- i.priority %></i></span>
+			</div>
+			<div class="w3-third w3-padding-tiny bw">
+				<b>Component: </b><i><%- i.component %></i>
+			</div>
+			<div class="w3-third w3-padding-tiny bw">
+				<b>Milestone: </b><i><%- i.milestone %></i>
+			</div>
 		</div>
 	</a>
 

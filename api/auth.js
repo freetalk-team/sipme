@@ -8,7 +8,7 @@ const passport = require('passport')
 
 const { post } = require('@common/request');
 
-const { setupUser, sessionChecker } = require('./common');
+const { setupUser, sessionChecker, generatePassword } = require('./common');
 
 const DRIVE_SCOPE = ['https://www.googleapis.com/auth/drive'];
 const CONTACT_SCOPE = ['https://www.googleapis.com/auth/contacts.readonly'];
@@ -87,7 +87,7 @@ router.get('/google/callback'
 		console.log('OAuth2 callback:', user);
 		req.session.user = user;
 
-		const id = user.id
+		const { id, accessToken, accessTokenExpire } = user
 			, email = user.emails[0].value
 			, name = user.displayName
 			, uid = email.hashHex();
@@ -96,7 +96,7 @@ router.get('/google/callback'
 	
 
 		const data = { role: 'user' };
-		const info = { };
+		const info = { data };
 
 		let update = false, token = user.refreshToken;
 
@@ -107,6 +107,28 @@ router.get('/google/callback'
 		// 	data.token = token;
 		// 	// fields.push('token');
 		// }
+
+		const oauth2 = getOAuth2Client();
+		oauth2.setCredentials({ access_token: accessToken});
+
+		try {
+			const tokenInfo = await getTokenInfo(oauth2, accessToken);
+			const scopes = tokenInfo.scopes;
+
+			const perm = {
+				photo: scopes.includes(PHOTO_SCOPE[0]),
+				contact: scopes.includes(CONTACT_SCOPE[0]),
+				drive: scopes.includes(DRIVE_SCOPE[0])
+			};
+
+			user.accessTokenExpire = tokenInfo.expiry_date;
+			user.google = perm;
+
+			data.google = perm;
+		}
+		catch (e) {
+			console.error('Failed to get token info', e);
+		}
 
 		let r, createAlbum = false, createUser;
 
@@ -137,9 +159,6 @@ router.get('/google/callback'
 
 				data.photo = user.photos[0].value;
 
-				const info = { data };
-
-
 				if (name) {
 					info.name = name;
 					r.name = name;
@@ -148,7 +167,7 @@ router.get('/google/callback'
 				if (token)
 					info.token = token;
 
-				info.data = data;
+				r.data = data;
 
 				update = true;
 				//createAlbum = true;
@@ -156,13 +175,17 @@ router.get('/google/callback'
 				
 
 			}
-			else if (token) {
-				update = true;
-				info.token = token;
-				await db.update('login', uid, { token });
-			}
 			else {
-				user.refreshToken = r.token;
+
+				Object.assign(data, r.data);
+
+				if (token) {
+					update = true;
+					info.token = token;
+				}
+				else {
+					user.refreshToken = r.token;
+				}
 			}
 
 			
@@ -176,8 +199,6 @@ router.get('/google/callback'
 			delete user._json;
 
 			Object.assign(user, r);
-
-			setupUser(user);
 			
 			app.users[user.id] = user;
 
@@ -187,7 +208,13 @@ router.get('/google/callback'
 
 			if (token) {
 
-				const info = { id: uid, email, state: 'gmail', token };
+				Object.assign(info, { 
+					id: uid, 
+					email, 
+					state: 'gmail', 
+					token, 
+					password: generatePassword(email),
+				});
 
 				if (name)
 					info.name = name;
@@ -202,32 +229,14 @@ router.get('/google/callback'
 			}
 
 			console.error('Failed to login:', e);
-			return res.status(401).end('Not invited');
+			return res.redirect('/logout');
 		}
 
 		
 		//const [r, created ] = await app.db.upsert('login', data, fields);
 		// console.debug('## LOGIN:', r);
 
-		const oauth2 = getOAuth2Client();
-		oauth2.setCredentials({ access_token: user.accessToken});
-
-		try {
-			const tokenInfo = await getTokenInfo(oauth2, user.accessToken);
-			const scopes = tokenInfo.scopes;
-
-			user.accessTokenExpire = tokenInfo.expiry_date;
-			user.google = {
-				photo: scopes.includes(PHOTO_SCOPE[0]),
-				contact: scopes.includes(CONTACT_SCOPE[0]),
-				drive: scopes.includes(DRIVE_SCOPE[0])
-			};
-
-			
-		}
-		catch (e) {
-			console.error('Failed to get token info', e);
-		}
+		
 
 		if (Config.google.firebase) {
 			// todo: add claims
@@ -278,8 +287,8 @@ router.get('/google/callback'
 				console.error('Failed to update user info', e);
 			}
 		}
-
 		
+		setupUser(user);
 
 		if (false) {
 			let uid = user.id;

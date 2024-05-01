@@ -213,6 +213,7 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
 .w3-margin-12{margin:12px!important}.w3-margin-16{margin:16px!important}.w3-margin-24{margin:24px!important}
 .w3-margin-32{margin:32px!important}.w3-margin-48{margin:48px!important}.w3-margin-64{margin:64px!important}
 .w3-margin-hor-12{margin-top:12px!important;margin-bottom:12px!important}.w3-margin-hor-16{margin-top:16px!important;margin-bottom:16px!important}
+.w3-margin-tiny{margin: 4px!important}
 /* End remove */
 .w3-padding-tiny{padding:2px 4px!important}
 .w3-padding-small{padding:4px 8px!important}

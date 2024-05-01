@@ -15,7 +15,7 @@ module.exports = {
 
 			case 'pg':
 			case 'postgres':
-			q = "create view ticket_info as select ticket.*,coalesce(nullif(json_agg(to_jsonb(ticket_change) - 'ticket')::text, '[null]'), '[]')::json as change from ticket left join ticket_change on id=ticket_change.ticket group by id";
+			q = "create view ticket_info as select ticket.*,coalesce(nullif(json_agg(to_jsonb(ticket_change_user) - 'ticket')::text, '[null]'), '[]')::json as change from ticket left join ticket_change_user on id=ticket_change_user.ticket group by id";
 			break;
 		}
 		

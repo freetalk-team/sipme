@@ -25,6 +25,7 @@ class Bot extends UserAgent {
 	#iv;
 	#rooms = new Set;
 	#domain;
+	#userdomain;
 
 	constructor (domain=kDomain, user=kProfile.user) {
 		const uri = user + '@' + domain;
@@ -36,6 +37,7 @@ class Bot extends UserAgent {
 		});
 
 		this.#domain = domain;
+		this.#userdomain = Config.sip.domain;
 	}
 
 	onRegistered() {
@@ -55,12 +57,15 @@ class Bot extends UserAgent {
 	}
 
 
-	async sendMessage(user, message) {
+	async sendMessage(user, message, push=false) {
 
 		await this.#checkConnected();
 
-		return super.sendMessage(user + '@' + this.#domain, message);
+		const uri = user + '@' + this.#userdomain;
+		return super.sendMessage(uri, message, push);
 	}
+
+
 
 	async sendRoomMessage(to, msg) {
 		// const data = { 

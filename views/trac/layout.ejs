@@ -11,9 +11,11 @@
 			a.item { color: unset; }
 		</style>
 	</head>
-	<body class="column">
+	<body class="column" mobile="<%- isMobile %>">
 		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
-			<img class="x64" src="<%- Config.product.logo %>">
+			<% if (!isMobile) { %>
+				<img class="x64" src="<%- Config.product.logo %>">
+			<% } %>
 			<div class="cc m2 fit">
 				<h1 class="wm8 text-stroke nomargin cartoon">Trac</h1>
 				<b><%- Config.company.name %></b>
