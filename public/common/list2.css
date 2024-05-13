@@ -338,6 +338,11 @@ li:nth-of-type(5) + li {
 	background-color: #4a44;
 }
 
+.item.new:nth-child(even) {
+	background-color: #44aa4422!important;
+}
+
+
 .group:has(.loading3), .group.collapsed {
 	:is([name="_more"],[name="_less"]) { display: none; }
 }

@@ -106,7 +106,7 @@
 	<label class="label">{{this.title || this.name.capitalizeFirstLetter()}}</label>
 	<ul class="w3-ul count" name="{{this.name}}">
 		@foreach{{this.items}}[template]
-			[[{{_1}},li]]{{this}}
+			[[_1,li]]
 		@endforeach
 	</ul>
 </template>

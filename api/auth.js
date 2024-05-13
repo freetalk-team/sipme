@@ -83,6 +83,7 @@ router.get('/google/callback'
 		const db = app.db;
 		const fb = app.firebase;
 		const user = req.user;
+		const isMobile = req.useragent.isMobile;
 
 		console.log('OAuth2 callback:', user);
 		req.session.user = user;
@@ -152,7 +153,8 @@ router.get('/google/callback'
 					await db.update('login', uid, { token });
 				}
 
-				return res.status(401).end('Not invited');
+				// return res.status(401).end('Not invited');
+				return res.render('notinvited', { isMobile, name });
 			}
 
 			if (r.login == 1) {

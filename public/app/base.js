@@ -303,6 +303,15 @@ class AppBase extends UX.Page {
 
 		await this.loadSettings();
 
+		if ('serviceWorker' in navigator) {
+			const opt = {
+				scope: '/',
+				//type: 'module'
+			};
+
+			await navigator.serviceWorker.register('/static.js', opt);
+		}
+
 		this.#sidebar = new Sidebar;
 		this.#editor = new Editor;
 	
@@ -722,24 +731,10 @@ class AppBase extends UX.Page {
 
 	showNotification(area, msg, type='warning', timeout=2000) {
 
-		let container;
-
 		switch (area) {
-			case 'editor': {
-				const e = document.getElementById('editor');
-				container = e.querySelector('[role="popup-area"]');
-			}
-			break;
+			case 'editor':
+			return this.#editor.showNotification(msg, type, timeout);
 		}
-
-		if (!container) return;
-
-		const box = dom.renderTemplate('popup-item', { msg });
-		container.appendChild(box);
-		
-		setTimeout(() => dom.removeElement(box), timeout);
-
-		//const e = container.querySelector('notify-area');
 	}
 
 	onAction(action, e) {

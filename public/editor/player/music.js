@@ -10,6 +10,8 @@ export class MusicPage extends EditorBase {
 	#track;
 	#more = false;
 
+	get more() { return this.#more; }
+
 	constructor(container) { 
 		super(container, MusicPage.id); 
 
@@ -31,9 +33,12 @@ export class MusicPage extends EditorBase {
 
 	}
 
-	async load() {
-		this.#offset = 0;
-		this.#total = await app.db.count('audio');
+	async load(more=false) {
+
+		if (!more) {
+			this.#offset = 0;
+			this.#total = await app.db.count('audio');
+		}
 
 		const files = await app.db.lsByRating('audio', this.#offset);
 

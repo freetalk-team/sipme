@@ -18,9 +18,8 @@ AddEditor.register('playlist', [
 	})
 ]);
 
-App.Commands.register('add-new-playlist', () => {
+App.Commands.register('add-new-playlist', (recent=app.player.recent) => {
 
-	const recent = app.player.recent;
 	console.log('# Creating playlist:', recent);
 
 	const params = {

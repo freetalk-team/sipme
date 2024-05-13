@@ -1,0 +1,56 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    #image: nginx/nginx-ingress:latest
+    hostname: nginx
+    container_name: nginx
+    # entrypoint: 'sleep 1h' 
+    volumes:
+      - ./deploy/nginx/app.conf:/etc/nginx/conf.d/app.conf
+      - ./deploy/nginx/ssl.conf:/etc/nginx/ssl.conf
+      - ./deploy/app/cert/letsencrypt/www.sipme.io/fullchain.pem:/etc/nginx/cert/fullchain.pem
+      - ./deploy/app/cert/letsencrypt/www.sipme.io/privkey.pem:/etc/nginx/cert/privkey.pem
+
+     #- ./airsim.conf:/etc/nginx/conf.d/airsim.conf
+    network_mode: host
+
+  kamailio:
+    image: kamailio:5.6.3-alpine
+    hostname: kamailio
+    container_name: kamailio
+    logging:
+      options:
+        max-size: 50m
+    volumes:
+    #  - ./deploy/kamailio/kamailio.heroku.sample.cfg:/etc/kamailio/kamailio.cfg
+     - ./deploy/kamailio/kamailio.sample.local.cfg:/etc/kamailio/kamailio.cfg
+     - ./deploy/kamailio/scripts/message.js:/usr/local/share/kamailio/message.js
+    ports:
+     - "4080:4080/tcp" # WS
+
+    env_file:
+     - ./deploy/app/heroku/.env
+
+    environment:
+     - PUSH_PROXY="http://172.18.0.1:9012"
+
+  push:
+    # image: node:alpine3.18
+    image: registry.heroku.com/sipme/web:latest
+    hostname: pushproxy
+    container_name: pushproxy
+    volumes:
+     - ./deploy/kamailio/push_proxy.js:/usr/local/bin/push_proxy
+    ports:
+     - "9012:9012/tcp" # WS
+
+    env_file:
+     - ./deploy/app/heroku/.env.firebase
+
+    entrypoint: ['push_proxy']
+
+networks:
+  default:
+    external:
+      name: voipnet

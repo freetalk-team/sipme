@@ -229,7 +229,7 @@ export class SettingsList {
 
 						const ul = e.querySelector('ul');
 						for (const info of i.val) {
-							const li = dom.renderTemplate(i.template, info);
+							const li = dom.renderTemplate(i.template, info, 'li');
 							ul.appendChild(li);
 						}
 					}

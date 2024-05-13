@@ -11,6 +11,12 @@
 		{{dom.markdown(this.msg)}}
 	</template>
 
+	<template id="popup-file-item" class="cr ci">
+		<i class="fit ellipsis">{{this.name}}</i>
+		<span class="smaller">{{fileX.getType(this.type)}}</span>
+		<b class="smaller">{{size(this.size)}}</b>
+	</template>
+
 	<template id="editor-header-grid" class="header grid">
 		<i class="fa fa-fw icon circle stroke {{this.icon||'fa-dot-circle'}}" style="color:{{this.iconcolor||'inherit'}}" role="icon"></i>
 		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
@@ -100,7 +106,7 @@
 			[[editor-sidebar-tabs]]{{this}}
 			[[scrollable-list,,,column list]]
 		</div>
-		<div class="navbar container-col">
+		<div class="navbar cc">
 			<button class="icon" name="expand" title="Expand">
 				<i class="fa fa-fw sm fa-angle-double-left"></i>
 			</button>
@@ -108,7 +114,7 @@
 	</template>
 
 	<template id="editor-sidebar-title" class="sidebar column fade fa-color-icons">
-		<div class="header container-row center-items w3-padding-tiny">
+		<div class="header cr center-items w3-padding-tiny">
 			<i class="fa {{_0}}"></i>
 			<h5 class="nomargin text-up fit ellipsis watermark-6">{{_0}}</h5>
 			<button class="icon fa fa-fw fa-angle-double-right smaller" name="expand" title="Expand"></button>
@@ -131,14 +137,14 @@
 	</template>
 
 	<template id="search-area" classes="search-area column w3-panel max-width w3-margin-top w3-margin-bottom" ds="{{_0}}" template="{{_1}}" role="search">
-		<div class="input-area search container-row m5 fit  w3-margin-bottom">
+		<div class="input-area search cr m5 fit  w3-margin-bottom">
 			<input class="fit" type="text" name="search" placeholder="search" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false">
 			<button class="icon fa" name="clear" disabled title="Clear"></button>
 			<button class="icon fa sm" disabled name="search" title="Search"></button>
 		</div>
 	</template>
 
-	<template id="search-area-results-container" classes="container-col show-empty">
+	<template id="search-area-results-container" classes="cc show-empty">
 		@foreach{{this.slice(0, 10)}}[_0]
 			[[_1]]{{this}}
 		@endforeach
@@ -147,17 +153,17 @@
 		@endforeach
 	</template>
 
-	<template id="search-area-results" classes="results container-col list2 count fade">
-		[[search-area-results-container,,_0]]{{this}}
-		<footer class="container-row smaller w3-padding-tiny" style="justify-content:end">
+	<template id="search-area-results" classes="results cc list count fade">
+		[[search-area-results-container,div container-empty,_0]]{{this}}
+		<div class="cr smaller w3-padding-tiny" style="justify-content:end">
 			@if{{this.length >= 10}}
 				<a name="less" class="hidden italic" title="Less">less</a>
 				<a name="more" class="italic" title="More">more</a>
 			@endif
-		</footer>
+		</div>
 	</template>
 
-	<template id="editor-tab-navbar" class="container-row tabbar" role="navbar">
+	<template id="editor-tab-navbar" class="cr tabbar" role="navbar">
 		@foreach{{this}}
 			[[editor-tab-navbar-item,span]]{{this}}
 		@endforeach
@@ -167,11 +173,11 @@
 		{{this}}
 	</template>
 
-	<template id="editor-tab-page" class="container-col">
+	<template id="editor-tab-page" class="cc">
 		[[editor-tab-navbar]]{{this}}
 		<div role="tab-area">
 			@foreach{{this}}
-				<div class="container-col fade hidden" page="{{this}}"></div>
+				<div class="cc fade hidden" page="{{this}}"></div>
 			@endforeach
 		</div>
 	</template>

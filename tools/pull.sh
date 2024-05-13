@@ -75,7 +75,7 @@ for font in raleway inconsolata monday-feelings super-boys; do
 
 done
 
-for dir in svg png ico ogg; do
+for dir in svg png ico ogg screenshot; do
     cp -r ${PUBLIC}/ui/${dir} public/ui/
 done
 

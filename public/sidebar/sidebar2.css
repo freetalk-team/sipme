@@ -286,3 +286,20 @@
 #sidebar .list2 .group:last-child {
 	padding-bottom: 8px;
 }
+
+/*
+#sidebar .area {
+	position: relative;
+}
+
+#sidebar .area:after {
+	position: absolute;
+	content: "";
+	bottom: 0;
+	background: url(/ui/svg/team2-x.svg) no-repeat center bottom;
+    background-size: contain;
+	opacity: .3;
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+}
+*/

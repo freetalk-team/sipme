@@ -362,7 +362,7 @@ app.get('/login', function(req, res){
 //
 //   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
 app.post('/login', 
-	passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+	passport.authenticate('local', { failureRedirect: '/notinvited', failureFlash: true }),
 	function(req, res, next) {
 
 		console.debug('ON LOGIN', req.user);
@@ -379,6 +379,11 @@ app.post('/login',
 	function(req, res) {
 		res.redirect('/');
 	});
+
+app.get('/notinvited', function(req, res) {
+	const isMobile = req.useragent.isMobile;
+	res.render('notinvited', { isMobile });
+});
 
 app.get('/logout', function(req, res){
 	// clear the remember me cookie when logging out
@@ -397,16 +402,14 @@ app.post('/setup', ensureAuthenticated, async (req, res) => {
 
 	console.debug('SETUP request', user.id, req.body);
 
-	const { fname, lname, email, phone, dd, mm, yyyy, password } = req.body;
+	const { fname, lname, email, phone, dob, password } = req.body;
 	const name = `${fname} ${lname}`;
 
 	const exclude = ['complete', 'provider', 'refreshToken', 'accessToken', 'accessTokenExpire', 'firebaseToken', 'firebaseTokenExpire'];
+
 	const data = db.info('login', user, 'data', ...exclude);
 
-	Object.assign(data, {
-		phone,
-		dob: `${dd}-${mm}-${yyyy}`
-	});
+	Object.assign(data, { phone, dob });
 
 	if (user.photo)
 		data.photo = user.photo;

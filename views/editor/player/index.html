@@ -28,7 +28,7 @@
 	</div>
 	@endif -->
 	<div class="cr ci w3-margin-4" role="filter">
-		<input class="fit" name="filter" placeholder="filter" autocomplete="off">
+		<input class="fit" name="filter" placeholder="filter" autocomplete="off" spellcheck="false">
 		<!-- <button name="search" class="icon fa fa-search" title="Search" disabled></button> -->
 	</div>
 	<!-- <div class="tabbar cr w3-padding-ver-8 margin-top" role="tabs">
@@ -111,7 +111,7 @@
 		<button class="icon fa fa-fw sm" name="share" title="Share"></button>
 		<button class="icon fa fa-fw" name="delete" title="Remove"></button>
 	</div> -->
-	[[{{_0}}]]
+	[[_0]]
 	[[editor-player-files-size,i]]{{this.files}}
 	[[editor-player-files,ul hidden]]{{this.files}}
 	<div class="star-ratings rating" data-rating="{{this.rating || 0}}"></div>
@@ -183,9 +183,9 @@
 	<button class="icon fa sm display-hover" name="delete" title="Remove"></button>
 </template>
 
-<template id="editor-player-sidebar-playlist-file" classes="cr m5 ci w3-padding-small noevents si">
+<template id="editor-player-sidebar-playlist-file" class="cr m5 ci w3-padding-small noevents si" data-id="{{this.id||this.name.hashCode()}}">
 	<i class="fa smaller w3-text-green" name="{{this.type}}"></i>
-	<span class="fit ellipsis">{{this.title||this.file.name}}</span>
+	<span class="fit ellipsis">{{this.title||this.name||this.file.name}}</span>
 	@if{{this.album}}
 		<i class="smaller fit ellipsis">{{this.album}}</i>
 	@endif

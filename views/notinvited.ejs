@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/app.css">
+		<link rel="stylesheet" href="/site.css">
+
+		<style>
+			td { padding: 8px 16px; }
+			a.item { color: unset; }
+		</style>
+	</head>
+	<body class="column" mobile="<%- isMobile %>">
+		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
+			<% if (!isMobile) { %>
+				<img class="x64" src="<%- Config.product.logo %>">
+			<% } %>
+			<div class="cc m2 fit">
+				<h1 class="wm8 text-stroke nomargin cartoon">Web Messenger</h1>
+				<b><%- Config.company.name %></b>
+				<i class="smaller"><%- Config.company.desc %></i>
+			</div>
+		</header>
+
+		<div class="w3-main scroll-area custom">
+
+			<div class="max-width wider center">
+		
+				<div class="w3-container w3-row">
+		
+					<div class="w3-twothird cc m10">
+						<h3 class="w3-text-red wm8">Not invited</h3>
+						<div class="w3-container inconsolata-p">
+							<p>Dear <% name || 'user' %>,</p>
+							<p>We apologize for any inconvenience caused by not receiving an invitation to use our application yet. We understand how frustrating it can be to wait, and we sincerely apologize for any delay in extending access to our platform.</p>
+							<p>Rest assured, as soon as invitations become available, you will be among the first to receive yours. In the meantime, if you have any questions or concerns, please don't hesitate to reach out to us at <a><%- Config.company.support %></a>.</p>
+						</div>
+						<a class="w3-padding w3-margin-top w3-round w3-blue text-center button nounderline" style="width: fit-content;" href="/	"><i class="fa fa-home margin-right"></i>Home</a>
+						<%- include static/more.html %>
+					</div>
+					<div class="w3-third w3-container" style="margin-top: 30px;">
+						
+						<%- include static/features.html %>
+						<%- include static/links.html %>
+		
+						<div class="column w3-card-2 w3-margin-top inconsolata-p">
+							<h4 class="w3-margin-tiny wm6 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h4>
+							<ul class="cc m10 nounderline">
+								<li>
+									<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
+									<p class="smaller">Browse project source code in Github</p>
+								</li>
+								<li class="smaller">
+									<strong>Version: </strong><%- Config.version %>
+								</li>
+							</ul>
+						</div>
+					</div>
+		
+				</div>
+		
+				<%- include footer %>
+		
+			</div>
+		</div>
+	</body>
+</html>
+

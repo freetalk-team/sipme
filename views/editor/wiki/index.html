@@ -6,7 +6,21 @@
 </template>
 
 <template id="wiki-editor-content" classes="cc m10 max-width wider center w3-container">
-	[[search-area,,wiki,wiki-search-result]]
+	<!-- [[search-area,,wiki,wiki-search-result]] -->
+	<div class="search-area column w3-panel max-width w3-margin-top w3-margin-bottom" ds="wiki" template="wiki-search-result" role="search">
+		<div class="input-area search cr m5 fit  w3-margin-bottom">
+			<input class="fit" type="text" name="search" placeholder="search" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false">
+			<button class="icon fa" name="clear" disabled title="Clear"></button>
+			<button class="icon fa sm" disabled name="search" title="Search"></button>
+		</div>
+		<div class="show-container-empty">
+			<h1 class="wm6 monospace">Search Wiki database</h1>
+			<p class="inconsolata">App documentation, configuration examples, deployment samples and more</p>
+			<ul class="inconsolata">
+				<li><a cmd="open-start-wiki-wiki">Wiki</a></li>
+			</ul>
+		</div>
+	</div>
 	[[editor-wiki-doc-edit]]
 	<div class="main hide pointer-links" role="view"></div>
 </template>
@@ -27,8 +41,8 @@
 	</span>
 </template>
 
-<template id="wiki-search-result" classes="cc m2 result" data-id="{{this.id}}">
-	<a class="row no-child-pointer-events">
+<template id="wiki-search-result" classes="item cc m2 result noevents w3-padding" data-id="{{this.id}}" cmd="wiki-load-content">
+	<a class="row no-child-pointer-events" cmd="open-start-wiki">
 		<h3 class="title fit nomargin ellipsis">{{this.title}}</h3>
 		<div class="cr m2 ci" style="font-size: 90%;">
 		@foreach{{this.tags.split(' ')}}
@@ -36,7 +50,7 @@
 		@endforeach
 		</div>
 	</a>
-	<span class="md compact">{{dom.markdown(this.short)}}</span>
+	<span class="md compact inconsolata-li hide-selected fade">{{dom.markdown(this.short)}}</span>
 	<div class="w3-container cr small ci no-child-pointer-events">
 		@if{{this.date}}
 			<i>{{this.date.formatTimeDate()}}</i>
@@ -49,6 +63,10 @@
 			<i class="fit text-right">{{'Author: ' + this.user.name}}</i>
 		@endif
 	</div>
+</template>
+
+<template id="wiki-search-result-content" class="md show-selected fade inconsolata-li" role="content">
+
 </template>
 
 

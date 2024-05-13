@@ -14,7 +14,6 @@ export class EditorBase extends UX.PageController {
 	}
 
 	#dragCounter = 0;
-	#dragOpts;
 	#container;
 	#stack = [];
 	#mo;
@@ -25,8 +24,9 @@ export class EditorBase extends UX.PageController {
 
 	get currentEditor() { return this.#current; }
 	get loadingElement() { return document.getElementById('editor-loading'); }
-	get showHover() { return this.#dragOpts && this.#dragOpts.hover; }
+	get showHover() { return this.#current.dragOpts && this.#current.dragOpts.hover; }
 	get container() { return this.#container; }
+	get dragOptions() { return this.#current.dragOptions; }
 
 	constructor(id='editor') {
 		super();
@@ -721,11 +721,7 @@ export class EditorBase extends UX.PageController {
 
 		
 
-		this.#dragOpts = ed.dragOptions;
-
-		console.log('EDITOR: open =>', editor, id, 'drag=', !!this.#dragOpts);
-
-		this.#dragOpts ? this.#registerListeners() : this.#unregisterListeners();
+		
 		//this.dropArea = ed.dropArea;
 
 		// todo: handle CodeMirror textareas
@@ -771,6 +767,21 @@ export class EditorBase extends UX.PageController {
 		setTimeout(() => dom.removeElement(box), 3000);
 	}
 
+	showNotification(msg, type='warning', timeout=2000) {
+
+		let container = this.#container.querySelector('[role="popup-area"]');
+
+		if (!container) return;
+
+		const box = dom.renderTemplate('popup-item', { msg });
+		container.appendChild(box);
+		
+		if (type != 'progress')
+			setTimeout(() => dom.removeElement(box), timeout);
+
+		return box;
+	}
+
 	// cancel() {
 
 	// 	switch (this.current) {
@@ -794,10 +805,15 @@ export class EditorBase extends UX.PageController {
 			.map((item) => item.getAsFileSystemHandle());
 
 		const files = [];
+		let directory;
+
 		for await (const handle of fileHandlesPromises) {
 			if (handle.kind === 'directory') {
+
 				console.log(`Directory: ${handle.name}`);
 				await getDirectoryFileMeta(handle, files);
+
+				directory = handle.name;
 			} else {
 				console.log(`File: ${handle.name}`);
 				const file = await handle.getFile();
@@ -837,8 +853,36 @@ export class EditorBase extends UX.PageController {
 				//this.#content.addImageFromFile(images);
 			}
 
+
 			if (media.length > 0) {
-				await app.importAudioFiles(media);
+
+				const e = this.showNotification(`### Importing ${media.length} files`, 'progress');
+				let last;
+
+				await app.importAudioFiles(media, (id, state, info) => {
+
+					switch (state) {
+
+						case 'begin': 
+						last = dom.renderTemplate('popup-file-item', info);
+						e.appendChild(last);
+						break;
+
+						case 'end':
+						last.setAttribute('state', 'done');
+						break;
+
+						case 'meta':
+						// todo
+						break;
+
+						case 'done':
+						dom.removeElement(e);
+						break;
+					}
+
+
+				});
 			}
 
 			// for (const file of files) {
@@ -851,9 +895,9 @@ export class EditorBase extends UX.PageController {
 			// 	await this.currentPage.onFileDrop(file);
 			// }
 
-			const filtered = filterDraggedFiles(files, this.#dragOpts);
+			const filtered = filterDraggedFiles(files, this.dragOptions);
 			if (filtered.length > 0)
-				await this.currentPage.onFileDrop(filtered, dt);
+				await this.currentPage.onFileDrop(filtered, dt, directory);
 
 			console.log('EDITOR: emitting files drop event');
 			app.emit('filesdropped', files);
@@ -938,193 +982,11 @@ export class EditorBase extends UX.PageController {
 		switch (e.tagName) {
 
 			case 'A':
-			if (e.classList.contains('yt')) {
-				app.player.playYoutube(e);
-			}
-			else {
-
-				const name = e.getAttribute('name');
-				if (['next', 'prev'].includes(name)) {
-
-					const slideshow = e.closest('.slideshow-container');
-					if (slideshow) {
-
-						const imgs = slideshow.querySelectorAll('img');
-						for (let i = 0; i < imgs.length; ++i) {
-							const e  = imgs[i];
-
-							if (dom.isHidden(e)) continue;
-
-							if (name == 'prev') {
-								if (--i < 0) i = imgs.length - 1;
-							}
-							else {
-								++i;
-							}
-
-							i = i % imgs.length;
-
-							const num = slideshow.querySelector('.number');
-							num.innerText = `${i + 1} / ${imgs.length}`;
-
-							dom.hideElement(e);
-							dom.showElement(imgs[i]);
-
-							break;
-						}
-
-						return;
-					}
-				}
-				else if (['more', 'less'].includes(name)) {
-
-					const area = e.closest('.search-area');
-					if (area) {
-
-						const results = area.querySelector('.results');
-						const container = results.firstElementChild;
-
-						let c = 0;
-						const elements = container.querySelectorAll('.item.hidden');
-						const items = Array.from(elements).slice(0, 10);
-
-						for (const i of items) dom.showElement(i);
-
-						if (items.length < 10)
-							dom.hideElement(e);
-
-						return;
-					}
-
-				}
-
-				let ed = this.currentEditor;
-				if (!ed) break;
-
-				// const sidebar = ed.sidebar;
-				// if (sidebar && sidebar.container.contains(e))
-				// 	ed = sidebar;
-
-				const link = e.getAttribute('link');
-				if (link && link.startsWith('#')) {
-					const path = link.slice(1);
-					const id = (path.startsWith('/') ? path.slice(1) : path)
-						.replaceAll('/', '-');
-
-					app.executeCommand('open-page-wiki', id);
-					// ed.onLinkClick(link.slice(1));
-				}
-				else
-					this.onClick(e, pos);
-				// else {
-				// 	const action = e.getAttribute('name');
-				// 	this.onEditorAction(action, null, e);
-				// }
-			}
+			this.#handleClickLink(e);
 			break;
 
-			case 'BUTTON': {
-
-				let state = e.getAttribute('state');
-				if (state) {
-
-					const old = state;
-
-
-					switch (state) {
-						case 'on': 
-						state = 'off';
-						break;
-
-						case 'off':
-						state = 'on';
-						break;
-					}
-
-					e.setAttribute('state', state);
-
-					const title = e.title;
-					if (title) {
-						let i = title.lastIndexOf(state);
-
-						if (i != -1) {
-							e.title = title.slice(0, i) + old;
-						}
-					}
-				}
-
-				switch (e.name) {
-
-					case 'like': {
-						const tooltip = e.querySelector('.reaction');
-						if (tooltip) dom.removeElement(tooltip);
-
-						e.disabled = true;
-					}
-					break;
-
-					case 'search': {
-						const container = e.closest('.search-area');
-						if (container) {
-							if (doSearch(container))
-								return;
-						}
-					}
-					break;
-
-					case 'clear': {
-						const container = e.closest('.search-area');
-						if (container) {
-							clearSearch(container);
-
-							let ed = this.currentEditor;
-							if (ed) ed.onFilter('', e);
-
-							return;
-						}
-					}
-					break;
-					
-					// case 'additem': {
-					// 	const root = e.closest('[role="complex"]');
-					// 	if (root) {
-
-					// 		const template = root.getAttribute('item');
-					// 		const container = root.lastElementChild;
-
-					// 		const index = container.childNodes.length;
-					// 		const name = root.dataset.name || root.getAttribute('name');
-
-					// 		const e = dom.renderTemplate(template, );
-
-
-					// 	}
-					// }
-					// break;
-				}
-
-				// let item = e.closest('[container]') || e.parentElement;
-				let item = e.closest('[data-id]') || e.parentElement;
-
-				switch (e.name) {
-					case 'accept': {
-						const p = e.nextElementSibling;
-						e.disabled = true;
-						p.disabled = true;
-					}
-					break;
-
-					case 'reject': {
-						const p = e.previousElementSibling;
-						e.disabled = true;
-						p.disabled = true;
-					}
-					break;
-				}
-
-				this.onAction(e.name, item, e);
-			}
-			
+			case 'BUTTON': 
+			this.#handleClickButton(e);
 			break;
 
 			case 'I': {
@@ -1153,6 +1015,193 @@ export class EditorBase extends UX.PageController {
 			default:
 			this.onClick(e, pos);
 			break;
+		}
+	}
+
+	#handleClickButton(e) {
+		let state = e.getAttribute('state');
+		if (state) {
+
+			const old = state;
+
+
+			switch (state) {
+				case 'on': 
+				state = 'off';
+				break;
+
+				case 'off':
+				state = 'on';
+				break;
+			}
+
+			e.setAttribute('state', state);
+
+			const title = e.title;
+			if (title) {
+				let i = title.lastIndexOf(state);
+
+				if (i != -1) {
+					e.title = title.slice(0, i) + old;
+				}
+			}
+		}
+
+		switch (e.name) {
+
+			case 'like': {
+				const tooltip = e.querySelector('.reaction');
+				if (tooltip) dom.removeElement(tooltip);
+
+				e.disabled = true;
+			}
+			break;
+
+			case 'search': {
+				const container = e.closest('.search-area');
+				if (container) {
+					if (doSearch(container))
+						return;
+				}
+			}
+			break;
+
+			case 'clear': {
+				const container = e.closest('.search-area');
+				if (container) {
+					clearSearch(container);
+
+					let ed = this.currentEditor;
+					if (ed) ed.onFilter('', e);
+
+					return;
+				}
+			}
+			break;
+			
+			// case 'additem': {
+			// 	const root = e.closest('[role="complex"]');
+			// 	if (root) {
+
+			// 		const template = root.getAttribute('item');
+			// 		const container = root.lastElementChild;
+
+			// 		const index = container.childNodes.length;
+			// 		const name = root.dataset.name || root.getAttribute('name');
+
+			// 		const e = dom.renderTemplate(template, );
+
+
+			// 	}
+			// }
+			// break;
+		}
+
+		// let item = e.closest('[container]') || e.parentElement;
+		let item = e.closest('[data-id]') || e.parentElement;
+
+		switch (e.name) {
+			case 'accept': {
+				const p = e.nextElementSibling;
+				e.disabled = true;
+				p.disabled = true;
+			}
+			break;
+
+			case 'reject': {
+				const p = e.previousElementSibling;
+				e.disabled = true;
+				p.disabled = true;
+			}
+			break;
+		}
+
+		this.onAction(e.name, item, e);
+	}
+
+	#handleClickLink(e) {
+		if (e.classList.contains('yt')) {
+			app.player.playYoutube(e);
+		}
+		else {
+
+			const name = e.getAttribute('name');
+			if (['next', 'prev'].includes(name)) {
+
+				const slideshow = e.closest('.slideshow-container');
+				if (slideshow) {
+
+					const imgs = slideshow.querySelectorAll('img');
+					for (let i = 0; i < imgs.length; ++i) {
+						const e  = imgs[i];
+
+						if (dom.isHidden(e)) continue;
+
+						if (name == 'prev') {
+							if (--i < 0) i = imgs.length - 1;
+						}
+						else {
+							++i;
+						}
+
+						i = i % imgs.length;
+
+						const num = slideshow.querySelector('.number');
+						num.innerText = `${i + 1} / ${imgs.length}`;
+
+						dom.hideElement(e);
+						dom.showElement(imgs[i]);
+
+						break;
+					}
+
+					return;
+				}
+			}
+			else if (['more', 'less'].includes(name)) {
+
+				const area = e.closest('.search-area');
+				if (area) {
+
+					const results = area.querySelector('.results');
+					const container = results.firstElementChild;
+
+					let c = 0;
+					const elements = container.querySelectorAll('.item.hidden');
+					const items = Array.from(elements).slice(0, 10);
+
+					for (const i of items) dom.showElement(i);
+
+					if (items.length < 10)
+						dom.hideElement(e);
+
+					return;
+				}
+
+			}
+
+			let ed = this.currentEditor;
+			if (!ed) return;
+
+			// const sidebar = ed.sidebar;
+			// if (sidebar && sidebar.container.contains(e))
+			// 	ed = sidebar;
+
+			const link = e.getAttribute('link');
+			if (link && link.startsWith('#')) {
+				const path = link.slice(1);
+				const id = (path.startsWith('/') ? path.slice(1) : path)
+					.replaceAll('/', '-');
+
+				app.executeCommand('open-page-wiki', id);
+				// ed.onLinkClick(link.slice(1));
+			}
+			else
+				this.onClick(e, pos);
+			// else {
+			// 	const action = e.getAttribute('name');
+			// 	this.onEditorAction(action, null, e);
+			// }
 		}
 	}
 
@@ -1356,7 +1405,7 @@ export class EditorBase extends UX.PageController {
 			let data;
 
 			if (e)
-				data = Object.assign({}, e.dataset);
+				data = Object.assign({ target, item, parent: e }, e.dataset);
 
 			app.executeCommand(action, ...params, id, data);
 
@@ -1374,6 +1423,11 @@ export class EditorBase extends UX.PageController {
 	#setCurrent(p) {
 
 		this.#current = p;
+
+		const dragOpts = p.dragOptions;
+		// console.log('EDITOR: open =>', p.id, 'drag=', !!dragOpts);
+
+		dragOpts ? this.#registerListeners() : this.#unregisterListeners();
 
 		if (this.#scrollable) {
 			this.#scrollable.unregisterEvents();

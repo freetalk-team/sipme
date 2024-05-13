@@ -71,6 +71,7 @@ select
 .dark select {
 	background-color: var(--input-bg-dark);
 	color: var(--input-color-dark);
+	padding: 4px;
 }
 
 .dark ::-webkit-calendar-picker-indicator {

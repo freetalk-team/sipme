@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/main.css">
+		<link rel="stylesheet" href="/site.css">
+	</head>
+	<body class="column" mobile="<%- isMobile %>">
+		<header class="cr ci m10 w3-padding" style="box-shadow: var(--shadow-bottom);">
+			<% if (!isMobile) { %>
+				<img class="x64" src="<%- Config.product.logo %>">
+			<% } %>
+			<div class="cc m2 fit">
+				<h1 class="wm8 text-stroke nomargin"><%- Config.product.name %></h1>
+				<b><%- Config.company.name %></b>
+				<i class="smaller"><%- Config.company.desc %></i>
+			</div>
+		</header>
+
+		<div class="scroll-area custom cc m15">
+
+			<div class="w3-container w3-padding max-width wider center">
+				<h1>Send message</h1>
+				<form action="/send" method="post" class="login w3-card-2 w3-container w3-padding">
+					<label for="uid"><b>User ID or email</b></label>
+					<input type="text" placeholder="Enter Username" name="uid" required>
+					<label for="from"><b>Sender name</b></label>
+					<input type="text" placeholder="Enter name" name="from" autocomplete="username">
+					<label for="msg"><b>Message</b></label>
+					<textarea class="message" name="msg" placeholder="Type a message" spellcheck="off"></textarea>
+					<button class="w3-round" type="submit">Send</button>
+				</form>
+
+				<%- include footer %>
+			</div>
+		</div>
+	</body>
+</html>

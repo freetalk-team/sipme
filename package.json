@@ -14,7 +14,12 @@
     "build-js": "cd build/app && NODE_ENV=production npx webpack",
     "build-css": "npm run build-css-app && npm run build-css-main",
     "build-css-app": "cd build/css/app && NODE_ENV=production npx webpack",
-    "build-css-main": "cd build/css/main && NODE_ENV=production npx webpack"
+    "build-css-main": "cd build/css/main && NODE_ENV=production npx webpack",
+
+    "update-games": "cd db && npx sequelize-cli db:seed --seed seeders/update-games.js",
+    "update-games-prod": "cd db && NODE_ENV=production npx sequelize-cli db:seed --seed seeders/update-games.js",
+    "update-wiki": "cd db && npx sequelize-cli db:seed --seed seeders/update-wiki.js",
+    "update-wiki-prod": "cd db && NODE_ENV=production npx sequelize-cli db:seed --seed seeders/update-wiki.js"
   },
   "keywords": [
     "sip",

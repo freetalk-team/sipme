@@ -1,5 +1,7 @@
 
-const express = require('express');
+const express = require('express')
+	, etag = require('etag')
+	;
 
 const router = express.Router();
 
@@ -11,8 +13,8 @@ function render(req, res) {
 	const isMobile = req.useragent.isMobile;
 	const path = this.valueOf();
 
-	res.setHeader('ETag', etag(r.content, { weak: true }));
-	res.setHeader('Cache-Control', 'public, max-age=300');
+	// res.setHeader('ETag', etag(r.content, { weak: true }));
+	// res.setHeader('Cache-Control', 'public, max-age=300');
 
 	res.render(path, { isMobile });
 }

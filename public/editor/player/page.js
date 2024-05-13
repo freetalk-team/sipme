@@ -35,7 +35,6 @@ export class PlayerPage extends PageBase {
 	#panel = [];
 
 	#offset = 0;
-	#more = false;
 	#loading;
 	#state;
 	#progress;
@@ -228,7 +227,7 @@ export class PlayerPage extends PageBase {
 	}
 
 
-	onFileDrop(files, meta) {
+	onFileDrop(files, meta, directory) {
 		console.log('Player editor on file drop:', files.length);
 
 		const images = [];
@@ -246,6 +245,27 @@ export class PlayerPage extends PageBase {
 
 		if (media.length) {
 			this.active.onFilesDrop(media, images, other);
+
+			const playlist = [];
+
+			let title, id;
+
+			for (const i of media) {
+
+				id = i.name.hashCode();
+				title = i.name;
+
+				if (i.meta) {
+					title = i.meta.title || title;
+
+					delete i.meta;
+				}
+
+
+				playlist.push({ id, title, file: i });
+			}
+
+			app.executeCommand('add-new-playlist', playlist);
 		}
 	}
 
@@ -304,29 +324,31 @@ export class PlayerPage extends PageBase {
 		// 	this.addPage(i, p);
 		// }
 
-		this.onScrollY = (y, total) => {
+		this.onScrollY = async (y, total) => {
+
+			const more = this.active.more;
+
+			// console.log('Player on scroll:', y, total, more);
 			//console.log('XX Player on scroll');
 
 			// todo: put the constant somewhere 
-			if (this.#more && total - y < 30 && !this.#loading) {
-				console.log('Loading more files:', this.#offset);
+			if (more && total - y < 30 && !this.#loading) {
 
-				// todo: show loading
-				const Y = content.offsetY;
+				this.#loading = true;
 
-				this.#loading = dom.createElement('div', 'loader');
-				this.append(this.#loading);
-				// return;
+				this.toggleLoading();
 
-				setTimeout(async () => {
+				try {
 
-					// await this.#loadFiles();
+					await sleep(1200);
+					await this.active.load(true);
+				}
+				catch (e) {}
+				finally {
+					this.toggleLoading();
+				}
 
-					this.offsetY = Y;
-
-					dom.removeElement(this.#loading);
-					this.#loading = null;
-				}, 1200);
+				this.#loading = false;
 			}
 
 		}

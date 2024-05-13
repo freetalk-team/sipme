@@ -165,12 +165,12 @@ img[alt^="z20"] { width: 20%; }
 	text-overflow: ellipsis;
 }
 
-.md.inconsolata,
-.md.inconsolata-p p,
-.md.inconsolata-li :is(p,li) {
+.inconsolata,
+.inconsolata-p p,
+.inconsolata-li :is(p,li) {
 	font-family: "Inconsolata", sans-serif;
 }
 
-.md.serif, .md.serif-p p {
+.serif, .serif-p p {
 	font-family: sans-serif;
 }

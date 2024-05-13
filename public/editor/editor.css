@@ -302,6 +302,7 @@ button.circle2.fa:before {
 
 #editor .popup {
 	min-width: 250px;
+	max-width: 420px;
 }
 
 #editor .popup[value="success"] {

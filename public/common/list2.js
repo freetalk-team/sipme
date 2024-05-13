@@ -297,7 +297,7 @@ const ListMixin = Object.assign({
 	}
 
 	, toggleLoading() {
-		return this.area.classList.toggle('loading3');
+		return dom.toggleLoading(this.area);
 	}
 
 	, async loadGroups() {

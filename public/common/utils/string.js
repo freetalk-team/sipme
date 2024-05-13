@@ -2,7 +2,7 @@
 
 String.prototype.hashCode = function() {
 	//console.log(typeof this);
-	var hash = 5387, i = this.length
+	var hash = 5381, i = this.length
 	while(i)
 		hash = (hash * 33) ^ this.charCodeAt(--i)
 
@@ -110,6 +110,25 @@ String.prototype.eval = function(ctx, ..._) {
 	return function(..._) { return eval(exp); }.call(ctx, ..._);
 }
 
+String.prototype.evalx = function(ctx, ..._) {
+	const exp = this.
+		replace(/len\((.*?)\)/, (m, arg) => {
+			const v = arg.match(/_([0-9])/);
+			if (v) {
+				const i = parseInt(v[1]);
+				return _[i] ? _[i].length : 0;
+			}
+			
+			return arg.eval(ctx, ..._).length;
+		})
+		.replace(/_([0-9])/g, (m,i) => `_[${i}]`||'')
+		;
+
+	const s = exp.eval(ctx, ..._);
+
+	return s != null ? s : '';
+}
+
 String.prototype.evalCtx = function(data, ret=true) {
 
 	const ctx = data;
@@ -168,35 +187,7 @@ String.prototype.evalCtx = function(data, ret=true) {
 }
 
 String.prototype.replacex = function(ctx, ..._) {
-
-	// console.debug('REPLACEX:', this, ctx);
-
-	return this.replace(/\{\{(.+?)\}\}/g, (m, k) => {
-		const exp = k.
-			replace(/len\((.*?)\)/, (m, arg) => {
-				const v = arg.match(/_([0-9])/);
-				if (v) {
-					const i = parseInt(v[1]);
-					return _[i] ? _[i].length : 0;
-				}
-				
-				return arg.eval(ctx, ..._).length;
-			})
-			.replace(/_([0-9])/g, (m,i) => `_[${i}]`||'')
-			;
-
-		// if (/_[0-9]/.test(k)) {
-		// 	const i = k[1] - '0';
-		// 	return i < _.length ? _[i] : '';
-		// }
-
-		// console.debug('#', exp);
-
-		const s = exp.eval(ctx, ..._);
-		// console.debug('##', s);
-
-		return s != null ? s : '';
-	});
+	return this.replace(/\{\{(.+?)\}\}/g, (m, k) => k.evalx(ctx, ..._));
 }
 
 String.prototype.localeCompareNocase = function(s) {

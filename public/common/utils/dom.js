@@ -1,6 +1,6 @@
 
 import * as marked from '../../ui/lib/marked/lib/marked.esm.js';
-import * as template from './template.js';
+import * as template from './template2.js';
 
 const kHighlightStyle = 'highlight';
 
@@ -87,6 +87,15 @@ function createElementFromMarkdown(md, emojis=true) {
 }
 
 function applyStyles(e, ...styles) {
+
+	const s = styles.shift();
+	if (!s) return;
+
+	if (Array.isArray(s))
+		e.classList.add(...s);
+	else
+		e.classList.add(...s.split(' '));
+
 	if (styles.length > 0)
 		e.classList.add(...styles);
 }
@@ -642,6 +651,8 @@ window.dom = {
 	, renderEmojis
 	, escapeTags
 	, escape
+
+	, toggleLoading(e) { return e.classList.toggle('loading3'); }
 
 	, icon
 	, color
