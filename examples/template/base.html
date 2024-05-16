@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+	<template id="item">
+		<h2>{{this.title}}</h2>
+		<p>{{this.description}}</p>
+	</template>
+
+	<template id="items">
+		@foreach{{this}}
+			[[item]]
+		@endforeach
+	</template>
+
+	<template id="items-even">
+		@foreach{{this.filter((v,i) => i % 2)}}
+			[[item]]
+		@endforeach
+	</template>
+
+
+	<script type="module">
+
+		import '../../common/utils/string.js';
+		import { render } from '../../common/utils/template2.js';
+
+		const items = [
+			{ title: 'Item 1', description: 'Some description' },
+			{ title: 'Item 2', description: 'No description' },
+			{ title: 'Item 3', description: 'Some description' },
+			{ title: 'Item 4', description: 'No description' },
+		];
+
+		const container = document.body;
+
+		let e;
+
+		for (const i of items) {
+			e = render('item', i);
+			container.appendChild(e);
+		}
+
+		// or
+		e = render('items', items);
+		container.appendChild(e);
+
+		// or
+		e = render('items-even', items);
+		container.appendChild(e);
+
+	</script>
+</body>
