@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		.highlight:nth-child(even) {
+			background-color: #0f03;
+		}
+
+		.head {
+			background-color: #2196F3;
+			color: #fffa;
+		}
+
+		.padding {
+			padding: 4px 8px;
+		}
+
+		.pointer {
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+
+	<template id="item" class="highlight padding">
+		<h2>{{this.title}}</h2>
+		<p>{{this.description}}</p>
+	</template>
+
+	<template id="items">
+		<h1 class="head padding">Movies</h1>
+		@foreach{{this.slice(_0, _0 + _1)}}
+			[[item]]
+		@endforeach
+
+		@if{{_0 > 0}}
+			<a id="prev" class="pointer">previous</a>
+		@endif
+
+		@if{{this.slice(_0).length > _1}}
+			<a id="next" class="pointer">next</a>
+		@endif
+
+	</template>
+
+
+	<script type="module">
+
+		import '../../common/utils/string.js';
+		import { render } from '../../common/utils/template2.js';
+
+		const items = [
+			{ title: 'Item 1', description: 'Some description' },
+			{ title: 'Item 2', description: 'No description' },
+			{ title: 'Item 3', description: 'Some description' },
+			{ title: 'Item 4', description: 'No description' },
+			{ title: 'Item 6', description: 'No description' },
+			{ title: 'Item 7', description: 'No description' },
+		];
+
+		const container = document.body;
+
+		let e, a, offset = 0, limit = 5;
+
+		const renderItems = () => {
+			e = render('items', items, 'div', offset, limit);
+			container.appendChild(e);
+		}
+
+		renderItems();
+
+		container.onclick = (event) => {
+			const target = event.target;
+
+			if (target.tagName == 'A') {
+				offset += target.id == 'prev' ? -limit : limit;
+
+				container.removeChild(e);
+				renderItems();
+			}
+		}
+
+	</script>
+</body>
