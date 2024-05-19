@@ -52,7 +52,7 @@ export class Task {
 
 		e = await db.get('enum', 'milestone');
 		this.#milestones = e.value;
-
+	
 		const now = new Date().toJSON();
 		const end = [app.email, now];
 		const start = [app.email, '1985-05-03T00:00:00.000Z'];
@@ -274,7 +274,7 @@ export class Task {
 	}
 
 	static async setup(db) {
-		let data;
+		let data, enums;
 
 		// ticket enums
 		data = await ajax.get('/api/ticketenum');
@@ -287,6 +287,8 @@ export class Task {
 
 		await db.put('enum', data);
 
+		enums = data;
+
 		// todo: games
 
 		// own tickets
@@ -295,6 +297,8 @@ export class Task {
 
 		if (data.length > 0)
 			await db.put('task', data);
+
+		return { enums, tickets: data };
 	}
 }
 

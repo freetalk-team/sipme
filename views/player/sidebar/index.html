@@ -1,0 +1,68 @@
+
+<div ux>
+
+
+	<template id="sidebar-player-item" classes="main cr ci noevents" cmd="{{this.cmd||''}}">
+		<i class="fa fa-fw icon {{this.icon}}"></i>
+		<span class="title">{{this.display||this.name}}</span>
+	</template>
+
+	<template id="sidebar-player-item-playlist" classes="item playlist noevents cr ci w3-padding-tiny" data-id="{{this.id}}">
+		@if{{this.cover}}
+			<img class="x32" src="{{URL.createObjectURL(this.cover)}}">
+		@endif
+		<div class="column noverflow fit">
+			<div class="cr m2 ci noevents" hoverable>
+				<h4 class="nomargin fit ellipsis">{{this.display||this.name}}</h4>
+				<button class="icon fa fa-xs display-hover" name="share" title="Share" cmd="share-playlist"></button>
+				<button class="icon fa fa-xs display-hover" name="delete" title="Remove" cmd="rm-delete-playlist"></button>
+			</div>
+			<span class="cr ci smaller">
+				<i class="fit">{{this.tracks.length}} tracks</i>
+				<i class="watermark">{{this.genre}}</i>
+			</span>
+		</div>
+	</template>
+
+	<template id="sidebar-radio-item" classes="container-col m2 w3-padding-tiny">
+		<b>{{this.name}}</b>
+		<i class="smaller">{{this.tag}}</i>
+	</template>
+
+</div>
+
+<div id="sidebar" class="row collapsed">
+
+	<%- include navbar/index.html %> 
+
+	<div class="sidebar dark fit">
+
+		<div class="head column">
+			<div class="row ci fit">
+				<i class="fa icon"></i>
+				<h4 class="title nomargin ellipsis fit wm8"></h4>
+				<button class="icon fa sm fa-search display-hover" name="search" title="Find"></button>
+				<button class="icon fa sm display-hover" name="add" title="Create"></button>
+				<button class="icon fa fa-circle-down w3-text-green sm display-hover" name="import" title="Import"></button>
+			</div>
+			<input type="text" name="filter" placeholder="filter" spellcheck="false" autocomplete="off"/>
+		</div>
+	
+		<div class="scrollable list2 fill adjustable" select>
+			<div class="v-scroller">
+				<div class="slider">
+				</div>
+			</div>
+	
+			<div class="area">
+				<div class="shadow"></div>
+				
+				<div class="content list">
+				</div>
+			</div>
+			<!-- <div class="items"></div> -->
+		</div>
+	</div>
+
+	<div class="v-sash dark"></div>
+</div>

@@ -9,6 +9,7 @@ App.Commands.register('invite-new-user', () => {
 			console.debug('On new user', data);
 
 			data.name = data.firstname + ' ' + data.lastname;
+			data.id = data.id || data.email.hashHex();
 
 			delete data.firstname;
 			delete data.lastname;
@@ -24,7 +25,7 @@ App.Commands.register('invite-new-user', () => {
 				console.error('Failed to add user', e);
 			}
 
-			app.editor.cancel();
+			app.executeCommand('open-user-admin');
 		}
 	});
 });

@@ -100,11 +100,6 @@ export class MusicPage extends EditorBase {
 		
 	}
 
-	onClick(id) {
-		console.log('Playing file:', id);
-		app.player.playFile(id, true);
-	}
-
 	onAction(action, id, container) {
 
 		switch (action) {
@@ -114,6 +109,15 @@ export class MusicPage extends EditorBase {
 			return app.db.rm('audio', parseInt(id));
 		}	
 
+	}
+
+	onInput(e) {
+
+		switch (e.name) {
+			case 'filter':
+			this.filter(e.value);
+			break;
+		}
 	}
 	
 	onTrackChange(info) {

@@ -60,6 +60,14 @@
 		}
 	}
 
+	&[view="playlist"] {
+		.header {
+			:is(button) {
+				&[name="import"] { display: none; }
+			}
+		}
+	}
+
 	:is(video) {
 		&::-webkit-media-controls-toggle-closed-captions-button {
 			display: none;

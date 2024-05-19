@@ -14,6 +14,8 @@ import { Database } from './database.js';
 import { Task } from './editor/common/task2.js';
 import { TaskPage as TaskEditor } from './editor/task/page.js';
 
+import { Editor } from './editor.js';
+
 import './editor/welcome/index.js';
 import './editor/admin/index.js';
 import './editor/contact/index.js';
@@ -73,6 +75,35 @@ export class App extends AppBase {
 
 	createDatabase() {
 		return new Database;
+	}
+
+	createEditor() {
+		return new Editor;
+	}
+
+	async requestNotifications() {
+		try {
+			await Notification.requestPermission();
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	async registerServiceWorker() {
+		if ('serviceWorker' in navigator) {
+			const opt = {
+				scope: '/',
+				//type: 'module'
+			};
+
+			try {
+				await navigator.serviceWorker.register('/static.js', opt);
+			}
+			catch (e) {
+				console.error('Failed to register service worker', e);
+			}
+		}
 	}
 
 	async setupDatabase(db) {

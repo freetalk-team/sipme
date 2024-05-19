@@ -13,19 +13,21 @@ const express = require('express')
 	, session = require('express-session')
 	, favicon = require('serve-favicon')
 	, useragent = require('express-useragent')
+	, nodemailer = require('nodemailer')
 	, cors = require('cors')
 
 	, LocalStrategy = require('passport-local').Strategy
 	// , RememberMeStrategy = require('passport-remember-me').Strategy
 	, RememberMeStrategy = require('./node/passport-remember-me/lib').Strategy
 	;
-
-const { setupUser } = require('./api/common');
 	
 
 require('@common/utils');
 require('@common/logger');
 
+const marked = require('@common/marked');
+
+const { setupUser } = require('./api/common');
 
 const kPort = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV == 'production';
@@ -342,8 +344,9 @@ app.disable('x-powered-by');
 
 //app.get('/', cors(ALLOWED_DOMAINS), function(req, res){
 //app.get('/', cors(corsOptions), function(req, res){
-app.get('/', function(req, res){
-	res.render('index', { user: req.user });
+app.get('/', function(req, res) {
+	const template = req.useragent.isMobile ? 'index-mo' : 'index';
+	res.render(template, { user: req.user });
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){
@@ -478,6 +481,7 @@ app.use('/api', require('./api'));
 app.use('/doc', require('./api/wiki'));
 app.use('/trac', require('./api/trac'));
 app.use('/policy', require('./api/policy'));
+app.use('/player', require('./api/player'));
 
 if (Config.google) {
 	app.use('/auth', require('./api/auth'));
@@ -518,6 +522,39 @@ app.listen(kPort, async function() {
 		
 		if (Config.google && Config.google.firebase) {
 			firebase.init();
+		}
+
+		if (Config.email) {
+
+			const transport = nodemailer.createTransport(Config.email);
+
+
+			app.sendMail = function(to, subject, body) {
+
+				console.log('Sending email to:', to, subject);
+
+				const opt = {
+					from: Config.email.auth.user,
+					to,
+					subject,
+					//text: ''
+					html: marked.parse(body)
+				};
+
+				return new Promise((resolve, reject) => {
+
+					transport.sendMail(opt, (error, info) => {
+
+						if (error) reject(error);
+						else resolve(info);
+
+					});
+
+				});
+			}
+		}
+		else {
+			app.sendMail = function() {}
 		}
 
 		const data = await db.ls('room', { where: { domain: Config.sip.internal }});
@@ -562,14 +599,16 @@ function loadConfiguration() {
 	}
 
 	const ConfigUI = Object.assign({
-		title: Config.title,
-		domain: Config.domain,
-		...Config.ui
-	},
+			title: Config.title,
+			domain: Config.domain,
+			...Config.ui
+		},
 
-	{ 
-		sip: Object.assign({}, Config.sip, Config.ui.sip) 
-	});
+		{ 
+			sip: Object.assign({}, Config.sip, Config.ui.sip) 
+		});
+
+	ConfigUI.ice = ConfigUI.ice || { servers: [ 'stun:stun.l.google.com:19302' ] };
 
 	if (Config.google && Config.google.firebase) {
 
@@ -587,6 +626,24 @@ function loadConfiguration() {
 		}
 		else {
 			ConfigUI.firebase = Config.google.firebase.web;
+		}
+	}
+
+	if (Config.email) {
+		const cfg = Config.email;
+		if (cfg.service == 'gmail') {
+
+			// cfg.host = "smtp.gmail.com";
+			// cfg.port = 465;
+			// cfg.secure =true;
+
+			cfg.auth = cfg.auth || {};
+			cfg.auth.user = process.env.GMAIL_USER || cfg.auth.user;
+			cfg.auth.pass = process.env.GMAIL_PASS || cfg.auth.pass;
+		}
+		else {
+			cfg.host = process.env.SMTP_HOST || cfg.host;
+			cfg.port = process.env.SMTP_PORT || cfg.port;
 		}
 	}
 

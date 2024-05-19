@@ -125,9 +125,15 @@ class Player {
 	playNext() {
 		if (this.#queue.length == 0) return;
 
-
 		const id = this.#queue.shift();
 		return this.#playFile(id);
+	}
+
+	playPrev() {
+		if (this.#recent.length < 2) return;
+
+		const item = this.#recent[this.#recent.length - 2];
+		return this.#playFile(item.id);
 	}
 
 	clear() {

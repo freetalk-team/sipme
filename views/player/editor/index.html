@@ -1,0 +1,119 @@
+<div id="editor" class="column relative">
+	<div class="top-right mar3 w3-card w3-round column" role="popup-area"></div>
+	<div id="editor-loading" class="loading fill hidden"></div>
+	<%- include ../../editor/add/index.html %>
+</div>
+
+<div ux>
+
+	<template id="popup-item" class="popup md compact nomargin relative inconsolata w3-padding fade">
+		<button class="icon fa top-right" name="remove" title="Close"></button>
+		{{dom.markdown(this.msg)}}
+	</template>
+
+	<template id="popup-file-item" class="cr ci">
+		<i class="fit ellipsis">{{this.name}}</i>
+		<span class="smaller">{{fileX.getType(this.type)}}</span>
+		<b class="smaller">{{size(this.size)}}</b>
+	</template>
+
+	<template id="editor-header-grid" class="header grid">
+		<i class="fa fa-fw icon circle stroke {{this.icon||'fa-dot-circle'}}" style="color:{{this.iconcolor||'inherit'}}" role="icon"></i>
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		[[_0]]{{this}}
+		[[_1]]{{this}}
+	</template>
+
+	<template id="editor-header-avatar" class="header grid">
+		<img class="avatar circle">
+		<h2 class="title text-stroke ellipsis nomargin">{{this.title||''}}</h2>
+		<i class="ns smaller ellipsis">{{this.desc||''}}</i>
+		[[_0]]{{this}}
+		<div class="toolbar row-reverse">
+			[[_1]]{{this}}
+		</div>
+		[[_2]]{{this}}
+	</template>
+
+	<template id="editor-scrollable" class="editor column fit container relative">
+		[[scrollable,,_0]]{{this}}
+	</template>
+
+	<template id="editor-base" class="edit fade">
+		[[_0]]{{this}}
+		[[_1]]{{this}}
+	</template>
+
+	<template id="editor-base-editor" classes="editor column fit relative">
+	</template>
+
+	<template id="editor-base-sidebar" class="edit fade">
+		[[_0]]{{this}}
+		<div class="row-reverse fit sidebar-container">
+			<!-- <div class="sidebar"></div> -->
+			[[editor-sidebar]]{{_2}}
+			<div class="v-sash reverse"></div>
+			[[_1]]{{this}}
+		</div>
+	</template>
+
+	<template id="editor-sidebar-tabs" class="tabbar">
+		@foreach{{this}}
+			<span class="tab fit text-center noevents {{_0 == 0 ? 'active': ''}}" tab="{{this.name||this}}">
+				@if{{this.icon}}
+					<i class="fa {{this.icon}}"></i>
+				@else
+					{{this}}
+				@endif
+			</span>
+		@endforeach
+		<button class="icon fa fa-fw fa-angle-double-right small center" name="collapse" title="Collapse" style="margin:0 6px 0 auto"></button>
+	</template>
+
+	<template id="editor-sidebar" class="sidebar row">
+		<div class="main column fit fade">
+			[[editor-sidebar-tabs]]{{this}}
+			[[scrollable-list,,,column list]]
+		</div>
+		<div class="navbar cc">
+			<button class="icon" name="expand" title="Expand">
+				<i class="fa fa-fw sm fa-angle-double-left"></i>
+			</button>
+		</div>
+	</template>
+
+	<template id="editor-sidebar-title" class="sidebar column fade fa-color-icons">
+		<div class="header cr center-items w3-padding-tiny">
+			<i class="fa {{_0}}"></i>
+			<h5 class="nomargin text-up fit ellipsis watermark-6">{{_0}}</h5>
+			<button class="icon fa fa-fw fa-angle-double-right smaller" name="expand" title="Expand"></button>
+		</div>
+		[[scrollable-list,,,column]]
+	</template>
+
+	<template id="editor-tab-navbar" class="cr tabbar" role="navbar">
+		@foreach{{this}}
+			[[editor-tab-navbar-item,span]]{{this}}
+		@endforeach
+	</template>
+
+	<template id="editor-tab-navbar-item" class="tab" tab="{{this}}" title="{{this}}">
+		{{this}}
+	</template>
+
+	<template id="editor-tab-page" class="cc">
+		[[editor-tab-navbar]]{{this}}
+		<div role="tab-area">
+			@foreach{{this}}
+				<div class="cc fade hidden" page="{{this}}"></div>
+			@endforeach
+		</div>
+	</template>
+
+	<%- include ../../editor/settings/index.html %>
+	<%- include ../../editor/find/index.html %>
+
+	<%- include ../../editor/player/index.html %>
+
+</div>

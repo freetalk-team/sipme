@@ -2,8 +2,11 @@
 
 
 import { Navbar } from './navbar.js';
+import { SidebarPage } from './sidebar/base.js';
 
 class Sidebar extends UX.List {
+
+	static Page = SidebarPage;
 
 	static #views = {};
 	static register(Page, id=Page.id) { 

@@ -196,7 +196,8 @@ video::-webkit-media-controls-panel {
 
 .right { float: right; }
 
-.watermark, .wm { opacity: .4; }
+.wm2 { opacity: .2; }
+.watermark, .wm, .vm4 { opacity: .4; }
 .watermark-6, .wm6 { opacity: .6; }
 .watermark-8, .wm8 { opacity: .8; }
 

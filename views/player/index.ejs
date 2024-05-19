@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+	<head>
+		<title><%- Config.title %></title>
+
+		<link rel="stylesheet" href="/dist/app.min.css">
+
+		<script type="module" src="/dist/app-base.min.js"></script>
+		<script src="/dist/codemirror.js"></script>
+
+	</head>
+	<body class="column">
+		<div id="titlebar" class="cr ci dark">
+			<div class="app-icon"></div>
+			<b class="fit"><%- Config.title %></b>
+			<span class="raleway">ver. <%- Config.version %></span>
+			<button class="button icon fa fa-question-circle" title="Help" cmd="help-current-editor"></button>
+		</div>
+
+		<%- include common/index.html %> 
+
+		<div id="app-page" class="row">
+
+			<%- include sidebar/index.html %>
+			<%- include editor/index.html %>
+		</div>
+
+		<script type="module">
+
+			import { PlayerApp } from '/player/app.js';
+		
+			function startApp() {
+		
+				const app = new PlayerApp;
+		
+				app.load();
+			}
+			
+			startApp();
+		
+		</script>
+	</body>
+</html>

@@ -6,6 +6,10 @@ import { DataSourceRest, DataSourceRestAdmin } from './ds/rest.js';
 
 export class DataSource extends DataSourceBase {
 
+	static Base = DataSourceBase;
+	static Database = DataSourceDatabase;
+	static Rest = DataSourceRest;
+
 	#local;
 	#remote;
 

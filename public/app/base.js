@@ -3,12 +3,14 @@ import './utils.js';
 import '../common/utils.js';
 import '../common/core.js';
 
-import { Database } from './db.js';
+import { IndexDB as Database } from '../db.js';
 import { Player } from '../player.js';
 
-import { Editor } from '../editor.js';
+import { EditorBase as Editor } from '../editor/base.js';
 import { Sidebar } from '../sidebar2.js';
 import { Runner, TaskRunner } from '../editor/runner.js';
+
+import { DataSource } from './ds.js';
 
 import { EventMixin } from './event.js';
 
@@ -16,10 +18,15 @@ import { EventMixin } from './event.js';
 const kMaxTitleLength = 100;
 const kIdleTimeout = 120;
 
-class AppBase extends UX.Page {
+export class AppBase extends UX.Page {
+
+	static Database = Database;
+	static Player = Player;
 
 	static Editor = Editor;
 	static Sidebar = Sidebar;
+
+	static DataSource = DataSource;
 
 	static Commands = {
 
@@ -274,9 +281,29 @@ class AppBase extends UX.Page {
 		return new Database;
 	}
 
+	createEditor() {
+		return new Editor;
+	}
+
+	createSidebar() { 
+		return new Sidebar;
+	}
+
 	async setupDatabase() {
 
 		// todo: 
+	}
+
+	addDS(ds, name) {
+		this._[name || ds.name] = ds;
+	}
+
+	ds(id) {
+		return this._[id];
+	}
+
+	toggleLoading() {
+		return super.toggleLoading('loading2');
 	}
 
 	async load() {
@@ -290,7 +317,6 @@ class AppBase extends UX.Page {
 			console.error('Failed to initialize TMPFS', e);
 		}
 
-
 		const db = this.createDatabase();
 
 		try {
@@ -302,27 +328,14 @@ class AppBase extends UX.Page {
 		}
 
 		await this.loadSettings();
+		await this.registerServiceWorker();
 
-		if ('serviceWorker' in navigator) {
-			const opt = {
-				scope: '/',
-				//type: 'module'
-			};
-
-			await navigator.serviceWorker.register('/static.js', opt);
-		}
-
-		this.#sidebar = new Sidebar;
-		this.#editor = new Editor;
+		this.#sidebar = this.createSidebar();
+		this.#editor = this.createEditor();
 	
 		this.#active = true;
 
-		try {
-			await Notification.requestPermission();
-			this.#notifications = true;
-		} catch (e) {
-			this.#notifications = false;
-		}
+		this.#notifications = await this.requestNotifications();
 
 		console.log('Notifications enabled?', this.#notifications);
 
@@ -336,6 +349,12 @@ class AppBase extends UX.Page {
 		this.player.registerEvents();
 
 	}
+
+	requestNotifications() {
+		return false;
+	}
+
+	registerServiceWorker() {}
 
 	unload() {
 		console.log('Unloading app');
@@ -745,6 +764,53 @@ class AppBase extends UX.Page {
 		}
 	}
 
+	async importAudioFiles(files, progress=function(){}) {
+
+		const imported = [];
+	
+		for (const file of files) {
+	
+			const id = file.name.hashCode();
+
+			progress(id, 'begin', file);
+
+			const i = await this.db.get('audio', id);
+	
+			if (i) {
+				file.meta = i.meta;
+				continue;
+			}
+	
+			const meta = file.meta || await fileX.getMeta(file);
+			const ext = fileX.getExtension(file.name);
+			const type = fileX.isVideo(ext) ? 'video' : 'audio';
+
+			progress(id, 'meta', meta);
+	
+			const item = {
+				id, type, file
+			};
+	
+			console.log('# Importing file:', file.name);
+	
+			item.rating = 0;
+			item.meta = meta;
+			item.album = meta.album ? meta.album.toLowerCase().hashCode() : 0;
+	
+			await app.db.put('audio', item);
+
+			progress(id, 'end');
+	
+			imported.push(item);
+		}
+
+		progress(null, 'done');
+	
+		app.emit('audioadd', imported);
+
+		return imported;
+	}
+
 	#loadSettingFields() {
 
 		
@@ -975,10 +1041,6 @@ async function verifyPermission(fileHandle, readWrite) {
 	  
 	// The user didn't grant permission, so return false.
 	return false;
-}
-
-export {
-	AppBase
 }
 
 function calculateSettingAsThemeString(localStorageTheme, systemSettingDark) {

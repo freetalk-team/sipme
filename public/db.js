@@ -17,11 +17,13 @@ export class IndexDB {
 		this.db = await this.#openDatabase();
 
 		if (this.isSetup) {
-			this.setup();
+			await this.setup();
 		}
 
 		//app.on('datechange', () => this.updateHistory());
 	}
+
+	needSetup(ver) { return ver == 0; }
 
 	setup() {}
 
@@ -100,7 +102,7 @@ export class IndexDB {
 
 				this.onUpgrade(db, txn, ver);
 
-				if (ver == 0) {
+				if (this.needSetup(ver)) {
 					this.#setup = true;
 				}
 		
@@ -777,6 +779,12 @@ export class IndexDB {
 	
 		return Promise.all(promises);
 	}
+
+	static addTable = addTable;
+	static addIndex = addIndex;
+
+	static deleteTable = deleteTable;
+	static deleteIndex = deleteIndex;
 }
 
 function pushValue(key, value, cursor, resolve, reject) {

@@ -27,33 +27,17 @@
 					<h4 class="inconsolata"><%- Config.product.desc %></h4>
 		
 					<div class="w3-container cc 10" style="margin-top: 30px;">
-						<div class="column w3-card-2 w3-light-grey">
-							<h3 class="nomargin w3-blue w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Features</h3>
-							<%- include static/features.html %>
+
+						<%- include static/features.html %>
 							
-						</div>
 						<div class="w3-panel w3-leftbar w3-pale-red w3-xlarge">
 							<p><i class="fa fa-triangle-exclamation w3-text-red w3-margin-right"></i>Features are available only for Desktop browsers<br>
 						</div>
 
 						<%- include static/more.html %>
+						<%- include static/links.html %>
+						<%- include release %>
 						
-						<div class="column w3-card-2 w3-margin-top inconsolata-p">
-							<h3 class="wm8 text-stroke nomargin w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Site</h3>
-							<%- include static/links.html %>
-						</div>
-		
-						<div class="column w3-card-2 w3-margin-top inconsolata-p"></div>
-						<h3 class="wm8 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h3>
-						<ul class="cc m10 nounderline">
-							<li>
-								<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
-								<p class="smaller">Browse project source code in Github</p>
-							</li>
-							<li>
-								<strong>Version: </strong><%- Config.version %>
-							</li>
-						</ul>
 					</div>
 		
 				</div>

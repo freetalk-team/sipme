@@ -113,8 +113,8 @@ const PageMixin = {
 		this.container.classList.add(...s);
 	}
 
-	, toggleLoading() {
-		return this.container.classList.toggle('loading3');
+	, toggleLoading(style='loading3') {
+		return this.container.classList.toggle(style);
 	}
 
 	, addTemplate(id, data, tag='div', ...styles) {

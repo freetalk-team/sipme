@@ -1,12 +1,17 @@
 
 import './add/page2.js';
+import './find/page.js';
+
+import { PageBase } from './page.js';
+import { Sidebar } from './sidebar.js';
 
 import { createEmojiPicker, createInputWrapper, TorrentMonitor } from './common.js';
 import { loadArticle } from '../editor/channel/common.js';
-import { FindEditor } from './find/page.js';
 
 export class EditorBase extends UX.PageController {
 
+	static Page = PageBase;
+	static Sidebar = Sidebar;
 
 	static #editors = {};
 	static register(Editor, id=Editor.id) { 
@@ -24,7 +29,7 @@ export class EditorBase extends UX.PageController {
 
 	get currentEditor() { return this.#current; }
 	get loadingElement() { return document.getElementById('editor-loading'); }
-	get showHover() { return this.#current.dragOpts && this.#current.dragOpts.hover; }
+	get showHover() { return this.#current.dragOptions && this.#current.dragOptions.hover; }
 	get container() { return this.#container; }
 	get dragOptions() { return this.#current.dragOptions; }
 
@@ -831,6 +836,31 @@ export class EditorBase extends UX.PageController {
 
 		//const files = dt.files;
 
+		this.handleImport(files, directory);
+	}
+
+	async onImport(fileHandles) {
+		const files = [];
+		let directory;
+
+		for (const handle of fileHandles) {
+			if (handle.kind === 'directory') {
+
+				console.log(`Directory: ${handle.name}`);
+				await getDirectoryFileMeta(handle, files);
+
+				directory = handle.name;
+			} else {
+				console.log(`File: ${handle.name}`);
+				const file = await handle.getFile();
+				files.push(file);
+			}
+		}
+
+		this.handleImport(files, directory);
+	}
+
+	async handleImport(files, directory) {
 		if (files.length > 0) {
 
 			console.log('FILE TYPE:', files[0].type);
@@ -897,7 +927,7 @@ export class EditorBase extends UX.PageController {
 
 			const filtered = filterDraggedFiles(files, this.dragOptions);
 			if (filtered.length > 0)
-				await this.currentPage.onFileDrop(filtered, dt, directory);
+				await this.currentPage.onFileDrop(filtered, null, directory);
 
 			console.log('EDITOR: emitting files drop event');
 			app.emit('filesdropped', files);
@@ -982,7 +1012,7 @@ export class EditorBase extends UX.PageController {
 		switch (e.tagName) {
 
 			case 'A':
-			this.#handleClickLink(e);
+			this.#handleClickLink(e, pos);
 			break;
 
 			case 'BUTTON': 
@@ -1119,90 +1149,89 @@ export class EditorBase extends UX.PageController {
 		this.onAction(e.name, item, e);
 	}
 
-	#handleClickLink(e) {
+	#handleClickLink(e, pos) {
 		if (e.classList.contains('yt')) {
 			app.player.playYoutube(e);
+			return;
 		}
-		else {
 
-			const name = e.getAttribute('name');
-			if (['next', 'prev'].includes(name)) {
+		const name = e.getAttribute('name');
+		if (['next', 'prev'].includes(name)) {
 
-				const slideshow = e.closest('.slideshow-container');
-				if (slideshow) {
+			const slideshow = e.closest('.slideshow-container');
+			if (slideshow) {
 
-					const imgs = slideshow.querySelectorAll('img');
-					for (let i = 0; i < imgs.length; ++i) {
-						const e  = imgs[i];
+				const imgs = slideshow.querySelectorAll('img');
+				for (let i = 0; i < imgs.length; ++i) {
+					const e  = imgs[i];
 
-						if (dom.isHidden(e)) continue;
+					if (dom.isHidden(e)) continue;
 
-						if (name == 'prev') {
-							if (--i < 0) i = imgs.length - 1;
-						}
-						else {
-							++i;
-						}
-
-						i = i % imgs.length;
-
-						const num = slideshow.querySelector('.number');
-						num.innerText = `${i + 1} / ${imgs.length}`;
-
-						dom.hideElement(e);
-						dom.showElement(imgs[i]);
-
-						break;
+					if (name == 'prev') {
+						if (--i < 0) i = imgs.length - 1;
+					}
+					else {
+						++i;
 					}
 
-					return;
-				}
-			}
-			else if (['more', 'less'].includes(name)) {
+					i = i % imgs.length;
 
-				const area = e.closest('.search-area');
-				if (area) {
+					const num = slideshow.querySelector('.number');
+					num.innerText = `${i + 1} / ${imgs.length}`;
 
-					const results = area.querySelector('.results');
-					const container = results.firstElementChild;
+					dom.hideElement(e);
+					dom.showElement(imgs[i]);
 
-					let c = 0;
-					const elements = container.querySelectorAll('.item.hidden');
-					const items = Array.from(elements).slice(0, 10);
-
-					for (const i of items) dom.showElement(i);
-
-					if (items.length < 10)
-						dom.hideElement(e);
-
-					return;
+					break;
 				}
 
+				return;
 			}
-
-			let ed = this.currentEditor;
-			if (!ed) return;
-
-			// const sidebar = ed.sidebar;
-			// if (sidebar && sidebar.container.contains(e))
-			// 	ed = sidebar;
-
-			const link = e.getAttribute('link');
-			if (link && link.startsWith('#')) {
-				const path = link.slice(1);
-				const id = (path.startsWith('/') ? path.slice(1) : path)
-					.replaceAll('/', '-');
-
-				app.executeCommand('open-page-wiki', id);
-				// ed.onLinkClick(link.slice(1));
-			}
-			else
-				this.onClick(e, pos);
-			// else {
-			// 	const action = e.getAttribute('name');
-			// 	this.onEditorAction(action, null, e);
-			// }
 		}
+		else if (['more', 'less'].includes(name)) {
+
+			const area = e.closest('.search-area');
+			if (area) {
+
+				const results = area.querySelector('.results');
+				const container = results.firstElementChild;
+
+				let c = 0;
+				const elements = container.querySelectorAll('.item.hidden');
+				const items = Array.from(elements).slice(0, 10);
+
+				for (const i of items) dom.showElement(i);
+
+				if (items.length < 10)
+					dom.hideElement(e);
+
+				return;
+			}
+
+		}
+
+		let ed = this.currentEditor;
+		if (!ed) return;
+
+		// const sidebar = ed.sidebar;
+		// if (sidebar && sidebar.container.contains(e))
+		// 	ed = sidebar;
+
+		const link = e.getAttribute('link');
+		if (link && link.startsWith('#')) {
+			const path = link.slice(1);
+			const id = (path.startsWith('/') ? path.slice(1) : path)
+				.replaceAll('/', '-');
+
+			app.executeCommand('open-page-wiki', id);
+			// ed.onLinkClick(link.slice(1));
+		}
+		else
+			this.onClick(e, pos);
+		// else {
+		// 	const action = e.getAttribute('name');
+		// 	this.onEditorAction(action, null, e);
+		// }
 	}
 
 	#onCommand(cmd, item, target, ...params) {

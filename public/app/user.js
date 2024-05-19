@@ -148,10 +148,6 @@ const UserMixin = {
 		this._.playlist = new DataSourceDatabase('playlist');
 	}
 
-	, addDS(ds, name) {
-		this._[name || ds.name] = ds;
-	}
-
 	, ds(id, cache=false) {
 
 		let ds;
@@ -643,41 +639,7 @@ const UserMixin = {
 
 	}
 
-	, async importAudioFiles(files) {
-
-		const imported = [];
 	
-		for (const file of files) {
-	
-			const id = file.name.hashCode();
-			const i = await app.db.get('audio', id);
-	
-			if (i) {
-				file.meta = i.meta;
-				continue;
-			}
-	
-			const meta = file.meta || await fileX.getMeta(file);
-			const ext = fileX.getExtension(file.name);
-			const type = fileX.isVideo(ext) ? 'video' : 'audio';
-	
-			const item = {
-				id, type, file
-			};
-	
-			console.log('# Importing file:', file.name);
-	
-			item.rating = 0;
-			item.meta = meta;
-			item.album = meta.album ? meta.album.toLowerCase().hashCode() : 0;
-	
-			await app.db.put('audio', item);
-	
-			imported.push(item);
-		}
-	
-		app.emit('audioadd', imported);
-	}
 	
 }
 

@@ -59,16 +59,21 @@
 		<span class="title">{{this.display||this.name}}</span>
 	</template>
 
-	<template id="sidebar-player-item-playlist" classes="playlist noevents column w3-padding-tiny" data-id="{{this.id}}">
-		<div class="cr m2 ci noevents" hoverable>
-			<h4 class="nomargin fit ellipsis">{{this.display||this.name}}</h4>
-			<button class="icon fa fa-xs display-hover" name="share" title="Share" cmd="share-playlist"></button>
-			<button class="icon fa fa-xs display-hover" name="delete" title="Remove" cmd="rm-delete-playlist"></button>
+	<template id="sidebar-player-item-playlist" classes="item playlist noevents cr ci w3-padding-tiny" data-id="{{this.id}}">
+		@if{{this.cover}}
+			<img class="x32" src="{{URL.createObjectURL(this.cover)}}">
+		@endif
+		<div class="column noverflow fit">
+			<div class="cr m2 ci noevents" hoverable>
+				<h4 class="nomargin fit ellipsis">{{this.display||this.name}}</h4>
+				<button class="icon fa fa-xs display-hover" name="share" title="Share" cmd="share-playlist"></button>
+				<button class="icon fa fa-xs display-hover" name="delete" title="Remove" cmd="rm-delete-playlist"></button>
+			</div>
+			<span class="cr ci smaller">
+				<i class="fit">{{this.tracks.length}} tracks</i>
+				<i class="watermark">{{this.genre}}</i>
+			</span>
 		</div>
-		<span class="cr ci smaller">
-			<i class="fit">{{this.tracks.length}} tracks</i>
-			<i class="watermark">{{this.genre}}</i>
-		</span>
 	</template>
 
 	<template id="sidebar-radio-item" classes="container-col m2 w3-padding-tiny">
@@ -103,7 +108,7 @@
 			<input type="text" name="filter" placeholder="filter" spellcheck="false" autocomplete="off"/>
 		</div>
 	
-		<div class="scrollable list2 adjustable" select>
+		<div class="scrollable list2 fill adjustable" select>
 			<div class="v-scroller">
 				<div class="slider">
 				</div>

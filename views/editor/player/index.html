@@ -12,6 +12,7 @@
 	<div class="toolbar cr">
 		<button name="share" class="icon fa sm" title="Share"></button>
 		<button name="remove" class="icon fa" title="Remove"></button>
+		<button name="import" class="icon fa folder sm" title="Import" cmd="player-import-files"></button>
 	</div>
 	<div class="progress cr ci">
 		<input class="fit slider" type="range" min="1" max="100" value="0" disabled>
@@ -45,10 +46,11 @@
 	@endforeach
 </template>
 
-
-
 <template id="editor-player-content-base" classes="column hidden">
-
+	<div class="show-container-empty">
+		<h2 class="wm2 italic text-center">Drag and drop media files</h2>
+	</div>
+	<div class="container-empty column" role="main" cmd="player-queue-file" group></div>
 </template>
 
 <template id="editor-player-content-torrent" classes="column hidden fa-color-icons">
@@ -185,11 +187,9 @@
 
 <template id="editor-player-sidebar-playlist-file" class="cr m5 ci w3-padding-small noevents si" data-id="{{this.id||this.name.hashCode()}}">
 	<i class="fa smaller w3-text-green" name="{{this.type}}"></i>
-	<span class="fit ellipsis">{{this.title||this.name||this.file.name}}</span>
-	@if{{this.album}}
-		<i class="smaller fit ellipsis">{{this.album}}</i>
-	@endif
-	<b class="small text-right">{{size(this.size||this.file.size)}}</b>
+	<span class="fit2 ellipsis">{{fileX.getTitle(this)}}</span>
+	<i class="smaller fit ellipsis text-center">{{fileX.getAlbum(this)}}</i>
+	<b class="small text-right">{{fileX.getSize(this)}}</b>
 </template>
 
 <template id="edior-player-remote-file-item" classes="track grid item file noevents ci w3-padding-tiny" data-id="{{this.id}}">

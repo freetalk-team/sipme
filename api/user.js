@@ -536,9 +536,27 @@ router.post('/login', sessionChecker, async (req, res) => {
 	}
 	catch (e) {
 		console.error('Failed to create user', e);
-		return res.status(400).end();
+		res.statusCode = 400;
 	}
 
+	try {
+
+		const body = `
+# Welcome ${name}
+
+You have been invited to join **Web Messenger**
+
+[Go to site](${Config.domain})
+`;
+
+		await app.sendMail(email, 'Join Web Messenger', body);
+		
+	}
+	catch (e) {
+		console.error('Failed to send user invite email', e);
+	}
+
+	return res.end();
 });
 
 router.post('/register', sessionChecker, async (req, res) => {

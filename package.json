@@ -10,12 +10,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "build": "npm run build-js && npm run build-css",
+    "build": "npm run build-js && npm run build-app-js && npm run build-player-js && npm run build-css",
     "build-js": "cd build/app && NODE_ENV=production npx webpack",
     "build-css": "npm run build-css-app && npm run build-css-main",
     "build-css-app": "cd build/css/app && NODE_ENV=production npx webpack",
     "build-css-main": "cd build/css/main && NODE_ENV=production npx webpack",
-
+    "build-app-js": "cd build/app-base && NODE_ENV=production npx webpack",
+    "build-player-js": "cd build/player && NODE_ENV=production npx webpack",
     "update-games": "cd db && npx sequelize-cli db:seed --seed seeders/update-games.js",
     "update-games-prod": "cd db && NODE_ENV=production npx sequelize-cli db:seed --seed seeders/update-games.js",
     "update-wiki": "cd db && npx sequelize-cli db:seed --seed seeders/update-wiki.js",
@@ -56,6 +57,7 @@
     "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
     "pako": "^2.1.0",
     "passport": "^0.7.0",
     "passport-firebase-auth": "^0.0.0-beta.1",

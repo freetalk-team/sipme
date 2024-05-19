@@ -6,6 +6,10 @@
 	/* flex: 1; */
 	/* height: 100%; */
 
+	&.fill {
+		height: 100%;
+	}
+
 	.item {
 
 		visibility: visible;

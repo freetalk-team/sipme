@@ -17,7 +17,7 @@
 			<div class="w3-twothird">
 
 				<div class="w3-panel w3-leftbar w3-sand smaller w3-margin-hor-12" style="max-width: 450px;">
-					<p ><b>Note: </b>Only invited user can login</p>
+					<p ><b>Note: </b>Only invited users can login</p>
 				</div>
 
 				<form action="/login" method="post" class="login w3-card-2 w3-margin-bottom">
@@ -56,19 +56,8 @@
 				
 				<%- include static/features.html %>
 				<%- include static/links.html %>
-
-				<div class="column w3-card-2 w3-margin-top inconsolata-p">
-					<h4 class="w3-margin-tiny wm6 text-stroke w3-light-grey w3-padding-tiny w3-round text-stroke text-center gradient ellipsis">Release</h4>
-					<ul class="cc m10 nounderline">
-						<li>
-							<a title="Browse source" target="_blank" href="<%- Config.repo %>">Source code</a>
-							<p class="smaller">Browse project source code in Github</p>
-						</li>
-						<li class="smaller">
-							<strong>Version: </strong><%- Config.version %>
-						</li>
-					</ul>
-				</div>
+				<%- include release %>
+				
 			</div>
 
 		</div>

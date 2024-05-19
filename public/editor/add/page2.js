@@ -146,6 +146,8 @@ class TestPage extends BasePage {
 
 export class AddEditor extends UX.ListPage {
 
+	static Fields = CommonFields;
+
 	static kOptions = {};
 	static register(id, opt, onAdd) { 
 		if (onAdd) opt.onAdd = onAdd;

@@ -1,7 +1,7 @@
 
 class Navbar {
 
-	#current = 'home';
+	#current;
 	#selected;
 	#container;
 	//#missed = new Set;
@@ -10,7 +10,10 @@ class Navbar {
 	get active() { return this.#current; }
 
 	constructor(container='navbar') {
-		const e = document.getElementById(container);
+		let e = document.getElementById(container);
+
+		if (!e) 
+			e = dom.createElement('div');
 
 		e.onclick = (event) => {
 			const target = event.target;
@@ -81,9 +84,12 @@ e
 		this.clearSelection();
 		this.select(id, e);
 
-		const badge = e.querySelector('.badge');
-		if (badge) {
-			e.removeChild(badge);
+		if (e) {
+
+			const badge = e.querySelector('.badge');
+			if (badge) {
+				e.removeChild(badge);
+			}
 		}
 
 		this.onChange(id);
@@ -91,12 +97,12 @@ e
 
 	clearSelection() {
 		if (this.#current) {
-			const selected = this.selected;
-			if (selected) {
-				selected.classList.remove('selected');
-			}
-
 			this.#current = null;
+		}
+
+		const selected = this.selected;
+		if (selected) {
+			selected.classList.remove('selected');
 		}
 	}
 
@@ -107,7 +113,8 @@ e
 		this.#current = id;
 		this.#selected = e;
 
-		e.classList.add('selected');
+		if (e)
+			e.classList.add('selected');
 	}
 
 	onOpenEditor(type) {

@@ -1,11 +1,6 @@
 
 // import CodeMirror from './codemirror.js';
 
-const kCodeMirror = 
-	//  './codemirror.js'
-	'../dist/codemirror.js'
-	;
-
 const kDarkTheme = 
 	// 'pastel-on-dark'
 	// 'paraiso-dark'
@@ -71,9 +66,7 @@ class CodeMirrorWrapper {
 }
 
 async function checkImported() {
-	if (!window.CodeMirror) {
-		return import(kCodeMirror);
-	}
+	
 }
 
 function getMode(type) {

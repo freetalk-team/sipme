@@ -2,7 +2,7 @@
 
 String.prototype.hashCode = function() {
 	//console.log(typeof this);
-	var hash = 5381, i = this.length
+	var hash = 5387, i = this.length
 	while(i)
 		hash = (hash * 33) ^ this.charCodeAt(--i)
 

@@ -94,7 +94,6 @@ export class PlayerPage extends PageBase {
 
 		console.log('Creating player editor ....');
 
-		this.#createContent();
 		this.#createSidebar();
 
 		const header = this.header;
@@ -247,6 +246,7 @@ export class PlayerPage extends PageBase {
 			this.active.onFilesDrop(media, images, other);
 
 			const playlist = [];
+			const albums = [];
 
 			let title, id;
 
@@ -258,6 +258,9 @@ export class PlayerPage extends PageBase {
 				if (i.meta) {
 					title = i.meta.title || title;
 
+					if (i.meta.album)
+						albums.push(i.meta.album);
+
 					delete i.meta;
 				}
 
@@ -265,13 +268,76 @@ export class PlayerPage extends PageBase {
 				playlist.push({ id, title, file: i });
 			}
 
-			app.executeCommand('add-new-playlist', playlist);
+			if (media.length > 2) {
+
+				let album = directory;
+
+				if (media.length == albums.length && albums.unique().length == 1) {
+					// add it
+					album = albums[0];
+
+					const playlist = {
+						name: album,
+						id: album.hashCode().toString(),
+						type: 'album',
+						tracks: media.map(i => ({
+							id: i.id || i.name.hashCode(),
+							filename: i.name,
+							size: i.size,
+							title: i.meta && i.meta.title ? i.meta.title : i.name
+
+						}))
+					};
+
+					if (images.length > 0) {
+						images.sort((a, b) => a.size - b.size);
+						playlist.cover = images[0];
+					}
+
+					app.add('playlist', playlist, 'new');
+				}
+				else {
+					// prompt
+					app.executeCommand('add-new-playlist', playlist, album);
+				}
+
+			}
 		}
 	}
 
 
 	onTabChange(...args) {
-		if (this.active) this.active.onTabChange(...args);
+		if (this.active) 
+			this.active.onTabChange(...args);
+	}
+
+	async onScrollY(y, total) {
+
+		const more = this.active.more;
+
+		// console.log('Player on scroll:', y, total, more);
+		//console.log('XX Player on scroll');
+
+		// todo: put the constant somewhere 
+		if (more && total - y < 30 && !this.#loading) {
+
+			this.#loading = true;
+
+			this.toggleLoading();
+
+			try {
+
+				await sleep(1200);
+				await this.active.load(true);
+			}
+			catch (e) {}
+			finally {
+				this.toggleLoading();
+			}
+
+			this.#loading = false;
+		}
+
 	}
 
 	async #open(action, ...args) {
@@ -310,63 +376,6 @@ export class PlayerPage extends PageBase {
 		return p;
 	}
 	
-	#createContent() {
-		const editor = this.editorElement;
-		
-		this.registerEvents();
-		// this.registerClickHandlers();
-
-		// for (const i of ['files', 'torrent', 'playlist']) {
-
-		// 	let e = dom.renderTemplate('editor-player-content-base', {});
-
-		// 	const p = List.createPageMixin(e);
-		// 	this.addPage(i, p);
-		// }
-
-		this.onScrollY = async (y, total) => {
-
-			const more = this.active.more;
-
-			// console.log('Player on scroll:', y, total, more);
-			//console.log('XX Player on scroll');
-
-			// todo: put the constant somewhere 
-			if (more && total - y < 30 && !this.#loading) {
-
-				this.#loading = true;
-
-				this.toggleLoading();
-
-				try {
-
-					await sleep(1200);
-					await this.active.load(true);
-				}
-				catch (e) {}
-				finally {
-					this.toggleLoading();
-				}
-
-				this.#loading = false;
-			}
-
-		}
-
-		// content.onClick = (id, e) => {
-
-		// 	console.log('Item clicked', id);
-
-		// 	if (e.tagName == 'BUTTON') {
-
-		// 	}
-		// 	else if (e.classList.contains('torrent')) {
-		// 		e.classList.toggle('details');
-		// 	}
-		// }
-
-		// this.#content = content;
-	}
 
 	#createSidebar() {
 		const e = this.sidebarElement;

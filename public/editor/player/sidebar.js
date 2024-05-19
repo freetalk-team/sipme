@@ -23,7 +23,7 @@ export class Sidebar extends SidebarBase {
 
 		const recent = this.getPage('recent');
 
-		const opt = { visible: 100, badge: true, hide: true };
+		const opt = { visible: 100, badge: true, hide: true, cmd: 'player-play-file' };
 
 		opt.icon = 'fac-queue';
 		opt.name = 'queue';

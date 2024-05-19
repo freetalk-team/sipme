@@ -49,8 +49,20 @@ export class Database extends IndexDB {
 
 	onUpgrade(db, txn, ver) {
 		switch (ver) {
-		
+
 			case 0:
+			Database.addTable(db, kSettings);
+			
+			Database.addTable(db, kAudio);
+			Database.addTable(db, kRadio);
+			Database.addTable(db, kPlaylist);
+
+			Database.addIndex(kAudio, 'rating', txn);
+			Database.addIndex(kAudio, 'type', txn);
+
+			Database.addIndex(kPlaylist, 'type', txn);
+		
+			case 1:
 			addTable(db, kSettings);
 			addTable(db, kContact);
 			addTable(db, kChannel);
@@ -304,9 +316,6 @@ export class Database extends IndexDB {
 		return this.delete(kHistory, 'uid', id, id);
 	}
 }
-
-Database.addTable = addTable;
-Database.addIndex = addIndex;
 
 function encodeMessage({ msg, info, type, ts, own, user}) {
 

@@ -1,24 +1,9 @@
 
 import { PlayerPage  } from "./page.js";
-import { Fields as CommonFields } from '../../editor/settings/fields.js';
 
 App.Editor.register(PlayerPage);
 
-AddEditor.register('playlist', [
-	CommonFields.string({ name: 'display', title: 'Name', required: true })
-	, CommonFields.option({
-		name: 'genre'
-		, options: ['Pop', 'Rock', 'Folk', 'Classic', 'Jazz', 'Punk', 'Metal']
-	}),
-
-	CommonFields.list({
-		name: 'tracks'
-		// , itemClass: TrackListItem
-		, template: 'editor-player-sidebar-playlist-file'
-	})
-]);
-
-App.Commands.register('add-new-playlist', (recent=app.player.recent) => {
+App.Commands.register('add-new-playlist', (recent=app.player.recent,album=null) => {
 
 	console.log('# Creating playlist:', recent);
 
@@ -51,6 +36,55 @@ App.Commands.register('add-new-playlist', (recent=app.player.recent) => {
 		tracks: recent
 	};
 
+	if (album)
+		params.display = album;
+
 	app.openEditor('add', 'new', 'playlist', params);
 });
 
+App.Commands.register('player-import-files', async () => {
+
+	try {
+
+		const files = await showOpenFilePicker({
+			id: 'media',
+			multiple: true,
+			startIn: 'music',
+			excludeAcceptAllOption: true,
+			types: [
+				{
+				description: "Media files",
+				accept: {
+					"audio/*": ['.mp3', ".ogg", ".flac"],
+					'video/*': [".webm", '.mkv', '.avi']
+				},
+				},
+			],
+		});
+
+		app.editor.onImport(files);
+	}
+	catch (e) {
+		console.error('Failed to import files');
+	}
+
+});
+
+App.Commands.register('player-play-file', id => app.player.playFile(id));
+App.Commands.register('player-queue-file', id => app.player.playFile(id, true));
+
+const Fields = AddEditor.Fields;
+
+AddEditor.register('playlist', [
+	Fields.string({ name: 'display', title: 'Name', required: true })
+	, Fields.option({
+		name: 'genre'
+		, options: ['Pop', 'Rock', 'Hip Hop', 'R&B', 'Electronic', 'Country', 'Jazz', 'Classic', 'Reggae', 'Metal', 'Blues', 'Folk', 'Soul', 'Dance', 'Punk']
+	}),
+
+	Fields.list({
+		name: 'tracks'
+		// , itemClass: TrackListItem
+		, template: 'editor-player-sidebar-playlist-file'
+	})
+]);

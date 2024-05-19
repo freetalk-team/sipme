@@ -130,6 +130,10 @@ ul.count li.si:before, ol.count li.si:before {
     margin: 40px auto;
 }
 
+.loading2 > * {
+	display: none;
+}
+
 .loading2 {
 	position: relative;
 	min-height: 80px;

@@ -16,37 +16,48 @@ App.Commands.register('game-invite-user', async (id) => {
 	const ds = app.ds('game');
 	const items = ['opponent'];
 
-	const info = await ds.get(id);
-	let params = await app.game.params(id);
+	try {
 
-	let item;
+		app.toggleLoading();
 
-	for (const [name, type] of Object.entries(params)) {
+		const info = await ds.get(id);
+		let params = await app.game.params(id);
 
-		item = { name };
+		let item;
 
-		if (Array.isArray(type)) {
-			item.type = type.length < 5 ? 'radio' : 'option';
-			item.options = type.map(i => i.toString());
+		for (const [name, type] of Object.entries(params)) {
+
+			item = { name };
+
+			if (Array.isArray(type)) {
+				item.type = type.length < 5 ? 'radio' : 'option';
+				item.options = type.map(i => i.toString());
+			}
+			else if (type) item.type = type;
+			else item = name;
+
+			items.push(item);
 		}
-		else if (type) item.type = type;
-		else item = name;
 
-		items.push(item);
-	}
-
-	params = {
-		desc: 'Create new game',
-		items,
-		icon: info.icon,
-		reload: true,
-		onAdd({ opponent, ...options}) {
-			console.log('Creating new game:', options);
-			app.openEditor('game', 'open', id, opponent, options);
+		params = {
+			desc: 'Create new game',
+			items,
+			icon: info.icon,
+			reload: true,
+			onAdd({ opponent, ...options}) {
+				console.log('Creating new game:', options);
+				app.openEditor('game', 'open', id, opponent, options);
+			}
 		}
-	}
 
-	return app.openEditor('add', 'new', 'game', params);
+		return app.openEditor('add', 'new', 'game', params);
+	
+	} catch(e) {
+
+	} 
+	finally {
+		app.toggleLoading();
+	}
 });
 
 App.Commands.register('game-resign-user', async id => {

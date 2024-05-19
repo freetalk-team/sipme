@@ -251,6 +251,31 @@ async function getMeta(file) {
 	return meta;
 }
 
+function getTitle(file) {
+	if (file.title) return file.title;
+	if (file.meta && file.meta.title) return file.meta.title;
+	
+	const name = file.name || file.file.name;
+
+	let m;
+
+	if (m = name.match(/^\s*(\d{1,2})[\s-_.]*(.*)(\.\w+)?$/))
+		return m[2];
+
+	const [ filename ] = getFilename(name);
+	
+	return filename;
+}
+
+function getAlbum(file) {
+	if (file.meta && file.meta.album) return file.meta.album;
+
+	return '';
+}
+
+function getSize(file) {
+	return size(file.size || file.file.size);
+}
 
 window.fileX = {
 
@@ -277,4 +302,7 @@ window.fileX = {
 	, getFileType(file) { return file.type ? getType(file.type) : this.getTypeFromFilename(file.name); }
 
 	, getMeta
+	, getSize
+	, getTitle
+	, getAlbum
 };

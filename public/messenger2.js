@@ -80,6 +80,8 @@ export class Messenger {
 		const remoteView = this.remoteView;
 		const remoteAudio = this.remoteAudio;
 
+		const iceServers = Config.ice.servers.map(i => ({ urls: i }));
+
 		const ua = new SimpleUser(kServer, {
 			delegate: this
 
@@ -108,10 +110,7 @@ export class Messenger {
 				, sessionDescriptionHandlerFactoryOptions: {
 					iceGatheringTimeout: 5000, //currently, the smallest allowed value
 					peerConnectionConfiguration: {
-					  iceServers: [ 
-						//   { urls: 'stun:192.168.8.68:3478' } 
-						  , { urls: "stun:stun.l.google.com:19302" }
-						]
+					  iceServers
 					  , iceTransportPolicy: "all"
 					  , rtcpMuxPolicy: "require"
 					}
@@ -133,6 +132,9 @@ export class Messenger {
 
 		await this.unregister();
 		await this.ua.disconnect(); 
+
+		// testing
+		// this.ua.registerRequested = false;
 	}
 
 	register() {  return this.#checkRegistered(); }
